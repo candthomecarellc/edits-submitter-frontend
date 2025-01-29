@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import FormPage1 from './FormSubmit/FormPage1';
 import FormPage2 from './FormSubmit/FormPage2';
+import FormPage3 from './FormSubmit/FormPage3';
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -11,18 +12,18 @@ const Home = () => {
     uscitizenshiporDOB: '',
     uscitizenshiporDOBFile: null,
     usCitizenship: '',
-    usCitizenshipFile:  null,
+    usCitizenshipFile: null,
     identityDocument: '',
-    identityDocumentFile:  null,
+    identityDocumentFile: null,
     identityDocumentExtra: '',
-    identityDocumentExtraFile:  null,
+    identityDocumentExtraFile: null,
 
     ImmigrationstatesIdentity: '',
-    ImmigrationstatesIdentityFile:  null,
+    ImmigrationstatesIdentityFile: null,
     ImmigrationStatus: '',
-    ImmigrationStatusFile:  null,
+    ImmigrationStatusFile: null,
     dobIdentity: '',
-    dobIdentityFile:  null,
+    dobIdentityFile: null,
     homeAddressDocument: '',
     homeAddressDocumentFile: null,
 
@@ -50,7 +51,9 @@ const Home = () => {
     interestDividendsRoyaltiesFile: null,
 
     careForChildrenorAdults: '',
+    careForChildrenorAdultsFile: null,
     courtOrdered: '',
+    courtOrderedFile: null,
 
     healthInsurance: {
       proofOfCurrentHealthInsurance: '',
@@ -403,6 +406,13 @@ const Home = () => {
           )}
           {page === 2 && (
             <FormPage2
+              formData={formData}
+              setFormData={setFormData}
+              handleChange={handleChange}
+            />
+          )}
+          {page === 3 && (
+            <FormPage3
               formData={formData}
               setFormData={setFormData}
               handleChange={handleChange}
