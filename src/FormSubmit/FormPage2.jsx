@@ -1,7 +1,7 @@
-import ScrolltoTop from '../utils/ScrolltoTop';
+/* eslint-disable react/prop-types */
 import FileUpload from './FileUpload';
 
-/* eslint-disable react/prop-types */
+
 const FormPage2 = ({ formData, handleChange, setFormData }) => {
   // scroll to top smoth of page
 
@@ -614,9 +614,10 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
           </>
         </fieldset>
       </div>
-      <ScrolltoTop />
+      {/* <ScrolltoTop /> */}
     </div>
   );
 };
+
 
 export default FormPage2;
