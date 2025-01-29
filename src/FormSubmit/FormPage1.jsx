@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { DayPicker } from 'react-day-picker';
 import { formatDate } from '../utils/date';
-import ScrolltoTop from '../utils/ScrolltoTop';
 import FileUpload from './FileUpload';
 
 const FormPage1 = ({
@@ -298,7 +297,7 @@ const FormPage1 = ({
           </div>
         </fieldset>
       </div>
-      <ScrolltoTop />
+      {/* <ScrolltoTop /> */}
     </div>
   );
 };
