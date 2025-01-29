@@ -232,6 +232,7 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
               />
             </div>
           </>
+          {/* Self-Employment */}
           <div className="divider"></div>
           <>
             <legend className="font-medium text-gray-700 mb-4">
@@ -267,6 +268,7 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
               />
             </div>
           </>
+          {/* Unemployment Benefits */}
           <div className="divider"></div>
           <>
             <legend className="font-medium text-gray-700 mb-4">
@@ -312,6 +314,7 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
               />
             </div>
           </>
+          {/* Private Pensions/Annuities */}
           <div className="divider"></div>
           <>
             <legend className="font-medium text-gray-700 mb-4">
@@ -391,13 +394,13 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
             </legend>
             <div className="space-y-4">
               <select
-                name="socialSecurity"
-                value={formData.socialSecurity}
+                name="workersCompensation"
+                value={formData.workersCompensation}
                 className="select select-primary w-full"
                 onChange={handleChange}
                 required
                 aria-required="true"
-                aria-describedby="socialSecurity"
+                aria-describedby="workersCompensation"
               >
                 <option value="">Pick a Document</option>
                 <option value="Award letter/certificate">
@@ -411,8 +414,8 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 </option>
               </select>
               <FileUpload
-                name="socialSecurityFile"
-                defaultFile={formData.socialSecurityFile || null}
+                name="workersCompensationFile"
+                defaultFile={formData.workersCompensationFile || null}
                 onFileSelect={(name, file) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -430,28 +433,36 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
             </legend>
             <div className="space-y-4">
               <select
-                name="socialSecurity"
-                value={formData.socialSecurity}
+                name="childSupportAlimony"
+                value={formData.childSupportAlimony}
                 className="select select-primary w-full"
                 onChange={handleChange}
                 required
                 aria-required="true"
-                aria-describedby="socialSecurity"
+                aria-describedby="childSupportAlimony"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter/certificate">
-                  Award letter/certificate
+                <option value="Letter from person providing support">
+                  Letter from person providing support
                 </option>
-                <option value="Annual benefit statement">
-                  Annual benefit statement
+                <option value="Letter from court">Letter from court</option>
+                <option value="Child support/alimony check stub">
+                  Child support/alimony check stub
                 </option>
-                <option value="Correspondence from Social Security Administration">
-                  Correspondence from Social Security Administration
+                <option value="Copy of  NY EPPICard with printout">
+                  Copy of NY EPPICard with printout
+                </option>
+                <option value="Copy of child support account information from www.childsupport.ny.gov">
+                  Copy of child support account information from
+                  www.childsupport.ny.gov
+                </option>
+                <option value="Copy of bank statement showing direct deposit">
+                  Copy of bank statement showing direct deposit
                 </option>
               </select>
               <FileUpload
-                name="socialSecurityFile"
-                defaultFile={formData.socialSecurityFile || null}
+                name="childSupportAlimonyFile"
+                defaultFile={formData.childSupportAlimonyFile || null}
                 onFileSelect={(name, file) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -469,28 +480,24 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
             </legend>
             <div className="space-y-4">
               <select
-                name="socialSecurity"
-                value={formData.socialSecurity}
+                name="veteransBenefits"
+                value={formData.veteransBenefits}
                 className="select select-primary w-full"
                 onChange={handleChange}
                 required
                 aria-required="true"
-                aria-describedby="socialSecurity"
+                aria-describedby="veteransBenefits"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter/certificate">
-                  Award letter/certificate
-                </option>
-                <option value="Annual benefit statement">
-                  Annual benefit statement
-                </option>
-                <option value="Correspondence from Social Security Administration">
-                  Correspondence from Social Security Administration
+                <option value="Award letter">Award letter</option>
+                <option value="Benefit check stub">Benefit check stub</option>
+                <option value="Correspondence from Veterans Affairs">
+                  Correspondence from Veterans Affairs
                 </option>
               </select>
               <FileUpload
-                name="socialSecurityFile"
-                defaultFile={formData.socialSecurityFile || null}
+                name="veteransBenefitsFile"
+                defaultFile={formData.veteransBenefitsFile || null}
                 onFileSelect={(name, file) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -508,28 +515,21 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
             </legend>
             <div className="space-y-4">
               <select
-                name="socialSecurity"
-                value={formData.socialSecurity}
+                name="militaryPay"
+                value={formData.militaryPay}
                 className="select select-primary w-full"
                 onChange={handleChange}
                 required
                 aria-required="true"
-                aria-describedby="socialSecurity"
+                aria-describedby="militaryPay"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter/certificate">
-                  Award letter/certificate
-                </option>
-                <option value="Annual benefit statement">
-                  Annual benefit statement
-                </option>
-                <option value="Correspondence from Social Security Administration">
-                  Correspondence from Social Security Administration
-                </option>
+                <option value="Award letter">Award letter</option>
+                <option value="Check stub">Check stub</option>
               </select>
               <FileUpload
-                name="socialSecurityFile"
-                defaultFile={formData.socialSecurityFile || null}
+                name="militaryPayFile"
+                defaultFile={formData.militaryPayFile || null}
                 onFileSelect={(name, file) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -547,28 +547,23 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
             </legend>
             <div className="space-y-4">
               <select
-                name="socialSecurity"
-                value={formData.socialSecurity}
+                name="incomeFromRent"
+                value={formData.incomeFromRent}
                 className="select select-primary w-full"
                 onChange={handleChange}
                 required
                 aria-required="true"
-                aria-describedby="socialSecurity"
+                aria-describedby="incomeFromRent"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter/certificate">
-                  Award letter/certificate
+                <option value="Letter from roomer, boarder, tenant">
+                  Letter from roomer, boarder, tenant
                 </option>
-                <option value="Annual benefit statement">
-                  Annual benefit statement
-                </option>
-                <option value="Correspondence from Social Security Administration">
-                  Correspondence from Social Security Administration
-                </option>
+                <option value="Check stub">Check stub</option>
               </select>
               <FileUpload
-                name="socialSecurityFile"
-                defaultFile={formData.socialSecurityFile || null}
+                name="incomeFromRentFile"
+                defaultFile={formData.incomeFromRentFile || null}
                 onFileSelect={(name, file) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -582,32 +577,32 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
           <div className="divider"></div>
           <>
             <legend className="font-medium text-gray-700 mb-4">
-            Interest/Dividends/Royalties
+              Interest/Dividends/Royalties
             </legend>
             <div className="space-y-4">
               <select
-                name="socialSecurity"
-                value={formData.socialSecurity}
+                name="interestDividendsRoyalties"
+                value={formData.interestDividendsRoyalties}
                 className="select select-primary w-full"
                 onChange={handleChange}
                 required
                 aria-required="true"
-                aria-describedby="socialSecurity"
+                aria-describedby="interestDividendsRoyalties"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter/certificate">
-                  Award letter/certificate
+                <option value="Recent statement from bank, credit union or financial institution">
+                  Recent statement from bank, credit union or financial
+                  institution
                 </option>
-                <option value="Annual benefit statement">
-                  Annual benefit statement
-                </option>
-                <option value="Correspondence from Social Security Administration">
-                  Correspondence from Social Security Administration
+                <option value="Letter from broker">Letter from broker</option>
+                <option value="Letter from agent">Letter from agent</option>
+                <option value="1099 or tax return (if no other documentation is available)">
+                  1099 or tax return (if no other documentation is available)
                 </option>
               </select>
               <FileUpload
-                name="socialSecurityFile"
-                defaultFile={formData.socialSecurityFile || null}
+                name="interestDividendsRoyaltiesFile"
+                defaultFile={formData.interestDividendsRoyaltiesFile || null}
                 onFileSelect={(name, file) => {
                   setFormData((prev) => ({
                     ...prev,
