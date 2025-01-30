@@ -2,9 +2,10 @@ import { useState } from 'react';
 import FormPage1 from './FormSubmit/FormPage1';
 import FormPage2 from './FormSubmit/FormPage2';
 import FormPage3 from './FormSubmit/FormPage3';
+import FormPage4 from './FormSubmit/FormPage4';
 
 const Home = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(4);
   const timeZone = 'America/New_York';
   const [formData, setFormData] = useState({
     applicantName: '',
@@ -52,31 +53,30 @@ const Home = () => {
 
     careForChildrenorAdults: '',
     careForChildrenorAdultsFile: null,
-    courtOrdered: '',
-    courtOrderedFile: null,
+    courtOrdered: null,
 
     healthInsurance: {
-      proofOfCurrentHealthInsurance: '',
-      healthInsuranceTerminationLetter: '',
-      medicareCard: '',
-      confirmationOfMedicareApplication: '',
-      medicareAwardorDenialLetter: '',
+      proofOfCurrentHealthInsurance: null,
+      healthInsuranceTerminationLetter: null,
+      medicareCard: null,
+      confirmationOfMedicareApplication: null,
+      medicareAwardorDenialLetter: null,
     },
     medicalBills: {
-      proofofIncomeforMedicalBills: '',
-      proofofhomeAddress: '',
-      medicalBillsforLast3Months: '',
+      proofofIncomeforMedicalBills: null,
+      proofofhomeAddress: null,
+      medicalBillsforLast3Months: null,
     },
     resources: {
       bankStatements: '',
       stocksBonds: '',
       copyOfLifeInsurancePolicy: '',
       burialtrust: '',
-      deedforRealEstate: '',
+      deedForRealEstate: '',
     },
-    student: {
-      proofOfstudentStatus: '',
-    },
+
+    proofOfstudentStatus: '',
+    proofOfstudentStatusFile: null,
 
     //page 9
     personalInfo: {
@@ -90,6 +90,7 @@ const Home = () => {
       languageSpeak: '',
       languageRead: '',
     },
+    homeLess: false,
     homeAddress: {
       street: '',
       city: '',
@@ -114,9 +115,9 @@ const Home = () => {
       zip: '',
       apt: '',
       permissions: {
-        ApplyMedicaidForMe: '',
-        disussMyCase: '',
-        getNoticesAndCorrespondence: '',
+        ApplyMedicaidForMe: false,
+        disussMyCase: false,
+        getNoticesAndCorrespondence: false,
       },
     },
     blind: {
@@ -342,19 +343,61 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const fileData = {
-      uscitizenshiporDOBFile: e.target.uscitizenshiporDOBFile.files[0],
-    };
     console.log(formData);
-    console.log(fileData);
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const { name, value, type, checked } = e.target;
+
+    // Handle nested properties for specific cases
+    if (name.includes('.')) {
+      const keys = name.split('.'); // Split by dot to get nested keys
+      setFormData((prevData) => {
+        const updatedData = { ...prevData };
+        let nestedObj = updatedData;
+
+        // Traverse to the last key's parent
+        for (let i = 0; i < keys.length - 1; i++) {
+          if (!nestedObj[keys[i]]) nestedObj[keys[i]] = {}; // Ensure intermediate object exists
+          nestedObj = nestedObj[keys[i]];
+        }
+
+        // Set the value at the final key
+        nestedObj[keys[keys.length - 1]] =
+          type === 'checkbox' ? checked : value;
+        return updatedData;
+      });
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+    }
+  };
+
+  const updateFormData = (name, value) => {
+    setFormData((prevData) => {
+      const keys = name.split('.');
+      if (keys.length === 1) {
+        // For flat properties
+        return { ...prevData, [name]: value };
+      }
+
+      // For nested properties
+      const updatedData = { ...prevData };
+      let nestedObj = updatedData;
+
+      // Traverse to the last key's parent
+      for (let i = 0; i < keys.length - 1; i++) {
+        if (!nestedObj[keys[i]]) nestedObj[keys[i]] = {};
+        nestedObj = nestedObj[keys[i]];
+      }
+
+      // Set the value at the final key
+      nestedObj[keys[keys.length - 1]] = value;
+
+      return updatedData;
+    });
   };
 
   return (
@@ -402,6 +445,7 @@ const Home = () => {
               toggleDatePicker={toggleDatePicker}
               isOpen={isOpen}
               timeZone={timeZone}
+              updateFormData={updateFormData}
             />
           )}
           {page === 2 && (
@@ -409,6 +453,7 @@ const Home = () => {
               formData={formData}
               setFormData={setFormData}
               handleChange={handleChange}
+              updateFormData={updateFormData}
             />
           )}
           {page === 3 && (
@@ -416,6 +461,15 @@ const Home = () => {
               formData={formData}
               setFormData={setFormData}
               handleChange={handleChange}
+              updateFormData={updateFormData}
+            />
+          )}
+          {page === 4 && (
+            <FormPage4
+              formData={formData}
+              setFormData={setFormData}
+              handleChange={handleChange}
+              updateFormData={updateFormData}
             />
           )}
         </form>
