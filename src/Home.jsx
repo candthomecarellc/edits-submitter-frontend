@@ -7,9 +7,10 @@ import FormPage5 from './FormSubmit/FormPage5';
 import FormPage6 from './FormSubmit/FormPage6';
 import FormPage7 from './FormSubmit/FormPage7';
 import FormPage8 from './FormSubmit/FormPage8';
+import FormPage9 from './FormSubmit/FormPage9';
 
 const Home = () => {
-  const [page, setPage] = useState(7);
+  const [page, setPage] = useState(1);
   const timeZone = 'America/New_York';
   const [formData, setFormData] = useState({
     applicantName: '',
@@ -505,7 +506,23 @@ const Home = () => {
               updateFormData={updateFormData}
             />
           )}
-        </form>
+          {page === 9 && (
+            <FormPage9
+              formData={formData}
+              setFormData={setFormData}
+              handleChange={handleChange}
+              updateFormData={updateFormData}
+            />
+          )}
+          {/* Buttons */}
+          {page === 9 && (
+            <div className='text-center'>
+              <button type="submit" className="btn btn-primary btn-outline mt-4 w-full">
+              Submit
+            </button>
+            </div>
+          )}
+          </form>
         {/* Buttons */}
         <div className="flex justify-between mt-4 items-center">
           <button
