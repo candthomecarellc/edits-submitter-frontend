@@ -5,9 +5,11 @@ import FormPage3 from './FormSubmit/FormPage3';
 import FormPage4 from './FormSubmit/FormPage4';
 import FormPage5 from './FormSubmit/FormPage5';
 import FormPage6 from './FormSubmit/FormPage6';
+import FormPage7 from './FormSubmit/FormPage7';
+import FormPage8 from './FormSubmit/FormPage8';
 
 const Home = () => {
-  const [page, setPage] = useState(4);
+  const [page, setPage] = useState(7);
   const timeZone = 'America/New_York';
   const [formData, setFormData] = useState({
     applicantName: '',
@@ -481,6 +483,22 @@ const Home = () => {
           )}
           {page === 6 && (
             <FormPage6
+              formData={formData}
+              setFormData={setFormData}
+              handleChange={handleChange}
+              updateFormData={updateFormData}
+            />
+          )}
+          {page === 7 && (
+            <FormPage7
+              formData={formData}
+              setFormData={setFormData}
+              handleChange={handleChange}
+              updateFormData={updateFormData}
+            />
+          )}
+          {page === 8 && (
+            <FormPage8
               formData={formData}
               setFormData={setFormData}
               handleChange={handleChange}
