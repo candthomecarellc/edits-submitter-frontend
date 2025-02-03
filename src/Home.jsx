@@ -3,6 +3,7 @@ import FormPage1 from './FormSubmit/FormPage1';
 import FormPage2 from './FormSubmit/FormPage2';
 import FormPage3 from './FormSubmit/FormPage3';
 import FormPage4 from './FormSubmit/FormPage4';
+import FormPage5 from './FormSubmit/FormPage5';
 
 const Home = () => {
   const [page, setPage] = useState(4);
@@ -120,12 +121,7 @@ const Home = () => {
         getNoticesAndCorrespondence: false,
       },
     },
-    blind: {
-      standardAndLargePrintNotice: '',
-      standardAndDataCDAndaudioCDNotice: '',
-      standardAndBrailleNotice: '',
-      requireAnotherAccommodation: '',
-    },
+    blindNoticeType: '',
     familyInfo: [
       {
         name: '',
@@ -168,6 +164,8 @@ const Home = () => {
       },
     ],
     selfEmploymentInfo: '',
+    householdVeteran: '',
+    veteranName: '',
     earningFromWork: [
       {
         name: '',
@@ -466,6 +464,14 @@ const Home = () => {
           )}
           {page === 4 && (
             <FormPage4
+              formData={formData}
+              setFormData={setFormData}
+              handleChange={handleChange}
+              updateFormData={updateFormData}
+            />
+          )}
+          {page === 5 && (
+            <FormPage5
               formData={formData}
               setFormData={setFormData}
               handleChange={handleChange}
