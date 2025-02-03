@@ -4,6 +4,7 @@ import FormPage2 from './FormSubmit/FormPage2';
 import FormPage3 from './FormSubmit/FormPage3';
 import FormPage4 from './FormSubmit/FormPage4';
 import FormPage5 from './FormSubmit/FormPage5';
+import FormPage6 from './FormSubmit/FormPage6';
 
 const Home = () => {
   const [page, setPage] = useState(4);
@@ -163,9 +164,9 @@ const Home = () => {
         receivedAServiceFromIHS: '',
       },
     ],
-    selfEmploymentInfo: '',
     householdVeteran: '',
     veteranName: '',
+    selfEmploymentInfo: '',
     earningFromWork: [
       {
         name: '',
@@ -472,6 +473,14 @@ const Home = () => {
           )}
           {page === 5 && (
             <FormPage5
+              formData={formData}
+              setFormData={setFormData}
+              handleChange={handleChange}
+              updateFormData={updateFormData}
+            />
+          )}
+          {page === 6 && (
+            <FormPage6
               formData={formData}
               setFormData={setFormData}
               handleChange={handleChange}
