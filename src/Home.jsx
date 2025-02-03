@@ -516,13 +516,16 @@ const Home = () => {
           )}
           {/* Buttons */}
           {page === 9 && (
-            <div className='text-center'>
-              <button type="submit" className="btn btn-primary btn-outline mt-4 w-full">
-              Submit
-            </button>
+            <div className="text-center">
+              <button
+                type="submit"
+                className="btn btn-primary btn-outline mt-4 w-full"
+              >
+                Submit
+              </button>
             </div>
           )}
-          </form>
+        </form>
         {/* Buttons */}
         <div className="flex justify-between mt-4 items-center">
           <button
