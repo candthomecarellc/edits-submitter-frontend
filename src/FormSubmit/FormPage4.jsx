@@ -605,6 +605,7 @@ const FormPage4 = ({
         </p>
 
         {/* Notice Options */}
+        {/* Notice Options */}
         <div className="space-y-4">
           <p className="text-gray-700 font-medium">
             If you are blind or visually impaired and require information in an
@@ -615,11 +616,14 @@ const FormPage4 = ({
           {/* Standard and Large Print Notice */}
           <label className="flex items-center">
             <input
-              type="checkbox"
-              name="blind.standardAndLargePrintNotice"
-              checked={formData.blind.standardAndLargePrintNotice}
+              type="radio"
+              name="blindNoticeType"
+              value="Standard notice and large print notice"
+              checked={
+                formData.blindNoticeType === 'Standard notice and large print notice'
+              }
               onChange={handleChange}
-              className="checkbox"
+              className="radio"
             />
             <span className="ml-2">Standard notice and large print notice</span>
           </label>
@@ -627,11 +631,15 @@ const FormPage4 = ({
           {/* Standard and Data CD Notice */}
           <label className="flex items-center">
             <input
-              type="checkbox"
-              name="blind.standardAndDataCDAndaudioCDNotice"
-              checked={formData.blind.standardAndDataCDAndaudioCDNotice}
+              type="radio"
+              name="blindNoticeType"
+              value="Standard notice and data CD notice Standard notice and audio CD notice"
+              checked={
+                formData.blindNoticeType ===
+                'Standard notice and data CD notice Standard notice and audio CD notice'
+              }
               onChange={handleChange}
-              className="checkbox"
+              className="radio"
             />
             <span className="ml-2">
               Standard notice and data CD notice Standard notice and audio CD
@@ -642,11 +650,12 @@ const FormPage4 = ({
           {/* Standard and Audio CD Notice */}
           <label className="flex items-center">
             <input
-              type="checkbox"
-              name="blind.standardAndBrailleNotice"
-              checked={formData.blind.standardAndBrailleNotice}
+              type="radio"
+              name="blindNoticeType"
+              value="Standard notice and braille notice, if you assert that none of the other alternative formats will be equally effective for you"
+              checked={formData.blindNoticeType === 'Standard notice and braille notice, if you assert that none of the other alternative formats will be equally effective for you'}
               onChange={handleChange}
-              className="checkbox"
+              className="radio"
             />
             <span className="ml-2">
               Standard notice and braille notice, if you assert that none of the
@@ -657,11 +666,14 @@ const FormPage4 = ({
           {/* Standard and Braille Notice */}
           <label className="flex items-center">
             <input
-              type="checkbox"
-              name="blind.requireAnotherAccommodation"
-              checked={formData.blind.requireAnotherAccommodation}
+              type="radio"
+              name="blindNoticeType"
+              value="If you require another accommodation, please contact your social services district."
+              checked={
+                formData.blindNoticeType === 'If you require another accommodation, please contact your social services district.'
+              }
               onChange={handleChange}
-              className="checkbox"
+              className="radio"
             />
             <span className="ml-2">
               If you require another accommodation, please contact your social
