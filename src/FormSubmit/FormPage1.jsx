@@ -8,7 +8,6 @@ const FormPage1 = ({
   handleChange,
   toggleDatePicker,
   isOpen,
-  timeZone,
   setFormData,
 }) => {
   return (
@@ -58,13 +57,12 @@ const FormPage1 = ({
             <div className="absolute mt-1 bg-white shadow-lg rounded-lg z-50 border">
               <DayPicker
                 className="react-day-picker"
-                timeZone={timeZone}
                 mode="single"
                 selected={formData.applicationDate}
                 onSelect={(selectedDate) => {
                   setFormData({
                     ...formData,
-                    applicationDate: selectedDate,
+                    applicationDate: formatDate(selectedDate),
                   });
                   toggleDatePicker();
                 }}

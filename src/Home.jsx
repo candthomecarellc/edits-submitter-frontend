@@ -12,8 +12,8 @@ import FormPage9 from './FormSubmit/FormPage9';
 import { formSubmitFunction } from './utils/apiCalling';
 
 const Home = () => {
-  const [page, setPage] = useState(9);
-  const timeZone = 'America/New_York';
+  const [page, setPage] = useState(1);
+  
   const [formData, setFormData] = useState({
     applicantName: '',
     applicationDate: '',
@@ -464,7 +464,6 @@ const Home = () => {
               handleChange={handleChange}
               toggleDatePicker={toggleDatePicker}
               isOpen={isOpen}
-              timeZone={timeZone}
               updateFormData={updateFormData}
             />
           )}
