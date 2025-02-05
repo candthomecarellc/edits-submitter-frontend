@@ -102,14 +102,14 @@ const FormPage1 = ({
               aria-describedby="uscitizenshipHelp"
             >
               <option value="">Pick a Document</option>
-              <option value="U.S. passport/card">U.S. passport/card</option>
-              <option value="Certificate of Naturalization (DHS Forms N-550 or N-570)">
+              <option value="US passportcard">U.S. passport/card</option>
+              <option value="Certificate of Naturalization DHS Forms N550 or N570">
                 Certificate of Naturalization (DHS Forms N-550 or N-570)
               </option>
-              <option value="Certificate of U.S Citizenship (DHS Forms N-560 or N-561)">
+              <option value="Certificate of US Citizenship DHS Forms N560 or N561">
                 Certificate of U.S Citizenship (DHS Forms N-560 or N-561)
               </option>
-              <option value="NYS Enhanced Driver’s License (EDL)">
+              <option value="NYS Enhanced Drivers License EDL">
                 NYS Enhanced Driver’s License (EDL).
               </option>
               <option value="Native American Tribal Document issued by a Federally Recognized Tribe">
@@ -162,29 +162,29 @@ const FormPage1 = ({
               aria-describedby="usCitizenshipHelp"
             >
               <option value="">Pick a Document</option>
-              <option value="U.S. Birth Certificate*">
+              <option value="US Birth Certificate">
                 U.S. Birth Certificate*
               </option>
-              <option value="Certification of Birth issued by Department of State (Forms FS-545 or DS-1350)*">
+              <option value="Certification of Birth issued by Department of State Forms FS545 or DS1350">
                 Certification of Birth issued by Department of State (Forms
                 FS-545 or DS-1350)*
               </option>
-              <option value="Report of Birth Abroad (FS-240)">
+              <option value="Report of Birth Abroad FS240">
                 Report of Birth Abroad (FS-240)
               </option>
-              <option value="U.S. National ID card (Form I-197 or I-179)">
+              <option value="US National ID card Form I197 or I179">
                 U.S. National ID card (Form I-197 or I-179)
               </option>
-              <option value="Religious/School Records*">
+              <option value="ReligiousSchool Records">
                 Religious/School Records*
               </option>
-              <option value="Military record of service showing U.S. place of birth">
+              <option value="Military record of service showing US place of birth">
                 Military record of service showing U.S. place of birth
               </option>
               <option value="Final adoption decree">
                 Final adoption decree
               </option>
-              <option value="Evidence of qualifying for U.S. citizenship under the Child Citizenship Act of 2000">
+              <option value="Evidence of qualifying for US citizenship under the Child Citizenship Act of 2000">
                 Evidence of qualifying for U.S. citizenship under the Child
                 Citizenship Act of 2000
               </option>
@@ -223,28 +223,28 @@ const FormPage1 = ({
               aria-describedby="identityHelp"
             >
               <option value="">Pick a Document</option>
-              <option value="State Driver’s license or ID card with photo*">
+              <option value="State Drivers license or ID card with photo">
                 State Driver’s license or ID card with photo*
               </option>
-              <option value="ID card issued by a federal, state, or local government agency">
+              <option value="ID card issued by a federal state or local government agency">
                 ID card issued by a federal, state, or local government agency
               </option>
-              <option value="U.S. Military card or draft record or U.S Coast Guard Merchant Mariner Card">
+              <option value="US Military card or draft record or US Coast Guard Merchant Mariner Card">
                 U.S. Military card or draft record or U.S Coast Guard Merchant
                 Mariner Card
               </option>
-              <option value="School ID card with a photo (may also show date of birth)">
+              <option value="School ID card with a photo may also show date of birth">
                 School ID card with a photo (may also show date of birth)
               </option>
-              <option value="Certificate of Degree of Indian blood or other American Indian/Alaska Native tribal document with photo">
+              <option value="Certificate of Degree of Indian blood or other American IndianAlaska Native tribal document">
                 Certificate of Degree of Indian blood or other American
                 Indian/Alaska Native tribal document with photo
               </option>
-              <option value="Verified School, Nursery or Daycare records (for children under 18) (may also show date of birth)">
+              <option value="Verified School Nursery or Daycare records for children under 18">
                 Verified School, Nursery or Daycare records (for children under
                 18) (may also show date of birth)
               </option>
-              <option value="Clinic, Doctor or Hospital records (for children under 18)*">
+              <option value="Clinic Doctor or Hospital records for children under 18">
                 Clinic, Doctor or Hospital records (for children under 18)*
               </option>
             </select>

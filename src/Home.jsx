@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import FormPage1 from './FormSubmit/FormPage1';
 import FormPage2 from './FormSubmit/FormPage2';
@@ -8,9 +9,10 @@ import FormPage6 from './FormSubmit/FormPage6';
 import FormPage7 from './FormSubmit/FormPage7';
 import FormPage8 from './FormSubmit/FormPage8';
 import FormPage9 from './FormSubmit/FormPage9';
+import { formSubmitFunction } from './utils/apiCalling';
 
 const Home = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(9);
   const timeZone = 'America/New_York';
   const [formData, setFormData] = useState({
     applicantName: '',
@@ -343,9 +345,21 @@ const Home = () => {
     setIsOpen(!isOpen);
   };
 
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (data) => formSubmitFunction(data),
+    onSuccess: (data) => {
+      // Handle successful submission
+      console.log('Form submitted successfully:', data);
+    },
+    onError: (error) => {
+      // Handle submission error
+      console.error('Error submitting form:', error);
+    },
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    mutate(formData);
   };
 
   const handleChange = (e) => {
@@ -404,6 +418,10 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      {isLoading &&
+        alert(
+          'Please wait while we submit your form. Do not refresh the page.'
+        )}
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">

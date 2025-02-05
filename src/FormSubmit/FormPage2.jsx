@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import FileUpload from './FileUpload';
 
-
 const FormPage2 = ({ formData, handleChange, setFormData }) => {
   // scroll to top smoth of page
 
@@ -29,11 +28,10 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
               aria-describedby="ImmigrationstatesIdentity"
             >
               <option value="">Pick a Document</option>
-              <option value=" I-551 Permanent Resident Card (“Green Card”)*">
-                {' '}
+              <option value="I551 Permanent Resident Card Green Card">
                 I-551 Permanent Resident Card (“Green Card”)*
               </option>
-              <option value="I-688B or I-766 Employment Authorization Card*">
+              <option value="I688B or I766 Employment Authorization Card">
                 I-688B or I-766 Employment Authorization Card*
               </option>
             </select>
@@ -69,10 +67,10 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
               aria-describedby="ImmigrationStatus"
             >
               <option value="">Pick a Document</option>
-              <option value="I-94 Arrival/Departure Record*">
+              <option value="I94 ArrivalDeparture Record">
                 I-94 Arrival/Departure Record*
               </option>
-              <option value="USCIS Form I-797 Notice of Action">
+              <option value="USCIS Form I797 Notice of Action">
                 USCIS Form I-797 Notice of Action
               </option>
             </select>
@@ -109,7 +107,7 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
             >
               <option value="">Pick a Document</option>
               <option value="Visa">Visa</option>
-              <option value="U.S. Passport">U.S. Passport</option>
+              <option value="US Passport">U.S. Passport</option>
             </select>
             <FileUpload
               name="dobIdentityFile"
@@ -146,23 +144,22 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
               aria-describedby="homeAddressDocument"
             >
               <option value="">Pick a Document</option>
-              <option value="Lease/ letter/ rent receipt with your home address from landlord">
+              <option value="Lease letter rent receipt with your home address from landlord">
                 Lease/ letter/ rent receipt with your home address from landlord
               </option>
-              <option value="Utility Bill (gas, electric, phone, cable, fuel or water)">
+              <option value="Utility Bill gas electric phone cable fuel or water">
                 Utility Bill (gas, electric, phone, cable, fuel or water)
               </option>
               <option value="Property tax records or mortgage statement">
                 Property tax records or mortgage statement
               </option>
-              <option value="Driver’s license (if issued in the past 6 months)">
+              <option value="Drivers license if issued in the past 6 months">
                 Driver’s license (if issued in the past 6 months)
               </option>
               <option value="Government ID card with address">
                 Government ID card with address
               </option>
-              <option value=" Postmarked envelope or post card (cannot use if sent to a P.O. Box)">
-                {' '}
+              <option value="Postmarked envelope or post card cannot use if sent to a PO Box">
                 Postmarked envelope or post card (cannot use if sent to a P.O.
                 Box)
               </option>
@@ -213,10 +210,10 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
               >
                 <option value="">Pick a Document</option>
                 <option value="Paycheck stubs">Paycheck stubs</option>
-                <option value="Letter from employer on company letterhead, signed and dated">
+                <option value="Letter from employer on company">
                   Letter from employer on company letterhead, signed and dated
                 </option>
-                <option value="Business/payroll records">
+                <option value="Businesspayroll records">
                   Business/payroll records
                 </option>
               </select>
@@ -249,10 +246,10 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 aria-describedby="selfEmployment"
               >
                 <option value="">Pick a Document</option>
-                <option value="Current signed and dated income tax return and all Schedules">
+                <option value="Current signed and dated income tax return">
                   Current signed and dated income tax return and all Schedules
                 </option>
-                <option value="Records of earnings and expenses/ business records">
+                <option value="Records of earnings and expenses">
                   Records of earnings and expenses/ business records
                 </option>
               </select>
@@ -285,20 +282,20 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 aria-describedby="unemploymentBenefits"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter/certificate">
+                <option value="Award lettercertificate">
                   Award letter/certificate
                 </option>
-                <option value="Monthly benefit statement from NYS Department of Labor">
+                <option value="Monthly benefit statement from NYS">
                   Monthly benefit statement from NYS Department of Labor
                 </option>
-                <option value="Printout of recipient’s account information from the NYS Department of Labor’s website (www.labor.ny.gov)">
+                <option value="Printout of recipients account information">
                   Printout of recipient’s account information from the NYS
                   Department of Labor’s website (www.labor.ny.gov)
                 </option>
                 <option value="Copy of Direct Payment Card with printout">
                   Copy of Direct Payment Card with printout
                 </option>
-                <option value="Correspondence from the NYS Department of Labor">
+                <option value="Correspondence from the NYS Department">
                   Correspondence from the NYS Department of Labor
                 </option>
               </select>
@@ -331,7 +328,7 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 aria-describedby="privatePensionsAnnuities"
               >
                 <option value="">Pick a Document</option>
-                <option value="Statement from pension/annuity">
+                <option value="Statement from pensionannuity">
                   Statement from pension/annuity
                 </option>
               </select>
@@ -364,13 +361,13 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 aria-describedby="socialSecurity"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter/certificate">
+                <option value="Award lettercertificate_2">
                   Award letter/certificate
                 </option>
                 <option value="Annual benefit statement">
                   Annual benefit statement
                 </option>
-                <option value="Correspondence from Social Security Administration">
+                <option value="Correspondence from Social Security">
                   Correspondence from Social Security Administration
                 </option>
               </select>
@@ -403,15 +400,8 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 aria-describedby="workersCompensation"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter/certificate">
-                  Award letter/certificate
-                </option>
-                <option value="Annual benefit statement">
-                  Annual benefit statement
-                </option>
-                <option value="Correspondence from Social Security Administration">
-                  Correspondence from Social Security Administration
-                </option>
+                <option value="Award letter">Award letter</option>
+                <option value="Check stub">Check stub</option>
               </select>
               <FileUpload
                 name="workersCompensationFile"
@@ -446,17 +436,17 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                   Letter from person providing support
                 </option>
                 <option value="Letter from court">Letter from court</option>
-                <option value="Child support/alimony check stub">
+                <option value="Child supportalimony check stub">
                   Child support/alimony check stub
                 </option>
-                <option value="Copy of  NY EPPICard with printout">
+                <option value="Copy of NY EPPICard with printout">
                   Copy of NY EPPICard with printout
                 </option>
-                <option value="Copy of child support account information from www.childsupport.ny.gov">
+                <option value="Copy of child support account information">
                   Copy of child support account information from
                   www.childsupport.ny.gov
                 </option>
-                <option value="Copy of bank statement showing direct deposit">
+                <option value="Copy of bank statement showing">
                   Copy of bank statement showing direct deposit
                 </option>
               </select>
@@ -489,7 +479,7 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 aria-describedby="veteransBenefits"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter">Award letter</option>
+                <option value="Award letter_2">Award letter</option>
                 <option value="Benefit check stub">Benefit check stub</option>
                 <option value="Correspondence from Veterans Affairs">
                   Correspondence from Veterans Affairs
@@ -524,8 +514,8 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 aria-describedby="militaryPay"
               >
                 <option value="">Pick a Document</option>
-                <option value="Award letter">Award letter</option>
-                <option value="Check stub">Check stub</option>
+                <option value="Award letter_3">Award letter</option>
+                <option value="Check stub_2">Check stub</option>
               </select>
               <FileUpload
                 name="militaryPayFile"
@@ -556,10 +546,10 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 aria-describedby="incomeFromRent"
               >
                 <option value="">Pick a Document</option>
-                <option value="Letter from roomer, boarder, tenant">
+                <option value="Letter from roomer boarder tenant">
                   Letter from roomer, boarder, tenant
                 </option>
-                <option value="Check stub">Check stub</option>
+                <option value="Check stub_3">Check stub</option>
               </select>
               <FileUpload
                 name="incomeFromRentFile"
@@ -590,13 +580,13 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
                 aria-describedby="interestDividendsRoyalties"
               >
                 <option value="">Pick a Document</option>
-                <option value="Recent statement from bank, credit union or financial institution">
+                <option value="Recent statement from bank credit union">
                   Recent statement from bank, credit union or financial
                   institution
                 </option>
                 <option value="Letter from broker">Letter from broker</option>
                 <option value="Letter from agent">Letter from agent</option>
-                <option value="1099 or tax return (if no other documentation is available)">
+                <option value="1099 or tax return if no other">
                   1099 or tax return (if no other documentation is available)
                 </option>
               </select>
@@ -618,6 +608,5 @@ const FormPage2 = ({ formData, handleChange, setFormData }) => {
     </div>
   );
 };
-
 
 export default FormPage2;

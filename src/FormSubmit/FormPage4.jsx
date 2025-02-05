@@ -12,7 +12,7 @@ const FormPage4 = ({
             htmlFor="applicantName"
             className="block text-sm font-medium text-gray-700"
           >
-            Legal First Name <span className="text-red-500">*</span>
+            Legal First Name
           </label>
           <input
             type="text"
@@ -218,7 +218,7 @@ const FormPage4 = ({
             htmlFor="applicantName"
             className="block text-sm font-medium text-gray-700"
           >
-            What Language Do You: <span className="text-red-500">*</span>
+            What Language Do You:
           </label>
         </div>
         <div className="flex gap-4">
@@ -458,6 +458,17 @@ const FormPage4 = ({
               <input
                 type="text"
                 className="input input-primary"
+                id="anotherPerson.Name"
+                name="anotherPerson.Name"
+                value={formData.anotherPerson.Name}
+                onChange={handleChange}
+                placeholder="Name"
+              />
+            </div>
+            <div className="form-group space-y-2">
+              <input
+                type="text"
+                className="input input-primary"
                 id="anotherPerson.street"
                 name="anotherPerson.street"
                 value={formData.anotherPerson.street}
@@ -476,6 +487,8 @@ const FormPage4 = ({
                 placeholder="City"
               />
             </div>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
             <div className="form-group space-y-2">
               <input
                 type="text"
@@ -487,8 +500,6 @@ const FormPage4 = ({
                 placeholder="State"
               />
             </div>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
             <div className="form-group space-y-2">
               <input
                 type="text"
@@ -509,17 +520,6 @@ const FormPage4 = ({
                 value={formData.anotherPerson.zip}
                 onChange={handleChange}
                 placeholder="Zip"
-              />
-            </div>
-            <div className="form-group space-y-2">
-              <input
-                type="text"
-                className="input input-primary"
-                id="anotherPerson.county"
-                name="anotherPerson.county"
-                value={formData.anotherPerson.county}
-                onChange={handleChange}
-                placeholder="County"
               />
             </div>
           </div>
@@ -620,7 +620,8 @@ const FormPage4 = ({
               name="blindNoticeType"
               value="Standard notice and large print notice"
               checked={
-                formData.blindNoticeType === 'Standard notice and large print notice'
+                formData.blindNoticeType ===
+                'Standard notice and large print notice'
               }
               onChange={handleChange}
               className="radio"
@@ -633,10 +634,10 @@ const FormPage4 = ({
             <input
               type="radio"
               name="blindNoticeType"
-              value="Standard notice and data CD notice Standard notice and audio CD notice"
+              value="Standard notice and data C D notice Standard notice and audio C D notice"
               checked={
                 formData.blindNoticeType ===
-                'Standard notice and data CD notice Standard notice and audio CD notice'
+                'Standard notice and data C D notice Standard notice and audio C D notice'
               }
               onChange={handleChange}
               className="radio"
@@ -653,7 +654,10 @@ const FormPage4 = ({
               type="radio"
               name="blindNoticeType"
               value="Standard notice and braille notice, if you assert that none of the other alternative formats will be equally effective for you"
-              checked={formData.blindNoticeType === 'Standard notice and braille notice, if you assert that none of the other alternative formats will be equally effective for you'}
+              checked={
+                formData.blindNoticeType ===
+                'Standard notice and braille notice, if you assert that none of the other alternative formats will be equally effective for you'
+              }
               onChange={handleChange}
               className="radio"
             />
@@ -670,7 +674,8 @@ const FormPage4 = ({
               name="blindNoticeType"
               value="If you require another accommodation, please contact your social services district."
               checked={
-                formData.blindNoticeType === 'If you require another accommodation, please contact your social services district.'
+                formData.blindNoticeType ===
+                'If you require another accommodation, please contact your social services district.'
               }
               onChange={handleChange}
               className="radio"

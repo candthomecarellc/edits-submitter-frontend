@@ -21,7 +21,7 @@ const FormPage3 = ({ formData, handleChange, setFormData, updateFormData }) => {
               aria-describedby="careForChildrenorAdults"
             >
               <option value="">Pick a Document</option>
-              <option value="Written statement from day care center or other child/adult care provider">
+              <option value="Written statement from day care center or other childadult care provider">
                 Written statement from day care center or other child/adult care
                 provider
               </option>
@@ -260,8 +260,8 @@ const FormPage3 = ({ formData, handleChange, setFormData, updateFormData }) => {
           </div>
         </fieldset>
       </div>
-      {/*  */}
-      <div className="bg-white shadow-sm rounded-lg p-6">
+      {/* */}
+      {/* <div className="bg-white shadow-sm rounded-lg p-6">
         <p className="mb-4 text-gray-900 font-semibold bg-slate-200 px-4 py-2 rounded-md">
           If you or your spouse are required to pay court ordered support you
           must provide the following:
@@ -281,7 +281,7 @@ const FormPage3 = ({ formData, handleChange, setFormData, updateFormData }) => {
             />
           </div>
         </fieldset>
-      </div>
+      </div> */}
       {/*  */}
       {/*  */}
       <div className="bg-white shadow-sm rounded-lg p-6">
@@ -304,7 +304,7 @@ const FormPage3 = ({ formData, handleChange, setFormData, updateFormData }) => {
               <option value="Statement from college or university">
                 Statement from college or university
               </option>
-              <option value=" Other correspondence from college showing student status">
+              <option value="Other correspondence from college showing student status">
                 Other correspondence from college showing student status
               </option>
             </select>
