@@ -17,6 +17,7 @@ const FormPage5 = ({ formData, setFormData }) => {
     const newFamilyMember = {
       name: '',
       birthName: '',
+      cityOfBirth: '',
       stateOfBirth: '',
       countryOfBirth: '',
       dateOfBirth: {

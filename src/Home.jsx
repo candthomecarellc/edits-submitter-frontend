@@ -132,6 +132,7 @@ const Home = () => {
       {
         name: '',
         birthName: '',
+        cityOfBirth: '',
         stateOfBirth: '',
         countryOfBirth: '',
         dateOfBirth: {
