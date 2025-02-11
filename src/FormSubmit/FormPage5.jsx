@@ -182,11 +182,6 @@ const FormPage5 = ({ formData, setFormData }) => {
                 <option value="">Select</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-                <option value="Non-Binary/Non-Conforming">
-                  Non-Binary/Non-Conforming
-                </option>
-                <option value="Transgender">Transgender</option>
-                <option value="Different Identity">Different Identity</option>
               </select>
             </div>
 
@@ -275,6 +270,75 @@ const FormPage5 = ({ formData, setFormData }) => {
                 </div>
               </div>
             )}
+            {/* Child */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Is this person a parent of an applying child?
+              </label>
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name={`isParent-${index}`}
+                    value="Yes"
+                    checked={member.isParent === 'Yes'}
+                    onChange={(e) =>
+                      handleNestedChange(index, 'isParent', e.target.value)
+                    }
+                    className="radio radio-primary"
+                  />
+                  <span className="ml-2">Yes</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name={`isParent-${index}`}
+                    value="No"
+                    checked={member.isParent === 'No'}
+                    onChange={(e) =>
+                      handleNestedChange(index, 'isParent', e.target.value)
+                    }
+                    className="radio radio-primary"
+                  />
+                  <span className="ml-2">No</span>
+                </label>
+              </div>
+            </div>
+            {/* Is this person applying for health insurance? */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Is this person applying for health insurance?
+              </label>
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name={`isApplying-${index}`}
+                    value="Yes"
+                    checked={member.isApplying === 'Yes'}
+                    onChange={(e) =>
+                      handleNestedChange(index, 'isApplying', e.target.value)
+                    }
+                    className="radio radio-primary"
+                  />
+                  <span className="ml-2">Yes</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+
+                    type="radio"
+                    name={`isApplying-${index}`}
+                    value="No"
+                    checked={member.isApplying === 'No'}
+                    onChange={(e) =>
+                      handleNestedChange(index, 'isApplying', e.target.value)
+                    }
+                    className="radio radio-primary"
+                  />
+                  <span className="ml-2">No</span>
+                </label>
+              </div>
+            </div>
 
             {/* Relationship */}
             <div>
