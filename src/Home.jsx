@@ -13,7 +13,7 @@ import { formSubmitFunction } from './utils/apiCalling';
 
 const Home = () => {
   const [page, setPage] = useState(1);
-  
+
   const [formData, setFormData] = useState({
     applicantName: '',
     applicationDate: '',
@@ -149,22 +149,14 @@ const Home = () => {
           year: '',
         },
         relationship: '',
-        publicHealthCoverage: {
-          childHealthPlus: '',
-          medicaid: '',
-          familyHealthPlus: '',
-          idNumber: '',
-        },
+        publicHealthCoverage: '',
+        publicHealthCoverageidNumber: '',
         ssn: '',
-        usCitizenship: {
-          usCitizen: '',
-          immigrantNonCitizen: '',
-          receivedImmigrationStatusDate: {
-            month: '',
-            day: '',
-            year: '',
-          },
-          usNational: '',
+        usCitizenship: '',
+        usCitizenshipReceivedImmigrationStatusDate: {
+          month: '',
+          day: '',
+          year: '',
         },
         race: '',
         receivedAServiceFromIHS: '',
