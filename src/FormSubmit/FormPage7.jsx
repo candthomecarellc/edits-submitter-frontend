@@ -21,10 +21,243 @@ const FormPage7 = ({ formData, setFormData }) => {
   return (
     <div className="space-y-6">
       <div>
-        {/* Existing Sections */}
+        <div className="bg-white shadow-sm rounded-lg p-6">
+          <h1 className="text-2xl font-semibold mb-3">Health Insurance</h1>
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold mb-2">
+              Does anyone who is applying have Medicare?
+            </h3>
+            <div className="flex items-center space-x-4">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="No"
+                  checked={formData.applyingHavingMedicare === 'No'}
+                  onChange={(e) =>
+                    handleNestedChange('applyingHavingMedicare', e.target.value)
+                  }
+                  className="radio radio-primary"
+                />
+                <span className="ml-2">No</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="Yes"
+                  checked={formData.applyingHavingMedicare === 'Yes'}
+                  onChange={(e) =>
+                    handleNestedChange('applyingHavingMedicare', e.target.value)
+                  }
+                  className="radio radio-primary"
+                />
+                <span className="ml-2">Yes</span>
+              </label>
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold mb-2">
+              Does anyone who is applying already have other commercial health
+              insurance, including long term care insurance?
+            </h3>
+            <div className="flex items-center space-x-4">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="No"
+                  checked={
+                    formData.applyingHavingCommercialInsurance
+                      .commercialInsurance === 'No'
+                  }
+                  onChange={(e) =>
+                    handleNestedChange('applyingHavingCommercialInsurance', {
+                      ...formData.applyingHavingCommercialInsurance,
+                      commercialInsurance: e.target.value,
+                    })
+                  }
+                  className="radio radio-primary"
+                />
+                <span className="ml-2">No</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="Yes"
+                  checked={
+                    formData.applyingHavingCommercialInsurance
+                      .commercialInsurance === 'Yes'
+                  }
+                  onChange={(e) =>
+                    handleNestedChange('applyingHavingCommercialInsurance', {
+                      ...formData.applyingHavingCommercialInsurance,
+                      commercialInsurance: e.target.value,
+                    })
+                  }
+                  className="radio radio-primary"
+                />
+                <span className="ml-2">Yes</span>
+              </label>
+            </div>
+            {formData.applyingHavingCommercialInsurance.commercialInsurance ===
+              'Yes' && (
+              <div className="mt-4">
+                <input
+                  type="text"
+                  placeholder="Name of Insured (primary):"
+                  value={
+                    formData.applyingHavingCommercialInsurance.nameOfInsured ||
+                    ''
+                  }
+                  onChange={(e) =>
+                    handleNestedChange('applyingHavingCommercialInsurance', {
+                      ...formData.applyingHavingCommercialInsurance,
+                      nameOfInsured: e.target.value,
+                    })
+                  }
+                  className="input input-primary w-full"
+                />
+                <input
+                  type="text"
+                  placeholder="Persons Covered:"
+                  value={
+                    formData.applyingHavingCommercialInsurance.personCovered ||
+                    ''
+                  }
+                  onChange={(e) =>
+                    handleNestedChange('applyingHavingCommercialInsurance', {
+                      ...formData.applyingHavingCommercialInsurance,
+                      personCovered: e.target.value,
+                    })
+                  }
+                  className="input input-primary w-full mt-2"
+                />
+                {/* Cost of Policy: */}
+                <input
+                  type="text"
+                  placeholder="Cost of Policy:"
+                  value={
+                    formData.applyingHavingCommercialInsurance.costOfPolicy ||
+                    ''
+                  }
+                  onChange={(e) =>
+                    handleNestedChange('applyingHavingCommercialInsurance', {
+                      ...formData.applyingHavingCommercialInsurance,
+                      costOfPolicy: e.target.value,
+                    })
+                  }
+                  className="input input-primary w-full mt-2"
+                />
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    End date of coverage, if ending soon
+                  </label>
+                  <div className="flex items-center space-x-4">
+                    <input
+                      type="text"
+                      placeholder="Month"
+                      value={
+                        formData.applyingHavingCommercialInsurance.endOfCoverage
+                          .month || ''
+                      }
+                      onChange={(e) =>
+                        handleNestedChange(
+                          'applyingHavingCommercialInsurance',
+                          {
+                            ...formData.applyingHavingCommercialInsurance,
+                            endOfCoverage: {
+                              ...formData.applyingHavingCommercialInsurance
+                                .endOfCoverage,
+                              month: e.target.value,
+                            },
+                          }
+                        )
+                      }
+                      className="input input-primary"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Day"
+                      value={
+                        formData.applyingHavingCommercialInsurance.endOfCoverage
+                          .day || ''
+                      }
+                      onChange={(e) =>
+                        handleNestedChange(
+                          'applyingHavingCommercialInsurance',
+                          {
+                            ...formData.applyingHavingCommercialInsurance,
+                            endOfCoverage: {
+                              ...formData.applyingHavingCommercialInsurance
+                                .endOfCoverage,
+                              day: e.target.value,
+                            },
+                          }
+                        )
+                      }
+                      className="input input-primary"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Year"
+                      value={
+                        formData.applyingHavingCommercialInsurance.endOfCoverage
+                          .year || ''
+                      }
+                      onChange={(e) =>
+                        handleNestedChange(
+                          'applyingHavingCommercialInsurance',
+                          {
+                            ...formData.applyingHavingCommercialInsurance,
+                            endOfCoverage: {
+                              ...formData.applyingHavingCommercialInsurance
+                                .endOfCoverage,
+                              year: e.target.value,
+                            },
+                          }
+                        )
+                      }
+                      className="input input-primary"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold mb-2">
+              Does your current job offer health insurance?
+            </h3>
+            <div className="flex items-center space-x-4">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="No"
+                  checked={formData.currentJobInsurance === 'No'}
+                  onChange={(e) =>
+                    handleNestedChange('currentJobInsurance', e.target.value)
+                  }
+                  className="radio radio-primary"
+                />
+                <span className="ml-2">No</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="Yes"
+                  checked={formData.currentJobInsurance === 'Yes'}
+                  onChange={(e) =>
+                    handleNestedChange('currentJobInsurance', e.target.value)
+                  }
+                  className="radio radio-primary"
+                />
+                <span className="ml-2">Yes</span>
+              </label>
+            </div>
+          </div>
+        </div>
 
         {/* Monthly Housing Payment Section */}
-        <div className="bg-white shadow-sm rounded-lg p-6">
+        <div className="bg-white shadow-sm rounded-lg p-6 mt-4">
           <h1 className="text-2xl font-semibold mb-3">Housing Expenses</h1>
 
           {/* Monthly Housing Payment */}
@@ -76,8 +309,10 @@ const FormPage7 = ({ formData, setFormData }) => {
             >
               <option value="">Select Frequency</option>
               <option value="every month">Every Month</option>
-              <option value="2 times a year">2 Times a Year</option>
-              <option value="quarterly">Quarterly (4 Times a Year)</option>
+              <option value="two times a year">2 Times a Year</option>
+              <option value="quarterly (4 times a year)">
+                Quarterly (4 Times a Year)
+              </option>
               <option value="once a year">Once a Year</option>
             </select>
           </div>
