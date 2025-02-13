@@ -34,22 +34,14 @@ const FormPage5 = ({ formData, setFormData }) => {
         year: '',
       },
       relationship: '',
-      publicHealthCoverage: {
-        childHealthPlus: '',
-        medicaid: '',
-        familyHealthPlus: '',
-        idNumber: '',
-      },
+      publicHealthCoverage: '',
+      publicHealthCoverageidNumber: '',
       ssn: '',
-      usCitizenship: {
-        usCitizen: '',
-        immigrantNonCitizen: '',
-        receivedImmigrationStatusDate: {
-          month: '',
-          day: '',
-          year: '',
-        },
-        usNational: '',
+      usCitizenship: '',
+      usCitizenshipReceivedImmigrationStatusDate: {
+        month: '',
+        day: '',
+        year: '',
       },
       race: '',
       receivedAServiceFromIHS: '',
@@ -325,7 +317,6 @@ const FormPage5 = ({ formData, setFormData }) => {
                 </label>
                 <label className="flex items-center">
                   <input
-
                     type="radio"
                     name={`isApplying-${index}`}
                     value="No"
@@ -363,62 +354,64 @@ const FormPage5 = ({ formData, setFormData }) => {
               <div className="space-y-2">
                 <label className="flex items-center">
                   <input
-                    type="checkbox"
-                    checked={member.publicHealthCoverage.childHealthPlus}
+                    type="radio"
+                    name={`publicHealthCoverage-${index}`}
+                    value="childHealthPlus"
+                    checked={member.publicHealthCoverage === 'childHealthPlus'}
                     onChange={(e) =>
                       handleNestedChange(
                         index,
                         'publicHealthCoverage',
-                        e.target.checked,
-                        'childHealthPlus'
+                        e.target.value
                       )
                     }
-                    className="checkbox checkbox-primary"
+                    className="radio radio-primary"
                   />
                   <span className="ml-2">Child Health Plus</span>
                 </label>
                 <label className="flex items-center">
                   <input
-                    type="checkbox"
-                    checked={member.publicHealthCoverage.medicaid}
+                    type="radio"
+                    name={`publicHealthCoverage-${index}`}
+                    value="medicaid"
+                    checked={member.publicHealthCoverage === 'medicaid'}
                     onChange={(e) =>
                       handleNestedChange(
                         index,
                         'publicHealthCoverage',
-                        e.target.checked,
-                        'medicaid'
+                        e.target.value
                       )
                     }
-                    className="checkbox checkbox-primary"
+                    className="radio radio-primary"
                   />
                   <span className="ml-2">Medicaid</span>
                 </label>
                 <label className="flex items-center">
                   <input
-                    type="checkbox"
-                    checked={member.publicHealthCoverage.familyHealthPlus}
+                    type="radio"
+                    name={`publicHealthCoverage-${index}`}
+                    value="familyHealthPlus"
+                    checked={member.publicHealthCoverage === 'familyHealthPlus'}
                     onChange={(e) =>
                       handleNestedChange(
                         index,
                         'publicHealthCoverage',
-                        e.target.checked,
-                        'familyHealthPlus'
+                        e.target.value
                       )
                     }
-                    className="checkbox checkbox-primary"
+                    className="radio radio-primary"
                   />
                   <span className="ml-2">Family Health Plus</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="ID Number"
-                  value={member.publicHealthCoverage.idNumber}
+                  placeholder="ID Number from Benefit Card/Plan Card, if known"
+                  value={member.publicHealthCoverageidNumber || ''}
                   onChange={(e) =>
                     handleNestedChange(
                       index,
-                      'publicHealthCoverage',
-                      e.target.value,
-                      'idNumber'
+                      'publicHealthCoverageidNumber',
+                      e.target.value
                     )
                   }
                   className="input input-primary w-full"
@@ -446,22 +439,115 @@ const FormPage5 = ({ formData, setFormData }) => {
               <label className="block text-sm font-medium text-gray-700">
                 US Citizenship
               </label>
-              <select
-                value={member.usCitizenship.usCitizen}
-                onChange={(e) =>
-                  handleNestedChange(
-                    index,
-                    'usCitizenship',
-                    e.target.value,
-                    'usCitizen'
-                  )
-                }
-                className="select select-primary w-full"
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
+              <div className="space-y-2">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name={`usCitizenship-${index}`}
+                    value="U.S. Citizen"
+                    checked={member.usCitizenship === 'U.S. Citizen'}
+                    onChange={(e) =>
+                      handleNestedChange(index, 'usCitizenship', e.target.value)
+                    }
+                    className="radio radio-primary"
+                  />
+                  <span className="ml-2">U.S. Citizen</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name={`usCitizenship-${index}`}
+                    value="Immigrant/non-citizen"
+                    checked={member.usCitizenship === 'Immigrant/non-citizen'}
+                    onChange={(e) =>
+                      handleNestedChange(index, 'usCitizenship', e.target.value)
+                    }
+                    className="radio radio-primary"
+                  />
+                  <span className="ml-2">Immigrant/non-citizen</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name={`usCitizenship-${index}`}
+                    value="Non-immigrant (VIsa holder)"
+                    checked={
+                      member.usCitizenship === 'Non-immigrant (VIsa holder)'
+                    }
+                    onChange={(e) =>
+                      handleNestedChange(index, 'usCitizenship', e.target.value)
+                    }
+                    className="radio radio-primary"
+                  />
+                  <span className="ml-2">Non-immigrant (VIsa holder)</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name={`usCitizenship-${index}`}
+                    value="None of the above"
+                    checked={member.usCitizenship === 'None of the above'}
+                    onChange={(e) =>
+                      handleNestedChange(index, 'usCitizenship', e.target.value)
+                    }
+                    className="radio radio-primary"
+                  />
+                  <span className="ml-2">None of the above</span>
+                </label>
+              </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                  Enter the date you received your immigration status
+                    <span className="block ml-4">
+                      <span className="text-xs text-gray-500">MM/DD/YYYY</span>
+                    </span>
+                  </label>
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      placeholder="MM"
+                      value={member.usCitizenshipReceivedImmigrationStatusDate.month}
+                      onChange={(e) =>
+                        handleNestedChange(
+                          index,
+                          'usCitizenshipReceivedImmigrationStatusDate',
+                          e.target.value,
+                          'month'
+                        )
+                      }
+                      className="input input-primary w-1/3"
+                    />
+                    <input
+                      type="text"
+                      placeholder="DD"
+                      value={member.usCitizenshipReceivedImmigrationStatusDate.day}
+                      onChange={(e) =>
+                        handleNestedChange(
+                          index,
+                          'usCitizenshipReceivedImmigrationStatusDate',
+                          e.target.value,
+                          'day'
+                        )
+                      }
+                      className="input input-primary w-1/3"
+                    />
+                    <input
+                      type="text"
+                      placeholder="YYYY"
+                      value={member.usCitizenshipReceivedImmigrationStatusDate.year}
+                      onChange={(e) =>
+                        handleNestedChange(
+                          index,
+                          'usCitizenshipReceivedImmigrationStatusDate',
+                          e.target.value,
+                          'year'
+                        )
+                      }
+                      className="input input-primary w-1/3"
+                    />
+
+                  </div>
+              </div>
             </div>
 
             {/* Race */}
