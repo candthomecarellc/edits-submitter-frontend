@@ -15,8 +15,16 @@ const FormPage5 = ({ formData, setFormData }) => {
 
   const addFamilyMember = () => {
     const newFamilyMember = {
-      name: '',
-      birthName: '',
+      legalName: {
+        firstName: '',
+        middleName: '',
+        lastName: '',
+      },
+      birthName: {
+        firstName: '',
+        middleName: '',
+        lastName: '',
+      },
       cityOfBirth: '',
       stateOfBirth: '',
       countryOfBirth: '',
@@ -79,39 +87,113 @@ const FormPage5 = ({ formData, setFormData }) => {
           </h3>
           <div className="space-y-4">
             {/* Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Legal Name
-              </label>
-              <input
-                type="text"
-                value={member.name}
-                onChange={(e) =>
-                  handleNestedChange(index, 'name', e.target.value)
-                }
-                className="input input-primary w-full"
-              />
+            <div className="flex justify-between items-center">
+              <div className="form-group space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Legal First Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name={`familyInfo[${index}].legalName.firstName`}
+                  id={`familyInfo[${index}].legalName.firstName`}
+                  value={member.legalName.firstName}
+                  required
+                  onChange={(e) =>
+                    handleNestedChange(index, 'legalName', e.target.value, 'firstName')
+                  }
+                  className="input input-primary w-full"
+                />
+              </div>
+              <div className="form-group space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Legal Middle Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name={`familyInfo[${index}].legalName.middleName`}
+                  id={`familyInfo[${index}].legalName.middleName`}
+                  value={member.legalName.middleName}
+                  required
+                  onChange={(e) =>
+                    handleNestedChange(index, 'legalName', e.target.value, 'middleName')
+                  }
+                  className="input input-primary w-full"
+                />
+              </div>
+              <div className="form-group space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Legal Last Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name={`familyInfo[${index}].legalName.lastName`}
+                  id={`familyInfo[${index}].legalName.lastName`}
+                  value={member.legalName.lastName}
+                  required
+                  onChange={(e) =>
+                    handleNestedChange(index, 'legalName', e.target.value, 'lastName')
+                  }
+                  className="input input-primary w-full"
+                />
+              </div>
             </div>
 
             {/* Birth Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Birth Name
-              </label>
-              <input
-                type="text"
-                value={member.birthName}
-                onChange={(e) =>
-                  handleNestedChange(index, 'birthName', e.target.value)
-                }
-                className="input input-primary w-full"
-              />
+            <div className="flex justify-between items-center">
+              <div className="form-group space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Birth Name First
+                </label>
+                <input
+                  type="text"
+                  name={`familyInfo[${index}].birthName.firstName`}
+                  id={`familyInfo[${index}].birthName.firstName`}
+                  value={member.birthName.firstName}
+                  required
+                  onChange={(e) =>
+                    handleNestedChange(index, 'birthName', e.target.value, 'firstName')
+                  }
+                  className="input input-primary w-full"
+                />
+              </div>
+              <div className="form-group space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Birth Name Middle
+                </label>
+                <input
+                  type="text"
+                  name={`familyInfo[${index}].birthName.middleName`}
+                  id={`familyInfo[${index}].birthName.middleName`}
+                  value={member.birthName.middleName}
+                  required
+                  onChange={(e) =>
+                    handleNestedChange(index, 'birthName', e.target.value, 'middleName')
+                  }
+                  className="input input-primary w-full"
+                />
+              </div>
+              <div className="form-group space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Birth Name Last
+                </label>
+                <input
+                  type="text"
+                  name={`familyInfo[${index}].birthName.lastName`}
+                  id={`familyInfo[${index}].birthName.lastName`}
+                  value={member.birthName.lastName}
+                  required
+                  onChange={(e) =>
+                    handleNestedChange(index, 'birthName', e.target.value, 'lastName')
+                  }
+                  className="input input-primary w-full"
+                />
+              </div>
             </div>
 
             {/* Date of Birth */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Date of Birth
+                Date of Birth <span className="text-red-500">*</span>
               </label>
               <div className="flex space-x-2">
                 <input
@@ -146,6 +228,7 @@ const FormPage5 = ({ formData, setFormData }) => {
                   type="text"
                   placeholder="YYYY"
                   value={member.dateOfBirth.year}
+                  required
                   onChange={(e) =>
                     handleNestedChange(
                       index,
@@ -162,10 +245,11 @@ const FormPage5 = ({ formData, setFormData }) => {
             {/* Sex */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Sex
+                Sex <span className="text-red-500">*</span>
               </label>
               <select
                 value={member.sex}
+                required
                 onChange={(e) =>
                   handleNestedChange(index, 'sex', e.target.value)
                 }
@@ -271,7 +355,7 @@ const FormPage5 = ({ formData, setFormData }) => {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    name={`isParent-${index}`}
+                    name="familyInfo.isParent"
                     value="Yes"
                     checked={member.isParent === 'Yes'}
                     onChange={(e) =>
@@ -284,7 +368,7 @@ const FormPage5 = ({ formData, setFormData }) => {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    name={`isParent-${index}`}
+                    name="familyInfo.isParent"
                     value="No"
                     checked={member.isParent === 'No'}
                     onChange={(e) =>
@@ -305,7 +389,7 @@ const FormPage5 = ({ formData, setFormData }) => {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    name={`isApplying-${index}`}
+                    name="familyInfo.isApplyingFor"
                     value="Yes"
                     checked={member.isApplying === 'Yes'}
                     onChange={(e) =>
@@ -318,7 +402,7 @@ const FormPage5 = ({ formData, setFormData }) => {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    name={`isApplying-${index}`}
+                    name="familyInfo.isApplyingFor"
                     value="No"
                     checked={member.isApplying === 'No'}
                     onChange={(e) =>

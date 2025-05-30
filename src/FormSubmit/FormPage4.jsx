@@ -218,7 +218,7 @@ const FormPage4 = ({
             htmlFor="applicantName"
             className="block text-sm font-medium text-gray-700"
           >
-            What Language Do You:
+            What Language Do You: <span className="text-red-500">*</span>
           </label>
         </div>
         <div className="flex gap-4">
@@ -249,7 +249,7 @@ const FormPage4 = ({
       {/*  */}
       <div className="bg-white shadow-sm rounded-lg p-6">
         <p className="text-gray-700 text-sm bg-slate-200 p-2 rounded-lg mb-4">
-          HOME ADDRESS of the persons applying for health insurance
+          HOME ADDRESS of the persons applying for health insurance <span className="text-red-500">*</span>
         </p>
         <label htmlFor="homeLess" className="flex items-center mb-4">
           <input

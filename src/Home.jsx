@@ -9,9 +9,10 @@ import FormPage6 from './FormSubmit/FormPage6';
 import FormPage7 from './FormSubmit/FormPage7';
 import FormPage8 from './FormSubmit/FormPage8';
 import FormPage9 from './FormSubmit/FormPage9';
+import FormPage10 from './FormSubmit/FormPage10';
 import { formSubmitFunction } from './utils/apiCalling';
 
-const Home = () => {
+const MedicaidApplication = () => {
   const [page, setPage] = useState(1);
 
   const [formData, setFormData] = useState({
@@ -130,8 +131,16 @@ const Home = () => {
     blindNoticeType: '',
     familyInfo: [
       {
-        name: '',
-        birthName: '',
+        legalName: {
+          firstName: '',
+          middleName: '',
+          lastName: '',
+        },
+        birthName: {
+          firstName: '',
+          middleName: '',
+          lastName: '',
+        },
         cityOfBirth: '',
         stateOfBirth: '',
         countryOfBirth: '',
@@ -143,6 +152,8 @@ const Home = () => {
         sex: '',
         genderIdentity: '',
         isPregnant: '',
+        isParent: '',
+        isApplyingFor: '',
         pregnantDueDate: {
           month: '',
           day: '',
@@ -329,6 +340,161 @@ const Home = () => {
         obGyn: '',
       },
     ],
+    uniqueTiffId: '',
+    caseName: {
+      firstName: '',
+      lastName: '',
+    },
+    clientNoticeLanguage: '',
+    languageRead: '',
+    dateAdmitted_SNF: '',
+    residence: {
+      house: '',
+      street: '',
+      apt: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      phoneNumber: '',
+    },
+    mailAddress: {
+      house: '',
+      apt: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    },
+    secondMail: {
+      associateName: '',
+      inCareName: '',
+      street: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      phoneNumber: '',
+    },
+    languageSpoken: '',
+    contactName: '',
+    contactPhoneNumber: '',
+    caseComposition: '',
+    EDC1: '',
+    EDC2: '',
+    fuelType: '',
+    shelterType: '',
+    shelterAmount: '',
+    waterAmount: '',
+    addTY: '',
+    addTYAmount: '',
+    SSI: {
+      DM: '',
+      LA: '',
+      noDM: '',
+      noAll: '',
+      buy: '',
+    },
+    chronicCare: {
+      date: '',
+      PIA: '',
+      CON: '',
+      amount: '',
+      LOC: '',
+    },
+    earnedIncome: {
+      LN: '',
+      CTG: '',
+      childIdentifier: '',
+      chronicCareIndicator: '',
+      EID: '',
+      SRC: '',
+      PER: '',
+      employmentStatus: '',
+      gross: '',
+      INSUR: '',
+      CTSUP: '',
+      WKREL: '',
+      IRWE: '',
+    },
+    child_Care: {
+      MOYR1: '',
+      amount1: '',
+      MOYR2: '',
+      amount2: '',
+      MOYR3: '',
+      amount3: '',
+    },
+    unearned_Income: {
+      LN: '',
+      CTG: '',
+      childIdentifier: '',
+      chronicCareIndicator: '',
+      incomeSourceCode: '',
+      period: '',
+      amount: '',
+      CD1: '',
+      exempt1: '',
+      CD2: '',
+      exempt2: '',
+    },
+    resource: {
+      LN: '',
+      categoricalIndicator: '',
+      childIdentifier: '',
+      chronicCareIndicator: '',
+      unused: '',
+      CD: '',
+      resValue: '',
+      UTXN2_Flag: '',
+    },
+    householdComposition: {
+      submitionType: '',
+      line: '',
+      name_First: '',
+      name_Middle: '',
+      name_Last: '',
+      birth_date: '',
+      sex: '',
+      ssn: '',
+      ma: '',
+      resp_adult: '',
+      ethnicH: '',
+      ethnicI: '',
+      ethnicA: '',
+      ethnicB: '',
+      ethnicP: '',
+      ethnicW: '',
+      name_code: '',
+      aliasFirst: '',
+      aliasMiddle: '',
+      aliasLast: '',
+      pregnant: '',
+      cin: '',
+      state_charge_cd: '',
+      state_chg_date: '',
+      TASA: '',
+      EMP: '',
+      SSI: '',
+      BCS: '',
+      relationship_to_applicant: '',
+      CIBIC_CC: '',
+      CIBIC_CDC: '',
+      student_ID: '',
+      ACI: '',
+      AlienNo: '',
+      AlienDOE: '',
+      maritalStatus: '',
+      educationLevel: '',
+      alienEnteredCountry: '',
+      PID: '',
+      SSN_Validation: '',
+      DOH_BirthVerification: '',
+      WMS_Cat_CD: '',
+      DAI: '',
+      NH_Stay: '',
+      sub_MAP3044: '',
+      sub_DOH5178A: '',
+      sub_DOH4495A: '',
+      sub_DOH5149: '',
+    },
   });
   console.log(formData);
 
@@ -524,8 +690,18 @@ const Home = () => {
               updateFormData={updateFormData}
             />
           )}
+          {page === 10 && (
+            <FormPage10
+            formData={formData}
+            setFormData={setFormData}
+            handleChange={handleChange}
+            toggleDatePicker={toggleDatePicker}
+            isOpen={isOpen}
+            updateFormData={updateFormData}
+            />
+          )}
           {/* Buttons */}
-          {page === 9 && (
+          {page === 10 && (
             <div className="text-center">
               <button
                 type="submit"
@@ -550,7 +726,7 @@ const Home = () => {
           <button
             type="button"
             onClick={() => setPage((prevPage) => prevPage + 1)}
-            disabled={page === 9}
+            disabled={page === 10}
             className="btn btn-primary"
           >
             Next
@@ -561,4 +737,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MedicaidApplication;
