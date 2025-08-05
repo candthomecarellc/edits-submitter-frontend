@@ -37,15 +37,31 @@ const Login = () => {
             const { accessToken, refreshToken, user } = response.data.data;
 
             // Store tokens and user data
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
-            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('edits-submitter.accessToken', accessToken);
+            localStorage.setItem('edits-submitter.refreshToken', refreshToken);
+            localStorage.setItem('edits-submitter.user', JSON.stringify(user));
 
             // Redirect to the attempted page or dashboard
             const from = location.state?.from?.pathname || '/dashboard';
             navigate(from, { replace: true });
         } catch (err) {
-            setError(err.response?.data?.message || 'Login failed. Please try again.');
+            if (err.response?.data?.errorSources) {
+                // Handle structured error response
+                const errorMessages = err.response.data.errorSources.map(source => source.message).join(', ');
+                setError(errorMessages);
+            } else if (err.response?.data?.message) {
+                // Handle simple error message
+                setError(err.response.data.message);
+            } else if (err.response?.status === 404) {
+                setError('No user found with this email address. Please check your email or register a new account.');
+            } else if (err.response?.status === 401) {
+                setError('Invalid password. Please try again.');
+            } else if (!err.response) {
+                setError('Unable to connect to the server. Please check your internet connection.');
+            } else {
+                setError('An unexpected error occurred. Please try again later.');
+            }
+            console.error('Login error:', err);
         } finally {
             setLoading(false);
         }

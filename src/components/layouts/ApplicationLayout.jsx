@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Outlet, useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const ApplicationLayout = () => {
-    const { id } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
     const [application, setApplication] = useState(null);
@@ -13,8 +12,15 @@ const ApplicationLayout = () => {
     useEffect(() => {
         const fetchApplication = async () => {
             try {
-                const accessToken = localStorage.getItem('accessToken');
-                const response = await axios.get(`http://localhost:3000/api/v1/application/${id}`, {
+                const accessToken = localStorage.getItem('edits-submitter.accessToken');
+                const applicationId = localStorage.getItem('edits-submitter.currentApplicationId');
+                
+                if (!applicationId) {
+                    navigate('/applications');
+                    return;
+                }
+
+                const response = await axios.get(`http://localhost:3000/api/v1/application/${applicationId}`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
@@ -28,7 +34,7 @@ const ApplicationLayout = () => {
         };
 
         fetchApplication();
-    }, [id]);
+    }, [navigate]);
 
     const isActive = (path) => location.pathname === path;
 
@@ -63,30 +69,21 @@ const ApplicationLayout = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <div className="flex">
+        <div className="h-[calc(100vh-4rem)] bg-gray-100">
+            <div className="flex h-full">
                 {/* Side Navigation */}
-                <div className="w-64 bg-indigo-200 shadow-sm min-h-screen">
+                <div className="w-64 bg-indigo-200 shadow-sm h-full">
                     <div className="p-4 border-b">
                         <h2 className="text-lg font-semibold text-gray-900">Application</h2>
-                        <p className="text-sm text-gray-500 truncate">ID: {application._id}</p>
-                        <div className="mt-2">
-                            <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                                application.status === 'PENDING' 
-                                    ? 'bg-yellow-100 text-yellow-800'
-                                    : application.status === 'APPROVED'
-                                    ? 'bg-green-100 text-green-800'
-                                    : 'bg-red-100 text-red-800'
-                            }`}>
-                                {application.status}
-                            </span>
-                        </div>
+                        <p className="text-sm text-gray-500 truncate">Applicant: {application.applicant?.first} {application.applicant?.middle} {application.applicant?.last}</p>
+                        <p className="text-sm text-gray-500 truncate">{application.email}</p>
+                        <p className="text-sm text-gray-500 truncate">{application.primaryPhone?.number}</p>
                     </div>
                     <nav className="mt-4">
                         <Link
-                            to={`/application/${id}/overview`}
+                            to={`/application/overview`}
                             className={`flex items-center px-4 py-2 text-sm font-medium ${
-                                isActive(`/application/${id}/overview`)
+                                isActive(`/application/overview`)
                                     ? 'bg-indigo-50 text-indigo-700'
                                     : 'text-gray-700 hover:bg-gray-50'
                             }`}
@@ -94,9 +91,9 @@ const ApplicationLayout = () => {
                             Overview
                         </Link>
                         <Link
-                            to={`/application/${id}/applicant-information`}
+                            to={`/application/applicant-information`}
                             className={`flex items-center px-4 py-2 text-sm font-medium ${
-                                isActive(`/application/${id}/applicant-information`)
+                                isActive(`/application/applicant-information`)
                                     ? 'bg-indigo-50 text-indigo-700'
                                     : 'text-gray-700 hover:bg-gray-50'
                             }`}
@@ -104,9 +101,9 @@ const ApplicationLayout = () => {
                             Applicant Information
                         </Link>
                         <Link
-                            to={`/application/${id}/expense`}
+                            to={`/application/household-expense`}
                             className={`flex items-center px-4 py-2 text-sm font-medium ${
-                                isActive(`/application/${id}/expense`)
+                                isActive(`/application/household-expense`)
                                     ? 'bg-indigo-50 text-indigo-700'
                                     : 'text-gray-700 hover:bg-gray-50'
                             }`}
@@ -114,9 +111,9 @@ const ApplicationLayout = () => {
                             Household Expense
                         </Link>
                         <Link
-                            to={`/application/${id}/household-composition`}
+                            to={`/application/household-composition`}
                             className={`flex items-center px-4 py-2 text-sm font-medium ${
-                                isActive(`/application/${id}/household-composition`)
+                                isActive(`/application/household-composition`)
                                     ? 'bg-indigo-50 text-indigo-700'
                                     : 'text-gray-700 hover:bg-gray-50'
                             }`}
@@ -124,9 +121,9 @@ const ApplicationLayout = () => {
                             Household Composition
                         </Link>
                         <Link
-                            to={`/application/${id}/documents`}
+                            to={`/application/documents`}
                             className={`flex items-center px-4 py-2 text-sm font-medium ${
-                                isActive(`/application/${id}/documents`)
+                                isActive(`/application/documents`)
                                     ? 'bg-indigo-50 text-indigo-700'
                                     : 'text-gray-700 hover:bg-gray-50'
                             }`}
@@ -134,9 +131,19 @@ const ApplicationLayout = () => {
                             Documents
                         </Link>
                         <Link
-                            to={`/application/${id}/history`}
+                            to={`/application/response`}
                             className={`flex items-center px-4 py-2 text-sm font-medium ${
-                                isActive(`/application/${id}/history`)
+                                isActive(`/application/response`)
+                                    ? 'bg-indigo-50 text-indigo-700'
+                                    : 'text-gray-700 hover:bg-gray-50'
+                            }`}
+                        >
+                            Response
+                        </Link>
+                        <Link
+                            to={`/application/history`}
+                            className={`flex items-center px-4 py-2 text-sm font-medium ${
+                                isActive(`/application/history`)
                                     ? 'bg-indigo-50 text-indigo-700'
                                     : 'text-gray-700 hover:bg-gray-50'
                             }`}
@@ -155,9 +162,94 @@ const ApplicationLayout = () => {
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1">
-                    <div className="p-6">
+                <div className="flex-1 overflow-y-auto">
+                    <div className="">
                         <Outlet context={{ application, setApplication }} />
+                    </div>
+                </div>
+
+                {/* Right Panel */}
+                <div className="w-80 bg-gray-900 text-white p-6 overflow-y-auto">
+                    <h2 className="text-lg font-semibold mb-4">Field Status Legend</h2>
+                    <div className="space-y-4">
+                        <div className="flex items-center space-x-3">
+                            <div className="w-4 h-4 rounded-full bg-green-300"></div>
+                            <span>Confirmed</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                            <div className="w-4 h-4 rounded-full bg-yellow-300"></div>
+                            <span>Inputed but not confirmed</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                            <div className="w-4 h-4 rounded-full bg-red-300"></div>
+                            <span>Required but not inputed</span>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                            <div className="w-4 h-4 rounded-full bg-gray-300"></div>
+                            <span>Not required and not inputed</span>
+                        </div>
+                    </div>
+
+                    <div className="mt-8">
+                        <h2 className="text-lg font-semibold mb-4">Application Status</h2>
+                        <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                                <span className="text-gray-400">Status:</span>
+                                <span className={`px-2 py-1 rounded-full text-xs ${
+                                    application.status === 'PENDING' 
+                                        ? 'bg-yellow-900 text-yellow-300'
+                                        : application.status === 'APPROVED'
+                                        ? 'bg-green-900 text-green-300'
+                                        : 'bg-red-900 text-red-300'
+                                }`}>
+                                    {application.status}
+                                </span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-400">Created:</span>
+                                <span>{new Date(application.createdAt).toLocaleDateString()}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-400">Last Updated:</span>
+                                <span>{new Date(application.updatedAt).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-8">
+                        <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
+                        <div className="space-y-2">
+                            <button
+                                onClick={() => navigate(`/application/overview`)}
+                                className={`w-full px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                                    isActive(`/application/overview`)
+                                        ? 'bg-indigo-600 text-white'
+                                        : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                                }`}
+                            >
+                                View Overview
+                            </button>
+                            <button
+                                onClick={() => navigate(`/application/documents`)}
+                                className={`w-full px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                                    isActive(`/application/documents`)
+                                        ? 'bg-indigo-600 text-white'
+                                        : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                                }`}
+                            >
+                                View Documents
+                            </button>
+                            <button
+                                onClick={() => navigate(`/application/history`)}
+                                className={`w-full px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                                    isActive(`/application/history`)
+                                        ? 'bg-indigo-600 text-white'
+                                        : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                                }`}
+                            >
+                                View History
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

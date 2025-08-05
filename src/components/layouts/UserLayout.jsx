@@ -10,7 +10,7 @@ const UserLayout = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
+        const storedUser = localStorage.getItem('edits-submitter.user');
         if (!storedUser) {
             navigate('/');
             return;
@@ -29,7 +29,7 @@ const UserLayout = () => {
 
     const handleLogout = async () => {
         try {
-            const accessToken = localStorage.getItem('accessToken');
+            const accessToken = localStorage.getItem('edits-submitter.accessToken');
             await axios.post(
                 'http://localhost:3000/api/v1/users/logout',
                 {},
@@ -42,9 +42,9 @@ const UserLayout = () => {
         } catch (err) {
             console.error('Logout error:', err);
         } finally {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            localStorage.removeItem('user');
+            localStorage.removeItem('edits-submitter.accessToken');
+            localStorage.removeItem('edits-submitter.refreshToken');
+            localStorage.removeItem('edits-submitter.user');
             navigate('/');
         }
     };
@@ -65,7 +65,7 @@ const UserLayout = () => {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white shadow-sm">
+            <nav className="bg-indigo-300 shadow-sm text-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex items-center space-x-8">

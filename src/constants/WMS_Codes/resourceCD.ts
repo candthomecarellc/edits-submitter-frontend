@@ -1,0 +1,16 @@
+export const RESOURCE_CD = [
+    { value: 'bank-accounts', label: 'Bank Accounts' },
+    { value: 'stocks-bonds', label: 'Stocks, Bonds, Securities' },
+    { value: 'promissory-notes', label: 'Promissory Notes' },
+    { value: 'mortgages', label: 'Mortgages, Conditional Sales Contracts' },
+    { value: 'trust-funds', label: 'Trust Funds' },
+    { value: 'pia-savings', label: 'PIA Savings Accts' },
+    { value: 'lump-sum', label: 'Lump Sum Payment' },
+    { value: 'german-reparation', label: 'German Reparation Payments' },
+    { value: 'automobile', label: 'Equity Value of Automobile' },
+    { value: 'straight-line', label: 'Straight Line' },
+    { value: 'endowment', label: 'Endowment' },
+    { value: 'life-insurance', label: 'Cash Value of Life Ins' },
+    { value: 'burial-reserve', label: 'Burial Reserve disregard SSI' },
+    { value: 'other', label: 'Other Liquid Resources' },
+]

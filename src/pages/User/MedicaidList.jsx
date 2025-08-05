@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import NewApplicationModal from '../../components/Modals/NewApplicationModal';
+import { APPLICATION_STATUS, status } from '../../constants/ApplicationConstants';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -14,17 +16,20 @@ const MedicaidList = () => {
     const [sortDirection, setSortDirection] = useState('desc');
     const [filterStatus, setFilterStatus] = useState('ALL');
     const [searchTerm, setSearchTerm] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchApplications = async () => {
             try {
-                const accessToken = localStorage.getItem('accessToken');
-                const response = await axios.get('http://localhost:3000/api/v1/application', {
+                const accessToken = localStorage.getItem('edits-submitter.accessToken');
+                const response = await axios.get('http://localhost:3000/api/v1/application/list', {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
+                console.log(response.data.data);
                 setApplications(response.data.data);
+                console.log(applications);
             } catch (err) {
                 setError(err.response?.data?.message || 'Failed to fetch applications');
             } finally {
@@ -45,30 +50,77 @@ const MedicaidList = () => {
     };
 
     const handleViewDetails = (applicationId) => {
-        navigate(`/application/${applicationId}/overview`);
+        localStorage.setItem('edits-submitter.currentApplicationId', applicationId);
+        navigate('/application/overview');
+    };
+
+    const handleCreateNew = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleModalSubmit = async (formData) => {
+        try {
+            const accessToken = localStorage.getItem('edits-submitter.accessToken');
+            formData.createdBy = JSON.parse(localStorage.getItem('edits-submitter.user')).userName;
+            console.log(formData);
+            const response = await axios.post(
+                'http://localhost:3000/api/v1/application',
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            
+            // Add the new application to the list
+            setApplications(prev => [response.data.data, ...prev]);
+            setIsModalOpen(false);
+            
+            // Navigate to the new application
+            localStorage.setItem('edits-submitter.currentApplicationId', response.data.data._id);
+            navigate('/application/overview');
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to create new application');
+        }
     };
 
     // Filter and sort applications
     const filteredApplications = applications
         .filter(app => {
-            const matchesStatus = filterStatus === 'ALL' || app.status === filterStatus;
+            const matchesStatus = filterStatus === 'ALL' || app.statusValue === filterStatus;
             const matchesSearch = searchTerm === '' || 
-                app.applicantName?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                app.applicantName?.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                app._id.toLowerCase().includes(searchTerm.toLowerCase());
+                app.caseName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                app.caseId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                app.applicant?.first?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                app.applicant?.last?.toLowerCase().includes(searchTerm.toLowerCase());
             return matchesStatus && matchesSearch;
         })
         .sort((a, b) => {
             let comparison = 0;
-            if (sortField === 'createdAt') {
-                comparison = new Date(a[sortField]) - new Date(b[sortField]);
-            } else if (sortField === 'applicantName') {
-                comparison = `${a.applicantName?.firstName} ${a.applicantName?.lastName}`.localeCompare(
-                    `${b.applicantName?.firstName} ${b.applicantName?.lastName}`
-                );
-            } else {
-                comparison = String(a[sortField]).localeCompare(String(b[sortField]));
+            
+            switch (sortField) {
+                case 'createdAt':
+                case 'updatedAt':
+                    comparison = new Date(a[sortField]) - new Date(b[sortField]);
+                    break;
+                case 'status':
+                    comparison = String(a.statusValue).localeCompare(String(b.statusValue));
+                    break;
+                case 'applicantName':
+                    const aName = `${a.applicant?.first || ''} ${a.applicant?.last || ''}`.trim();
+                    const bName = `${b.applicant?.first || ''} ${b.applicant?.last || ''}`.trim();
+                    comparison = aName.localeCompare(bName);
+                    break;
+                case 'caseId':
+                case 'caseName':
+                case 'createdBy':
+                    comparison = String(a[sortField] || '').localeCompare(String(b[sortField] || ''));
+                    break;
+                default:
+                    comparison = String(a[sortField] || '').localeCompare(String(b[sortField] || ''));
             }
+            
             return sortDirection === 'asc' ? comparison : -comparison;
         });
 
@@ -97,12 +149,26 @@ const MedicaidList = () => {
 
     return (
         <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+            <NewApplicationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSubmit={handleModalSubmit}
+            />
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-gray-900">Medicaid Applications</h1>
                     <p className="mt-2 text-sm text-gray-700">
                         A list of all Medicaid applications in the system.
                     </p>
+                </div>
+                <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <button
+                        type="button"
+                        onClick={handleCreateNew}
+                        className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                    >
+                        New Application
+                    </button>
                 </div>
             </div>
 
@@ -124,9 +190,9 @@ const MedicaidList = () => {
                         onChange={(e) => setFilterStatus(e.target.value)}
                     >
                         <option value="ALL">All Status</option>
-                        <option value="PENDING">Pending</option>
-                        <option value="APPROVED">Approved</option>
-                        <option value="REJECTED">Rejected</option>
+                        {APPLICATION_STATUS.map((status) => (
+                            <option value={status.value}>{status.label}</option>
+                        ))}
                     </select>
                 </div>
             </div>
@@ -142,9 +208,16 @@ const MedicaidList = () => {
                                         <th 
                                             scope="col" 
                                             className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer"
-                                            onClick={() => handleSort('_id')}
+                                            onClick={() => handleSort('caseId')}
                                         >
-                                            Application ID {sortField === '_id' && (sortDirection === 'asc' ? '↑' : '↓')}
+                                            Case ID {sortField === 'caseId' && (sortDirection === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th 
+                                            scope="col" 
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer"
+                                            onClick={() => handleSort('caseName')}
+                                        >
+                                            Case Name {sortField === 'caseName' && (sortDirection === 'asc' ? '↑' : '↓')}
                                         </th>
                                         <th 
                                             scope="col" 
@@ -163,9 +236,23 @@ const MedicaidList = () => {
                                         <th 
                                             scope="col" 
                                             className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer"
+                                            onClick={() => handleSort('createdBy')}
+                                        >
+                                            Created By {sortField === 'createdBy' && (sortDirection === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th 
+                                            scope="col" 
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer"
                                             onClick={() => handleSort('createdAt')}
                                         >
                                             Created At {sortField === 'createdAt' && (sortDirection === 'asc' ? '↑' : '↓')}
+                                        </th>
+                                        <th 
+                                            scope="col" 
+                                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer"
+                                            onClick={() => handleSort('updatedAt')}
+                                        >
+                                            Updated At {sortField === 'updatedAt' && (sortDirection === 'asc' ? '↑' : '↓')}
                                         </th>
                                         <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span className="sr-only">Actions</span>
@@ -176,24 +263,27 @@ const MedicaidList = () => {
                                     {paginatedApplications.map((application) => (
                                         <tr key={application._id}>
                                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                {application._id}
+                                                {application.caseId}
                                             </td>
                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                {application.applicantName?.firstName} {application.applicantName?.lastName}
+                                                {application.caseName}
                                             </td>
                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                                                    application.status === 'PENDING' 
-                                                        ? 'bg-yellow-100 text-yellow-800'
-                                                        : application.status === 'APPROVED'
-                                                        ? 'bg-green-100 text-green-800'
-                                                        : 'bg-red-100 text-red-800'
-                                                }`}>
-                                                    {application.status}
+                                                {application.applicant?.first} {application.applicant?.last}
+                                            </td>
+                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${status(application.status).color}`}>
+                                                    {status(application.status).label}
                                                 </span>
                                             </td>
                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                {application.createdBy}
+                                            </td>
+                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                 {new Date(application.createdAt).toLocaleDateString()}
+                                            </td>
+                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                {new Date(application.updatedAt).toLocaleDateString()}
                                             </td>
                                             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                                 <button

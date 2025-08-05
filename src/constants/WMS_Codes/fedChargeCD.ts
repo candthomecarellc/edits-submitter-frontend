@@ -1,0 +1,17 @@
+export const FED_CHARGE_CD = [
+    { value: 'fcar', label: 'Federal Charge American Repatriate' },
+    { value: 'scoor', label: 'State Charge OMN or OMRDDD Release' },
+    { value: 'rap', label: 'Refugees/Asylees (Refugee Assistance Program)' },
+    { value: 'urm', label: 'Unaccompanied Refugee Minor - Eligible through Age 20 if they Entered the Country before age 18' },
+    { value: 'ce', label: 'Cuban Entrants' },
+    { value: 'chuem', label: 'Cuban, Haitian Unaccompanied Entrant Minor - Eligible through age 20 if they entered the country before 18' },
+    { value: 'he', label: 'Haitian Entrants' },
+    { value: 'rriv', label: 'Relocated Relative of an Institutionalized Veteran' },
+    { value: 'ltr', label: 'Lawful Temporary Resident (Pre 1982)' },
+    { value: 'fnpa', label: 'Federally Non-participating Alien' },
+    { value: 'hc', label: 'Home Care - State Charge - MA only' },
+    { value: 'moe', label: 'Maintenance of Effort (MOE) Countable alien (if ACI IND is B, F, or K)' },
+    { value: 'tanf', label: 'Converted due to 60 month TANF limit' },
+    { value: 'qa', label: 'State Charge - Qualified alien/PRUCOL' },
+    { value: 'scfce', label: 'State Charge / Federal Charge expired' },
+]
