@@ -10,6 +10,9 @@ import HouseholdComposition from '../pages/Medicaid/HouseholdComposition/Househo
 import GeneralInformation from '../pages/Medicaid/HouseholdComposition/GeneralInformation/GeneralInformation';
 import Incomes from '../pages/Medicaid/HouseholdComposition/Incomes/Incomes';
 import Insurance from '../pages/Medicaid/HouseholdComposition/Insurance/Insurance';
+import Documents from '../pages/Medicaid/Documents/Documents';
+import Response from '../pages/Medicaid/Response/Response';
+import DecisionLog from '../pages/Medicaid/DecisionLog/DecisionLog';
 import UserLayout from '../components/layouts/UserLayout';
 import ApplicationLayout from '../components/layouts/ApplicationLayout';
 import HouseholdMemberLayout from '../components/layouts/HouseholdMemberLayout';
@@ -64,6 +67,18 @@ const router = createBrowserRouter([
                     {
                         path: 'household-composition',
                         element: <HouseholdComposition />,
+                    },
+                    {
+                        path: 'documents',
+                        element: <Documents />,
+                    },
+                    {
+                        path: 'response',
+                        element: <Response />
+                    },
+                    {
+                        path: 'decision-log',
+                        element: <DecisionLog />
                     },
                     {
                         path: 'household-composition/member',
