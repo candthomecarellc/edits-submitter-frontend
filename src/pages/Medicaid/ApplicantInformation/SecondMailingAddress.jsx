@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
-import { Input, Button, CheckboxGroup, Checkbox } from '../../../components/Form';
+import { Input, Button, CheckboxGroup, Checkbox, Select } from '../../../components/Form';
+import { PHONE_TYPES } from '../../../constants/phone';
 
 const SecondMailingAddress = () => {
     const { application, setApplication } = useOutletContext();
@@ -14,12 +15,14 @@ const SecondMailingAddress = () => {
         sameAsHomeAddress: application?.mail2Same || false,
         associateName: application?.mailingAddress2?.associateName || '',
         inCareOf: application?.mailingAddress2?.inCareOf || '',
-        phoneNumber: application?.mailingAddress2?.phone || '',
+        phoneNumber: application?.mailingAddress2?.phoneNumber || '',
+        phoneType: application?.mailingAddress2?.phoneType || '',
         accessRights: {
             applyRenew: application?.applyOrRenew || false,
             discuss: application?.discuss || false,
             getNotice: application?.getNotice || false,
         },
+        apartment: application?.mailingAddress2?.apartment || '',
         streetName: application?.mailingAddress2?.street || '',
         city: application?.mailingAddress2?.city || '',
         state: application?.mailingAddress2?.state || '',
@@ -32,8 +35,10 @@ const SecondMailingAddress = () => {
         associateName: status?.associateName || 'empty',
         inCareOf: status?.inCareOf || 'empty',
         phoneNumber: status?.phoneNumber || 'empty',
+        phoneType: status?.phoneType || 'empty',
         accessRights: status?.accessRights || 'empty',
         streetName: status?.streetName || 'empty',
+        apartment: status?.apartment || 'empty',
         city: status?.city || 'empty',
         state: status?.state || 'empty',
         zip: status?.zip || 'empty',
@@ -81,12 +86,14 @@ const SecondMailingAddress = () => {
             sameAsHomeAddress: application?.mail2Same || false,
             associateName: application?.mailingAddress2?.associateName || '',
             inCareOf: application?.mailingAddress2?.inCareOf || '',
-            phoneNumber: application?.mailingAddress2?.phone || '',
+            phoneNumber: application?.mailingAddress2?.phoneNumber || '',
+            phoneType: application?.mailingAddress2?.phoneType || '',
             accessRights: {
                 applyRenew: application?.applyOrRenew || false,
                 discuss: application?.discuss || false,
                 getNotice: application?.getNotice || false,
             },
+            apartment: application?.mailingAddress2?.apartment || '',
             streetName: application?.mailingAddress2?.street || '',
             city: application?.mailingAddress2?.city || '',
             state: application?.mailingAddress2?.state || '',
@@ -100,7 +107,9 @@ const SecondMailingAddress = () => {
             associateName: status?.associateName || 'empty',
             inCareOf: status?.inCareOf || 'empty',
             phoneNumber: status?.phoneNumber || 'empty',
+            phoneType: status?.phoneType || 'empty',
             accessRights: status?.accessRights || 'empty',
+            apartment:status?.apartment || 'empty',
             streetName: status?.streetName || 'empty',
             city: status?.city || 'empty',
             state: status?.state || 'empty',
@@ -123,7 +132,9 @@ const SecondMailingAddress = () => {
                     mailingAddress2: {
                         associateName: formData.associateName,
                         inCareOf: formData.inCareOf,
-                        phone: formData.phoneNumber,
+                        phoneNumber: formData.phoneNumber,
+                        phoneType: formData.phoneType,
+                        apartment: formData.apartment,
                         street: formData.streetName,
                         city: formData.city,
                         state: formData.state,
@@ -256,6 +267,21 @@ const SecondMailingAddress = () => {
                             />
                         </div>
 
+                        <div className="col-span-4">
+                            <Select
+                                type="phoneType"
+                                name="phoneType"
+                                id="phoneType"
+                                label="Phone Type"
+                                value={formData.phoneType}
+                                options={PHONE_TYPES}
+                                onChange={handleChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.phoneType}
+                                onStatusChange={(newStatus) => handleStatusChange('phoneType', newStatus)}
+                            />
+                        </div>
+
                         <div className="col-span-12">
                             <CheckboxGroup
                                 name="accessRights"
@@ -267,6 +293,21 @@ const SecondMailingAddress = () => {
                                 disabled={!isEditing}
                                 status={fieldStatuses.accessRights}
                                 onStatusChange={(newStatus) => handleStatusChange('accessRights', newStatus)}
+                            />
+                        </div>
+
+                        <div className="col-span-12">
+                            <Input
+                                type="apartment"
+                                name="apartment"
+                                id="apartment"
+                                label="Apartment"
+                                value={formData.apartment}
+                                maxLength={35}
+                                onChange={handleChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.apartment}
+                                onStatusChange={(newStatus) => handleStatusChange('apartment', newStatus)}
                             />
                         </div>
 

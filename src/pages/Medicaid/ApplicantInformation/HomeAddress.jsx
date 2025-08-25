@@ -19,7 +19,7 @@ const HomeAddress = () => {
         city: application?.residence?.city || '',
         state: application?.residence?.state || '',
         zipCode: application?.residence?.zip || '',
-        country: application?.residence?.country || '',
+        county: application?.residence?.county || '',
     });
 
     const status = application?.fieldStatus?.homeAddress;
@@ -32,7 +32,7 @@ const HomeAddress = () => {
         city: status?.city || 'empty',
         state: status?.state || 'empty',
         zip: status?.zip || 'empty',
-        country: status?.country || 'empty',
+        county: status?.county || 'empty',
     });
 
     const handleChange = (e) => {
@@ -76,7 +76,7 @@ const HomeAddress = () => {
             city: application?.residence?.city || '',
             state: application?.residence?.state || '',
             zipCode: application?.residence?.zip || '',
-            country: application?.residence?.country || '',
+            county: application?.residence?.county || '',
         }));
         setIsEditing(false);
         setError('');
@@ -90,7 +90,7 @@ const HomeAddress = () => {
             city: status?.city || 'empty',
             state: status?.state || 'empty',
             zip: status?.zip || 'empty',
-            country: status?.country || 'empty',
+            county: status?.county || 'empty',
         }));
     };
 
@@ -113,7 +113,7 @@ const HomeAddress = () => {
                         city: formData.city,
                         state: formData.state,
                         zip: formData.zipCode,
-                        country: formData.country,
+                        county: formData.county,
                     },
                     homeless: formData.homeless,
                     fieldStatus: {
@@ -300,15 +300,15 @@ const HomeAddress = () => {
 
                         <div className="col-span-3">
                             <Input
-                                type="country"
-                                name="country"
-                                id="country"
-                                label="Country"
-                                value={formData.country}
+                                type="county"
+                                name="county"
+                                id="county"
+                                label="County"
+                                value={formData.county}
                                 onChange={handleChange}
                                 disabled={!isEditing}
-                                status={fieldStatuses.country}
-                                onStatusChange={(newStatus) => handleStatusChange('country', newStatus)}
+                                status={fieldStatuses.county}
+                                onStatusChange={(newStatus) => handleStatusChange('county', newStatus)}
                             />
                         </div>
                     </div>

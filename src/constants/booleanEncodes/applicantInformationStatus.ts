@@ -21,7 +21,7 @@ export const APPLICANT_INFORMATION_STATUS = {
         city: 1 << 5,
         state: 1 << 6,
         zip: 1 << 7,
-        country: 1 << 8,
+        county: 1 << 8,
     },
     mailingAddress: {
         sameAsHomeAddress: 1 << 0,

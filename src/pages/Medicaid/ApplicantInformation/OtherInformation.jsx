@@ -23,7 +23,9 @@ const OtherInformation = () => {
         caseName: application?.caseName || '',
         caseComposition: application?.caseComposition || '',
         clientNoticeLanguage: application?.clientNoticeLanguage || '',
+        signatureDate: application?.signatureDate?.split('T')[0] || '',
         familyPlanning: application?.familyPlanning || false,
+        healthPlan: application?.healthPlan || false,
     });
 
     const status = application?.fieldStatus?.otherInformation;
@@ -39,7 +41,9 @@ const OtherInformation = () => {
         caseName: status?.caseName || 'empty',
         caseComposition: status?.caseComposition || 'empty',
         clientNoticeLanguage: status?.clientNoticeLanguage || 'empty',
+        signatureDate: status?.signatureDate || 'empty',
         familyPlanning: status?.familyPlanning || 'empty',
+        healthPlan: status?.healthPlan || 'empty',
     });
 
     const handleChange = (e) => {
@@ -86,7 +90,9 @@ const OtherInformation = () => {
             caseName: application?.caseName || '',
             caseComposition: application?.caseComposition || '',
             clientNoticeLanguage: application?.clientNoticeLanguage || '',
+            signatureDate: application?.signatureDate?.split('T')[0] || '',
             familyPlanning: application?.familyPlanning || false,
+            healthPlan: application?.healthPlan || false,
         }));
         setIsEditing(false);
         setError('');
@@ -103,7 +109,9 @@ const OtherInformation = () => {
             caseName: status?.caseName || 'empty',
             caseComposition: status?.caseComposition || 'empty',
             clientNoticeLanguage: status?.clientNoticeLanguage || 'empty',
+            signatureDate: status?.signatureDate || 'empty',
             familyPlanning: status?.familyPlanning || 'empty',
+            healthPlan: status?.healthPlan || 'empty',
         }));
     };
 
@@ -129,7 +137,9 @@ const OtherInformation = () => {
                     caseName: formData.caseName,
                     caseComposition: formData.caseComposition,
                     clientNoticeLanguage: formData.clientNoticeLanguage,
+                    signatureDate: formData.signatureDate,
                     familyPlanning: formData.familyPlanning,
+                    healthPlan: formData.healthPlan,
                     fieldStatus: {
                         otherInformation: fieldStatuses,
                     },
@@ -154,7 +164,9 @@ const OtherInformation = () => {
                 caseName: response.data.data.caseName,
                 caseComposition: response.data.data.caseComposition,
                 clientNoticeLanguage: response.data.data.clientNoticeLanguage,
+                signatureDate: response.data.data.signatureDate?.split('T')[0],
                 familyPlanning: response.data.data.familyPlanning,
+                healthPlan: response.data.data.healthPlan,
             }));
             setSuccess('Applicant information updated successfully');
             setIsEditing(false);
@@ -165,10 +177,10 @@ const OtherInformation = () => {
         }
     };
 
-    const handleFamilyPlanningChange = (e) => {
+    const handleCheckboxChange = (e) => {
         setFormData(prev => ({
             ...prev,
-            familyPlanning: e.target.checked
+            [e.target.name]: e.target.checked
         }));
     };
 
@@ -214,7 +226,6 @@ const OtherInformation = () => {
                                     onStatusChange={(newStatus) => handleStatusChange('providerId', newStatus)}
                                 />
                             </div>
-
                             <div className="col-span-2">
                                 <Input
                                     type="text"
@@ -311,7 +322,7 @@ const OtherInformation = () => {
                                     value={formData.languageSpoken}
                                     onChange={handleChange}
                                     options={LANGUAGE_OPTIONS}
-                                    required
+                                    required={true}
                                     disabled={!isEditing}
                                     status={fieldStatuses.languageSpoken}
                                     onStatusChange={(newStatus) => handleStatusChange('languageSpoken', newStatus)}
@@ -335,6 +346,7 @@ const OtherInformation = () => {
                         </div>
                     </div>
 
+                    <p className="col-span-12 text-sm text-gray-500">* Case name must be head of household. Enter last name, space, first name.</p>
                     <div className="col-span-3">
                         <Input
                             type="text"
@@ -386,6 +398,20 @@ const OtherInformation = () => {
                         />
                     </div>
 
+                    <div className="col-span-3">
+                        <DatePicker
+                            name="signatureDate"
+                            id="signatureDate"
+                            label="Signature Date"
+                            value={formData.signatureDate}
+                            onChange={handleChange}
+                            required
+                            disabled={!isEditing}
+                            status={fieldStatuses.signatureDate}
+                            onStatusChange={(newStatus) => handleStatusChange('signatureDate', newStatus)}
+                        />
+                    </div>
+
                     <div className="col-span-12 flex items-end gap-2">
                         <Checkbox
                             name="familyPlanning"
@@ -393,10 +419,24 @@ const OtherInformation = () => {
                             label="If I am not eligible for Medicaid coverage, I want Family Planning Services only"
                             checked={formData.familyPlanning}
                             value={formData.familyPlanning}
-                            onChange={handleFamilyPlanningChange}
+                            onChange={handleCheckboxChange}
                             disabled={!isEditing}
                             status={fieldStatuses.familyPlanning}
                             onStatusChange={(newStatus) => handleStatusChange('familyPlanning', newStatus)}
+                        />
+                    </div>
+
+                    <div className="col-span-12 flex items-end gap-2">
+                        <Checkbox
+                            name="healthPlan"
+                            id="healthPlan"
+                            label="I do not want to be in a health plan"
+                            checked={formData.healthPlan}
+                            value={formData.healthPlan}
+                            onChange={handleCheckboxChange}
+                            disabled={!isEditing}
+                            status={fieldStatuses.healthPlan}
+                            onStatusChange={(newStatus) => handleStatusChange('healthPlan', newStatus)}
                         />
                     </div>
                 </div>

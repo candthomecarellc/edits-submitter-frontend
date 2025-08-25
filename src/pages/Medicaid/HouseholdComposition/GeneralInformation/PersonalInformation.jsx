@@ -33,6 +33,10 @@ const PersonalInformation = () => {
         sex: member?.sex || '',
         gender: member?.gender || '',
         relationshipToApplicant: member?.relationshipToApplicant || '',
+        birthCity: member?.birthCity || '',
+        birthState: member?.birthState || '',
+        birthCountry: member?.birthCountry || '',
+        motherName: member?.motherName || '',
     });
 
     const status = member?.generalInformation?.personalInformation;
@@ -49,6 +53,10 @@ const PersonalInformation = () => {
         sex: status?.sex || 'empty',
         gender: status?.gender || 'empty',
         relationshipToApplicant: status?.relationshipToApplicant || 'empty',
+        birthCity: status?.birthCity || 'empty',
+        birthState: status?.birthState || 'empty',
+        birthCountry: status?.birthCountry || 'empty',
+        motherName: status?.motherName || 'empty',
     });
 
     const handleChange = (e) => {
@@ -99,7 +107,10 @@ const PersonalInformation = () => {
             sex: member?.sex || '',
             gender: member?.gender || '',
             relationshipToApplicant: member?.relationshipToApplicant || '',
-
+            birthCity: member?.birthCity || '',
+            birthState: member?.birthState || '',
+            birthCountry: member?.birthCountry || '',
+            motherName: member?.motherName || '',
         });
         setIsEditing(false);
         setError('');
@@ -363,6 +374,66 @@ const PersonalInformation = () => {
                             disabled={!isEditing}
                             status={fieldStatuses.relationshipToApplicant}
                             onStatusChange={(newStatus) => handleStatusChange('relationshipToApplicant', newStatus)}
+                        />
+                    </div>
+
+                    <div className="col-span-3">
+                        <Input
+                            type="birthCity"
+                            name="birthCity"
+                            id="birthCity"
+                            label="City of Birth"
+                            value={formData.birthCity}
+                            onChange={handleChange}
+                            required
+                            disabled={!isEditing}
+                            status={fieldStatuses.birthCity}
+                            onStatusChange={(newStatus) => handleStatusChange('birthCity', newStatus)}
+                        />
+                    </div>
+
+                    <div className="col-span-3">
+                        <Input
+                            type="birthState"
+                            name="birthState"
+                            id="birthState"
+                            label="State of Birth"
+                            value={formData.birthState}
+                            onChange={handleChange}
+                            required
+                            disabled={!isEditing}
+                            status={fieldStatuses.birthState}
+                            onStatusChange={(newStatus) => handleStatusChange('birthState', newStatus)}
+                        />
+                    </div>
+
+                    <div className="col-span-3">
+                        <Input
+                            type="birthCountry"
+                            name="birthCountry"
+                            id="birthCountry"
+                            label="Country of Birth"
+                            value={formData.birthCountry}
+                            onChange={handleChange}
+                            required
+                            disabled={!isEditing}
+                            status={fieldStatuses.birthCountry}
+                            onStatusChange={(newStatus) => handleStatusChange('birthCountry', newStatus)}
+                        />
+                    </div>
+
+                    <div className="col-span-3">
+                        <Input
+                            type="motherName"
+                            name="motherName"
+                            id="motherName"
+                            label="Mother's Name"
+                            value={formData.motherName}
+                            onChange={handleChange}
+                            required
+                            disabled={!isEditing}
+                            status={fieldStatuses.motherName}
+                            onStatusChange={(newStatus) => handleStatusChange('motherName', newStatus)}
                         />
                     </div>
                 </div>

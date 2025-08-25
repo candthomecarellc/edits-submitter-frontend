@@ -3,6 +3,8 @@ import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Select, Button } from '../../../components/Form';
 import { PHONE_TYPES } from '../../../constants/phone';
+import { APPLICATION_TYPES } from '../../../constants/WMS_Codes/applicationTypes';
+import { SUBMISSION_TYPES } from '../../../constants/WMS_Codes/submissionTypes';
 
 const PersonalDetails = () => {
     const { application, setApplication } = useOutletContext();
@@ -21,6 +23,8 @@ const PersonalDetails = () => {
         anotherPhone: application?.anotherPhone?.number || '',
         anotherPhoneType: application?.anotherPhone?.type || '',
         email: application?.email || '',
+        applicationType: application?.applicationType || '',
+        submitionType: application?.submitionType || '',
     });
 
     const status = application?.fieldStatus?.personalDetails;
@@ -33,6 +37,8 @@ const PersonalDetails = () => {
         anotherPhone: status?.anotherPhone || 'empty',
         anotherPhoneType: status?.anotherPhoneType || 'empty',
         email: status?.email || 'empty',
+        applicationType: status?.applicationType || 'empty',
+        submitionType: status?.submitionType || 'empty',
     });
 
     const handleChange = (e) => {
@@ -77,6 +83,8 @@ const PersonalDetails = () => {
             anotherPhone: application?.anotherPhone?.number || '',
             anotherPhoneType: application?.anotherPhone?.type || '',
             email: application?.email || '',
+            applicationType: application?.applicationType || '',
+            submitionType: application?.submitionType || '',
         }));
         setIsEditing(false);
         setError('');
@@ -90,6 +98,8 @@ const PersonalDetails = () => {
             anotherPhone: status?.anotherPhone || 'empty',
             anotherPhoneType: status?.anotherPhoneType || 'empty',
             email: status?.email || 'empty',
+            applicationType: status?.applicationType || 'empty',
+            submitionType: status?.submitionType || 'empty',
         }));
     };
 
@@ -104,6 +114,8 @@ const PersonalDetails = () => {
             const response = await axios.patch(
                 `http://localhost:3000/api/v1/application/${application._id}`,
                 {
+                    applicationType: formData.applicationType,
+                    submitionType: formData.submitionType,
                     applicant: {
                         first: formData.legalFirstName,
                         middle: formData.legalMiddleInitial,
@@ -131,6 +143,8 @@ const PersonalDetails = () => {
 
             setApplication(prev => ({
                 ...prev,
+                applicationType: response.data.data.applicationType,
+                submitionType: response.data.data.submitionType,
                 applicant: response.data.data.applicant,
                 email: response.data.data.email,
                 primaryPhone: response.data.data.primaryPhone,
@@ -292,6 +306,36 @@ const PersonalDetails = () => {
                                 />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="col-span-1 sm:col-span-1">
+                        <Select
+                            name="applicationType"
+                            id="applicationType"
+                            label="Application Type"
+                            value={formData.applicationType}
+                            onChange={handleChange}
+                            options={APPLICATION_TYPES}
+                            required={true}
+                            disabled={!isEditing}
+                            status={fieldStatuses.applicationType}
+                            onStatusChange={(newStatus) => handleStatusChange('applicationType', newStatus)}
+                        />
+                    </div>
+
+                    <div className="col-span-1 sm:col-span-1">
+                        <Select
+                            name="submitionType"
+                            id="submitionType"
+                            label="Submition Type"
+                            value={formData.submitionType}
+                            onChange={handleChange}
+                            options={SUBMISSION_TYPES}
+                            required={true}
+                            disabled={!isEditing}
+                            status={fieldStatuses.submitionType}
+                            onStatusChange={(newStatus) => handleStatusChange('submitionType', newStatus)}
+                        />
                     </div>
                 </div>
 

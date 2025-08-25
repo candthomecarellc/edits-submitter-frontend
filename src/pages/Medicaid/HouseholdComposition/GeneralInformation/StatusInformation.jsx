@@ -17,10 +17,11 @@ const StatusInformation = () => {
     const memberId = localStorage.getItem('edits-submitter.currentMemberId');
 
     const [formData, setFormData] = useState({
+        applying: member?.applying || false,
         responsibleAdult: member?.responsibleAdult || false,
         veteran: member?.veteran || false,
         pregnant: member?.pregnant || false,
-        pregnantDueDate: member?.pregnantDueDate || null,
+        pregnantDueDate: member?.pregnantDueDate || '',
         maritalStatus: member?.maritalStatus || '',
         studentId: member?.studentId || 0,
         studentType: member?.studentType || '',
@@ -63,10 +64,11 @@ const StatusInformation = () => {
     const handleCancel = () => {
         setFormData(prev => ({
             ...prev,
+            applying: member?.applying || false,
             responsibleAdult: member?.responsibleAdult || false,
             veteran: member?.veteran || false,
             pregnant: member?.pregnant || false,
-            pregnantDueDate: member?.pregnantDueDate || null,
+            pregnantDueDate: member?.pregnantDueDate || '',
             maritalStatus: member?.maritalStatus || '',
             studentId: member?.studentId || 0,
             studentType: member?.studentType || '',
@@ -142,6 +144,20 @@ const StatusInformation = () => {
 
                 <div className="grid grid-cols-12 gap-6">
                     <div className="col-span-6">
+                    <div className="pb-6">
+                            <Checkbox
+                                name="applying"
+                                id="applying"
+                                label="Is the member applying for health insurance?"
+                                value={formData.applying}
+                                checked={formData.applying}
+                                onChange={handleCheckboxChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.applying}
+                                onStatusChange={(newStatus) => handleStatusChange('applying', newStatus)}
+                            />
+                        </div>
+                    
                         <div className="pb-6">
                             <Checkbox
                                 name="responsibleAdult"

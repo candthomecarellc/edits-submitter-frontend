@@ -8,6 +8,75 @@ const Status = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
     const [submitSuccess, setSubmitSuccess] = useState('');
+    const statusCount = {
+        error: 0,
+        review: 0,
+        confirmed: 0,
+        default: 0,
+    };
+
+    console.log('Applicant Information:');
+    Object.keys(application.fieldStatus).forEach(page => {
+        console.log(' ', page,':');
+        Object.keys(application.fieldStatus[page]).forEach(field => {
+            if(application.fieldStatus[page][field] === 'default') statusCount.default++; 
+            else if(application.fieldStatus[page][field] === 'review') statusCount.review++; 
+            else if(application.fieldStatus[page][field] === 'confirmed') statusCount.confirmed++; 
+            else if(application.fieldStatus[page][field] === 'error') statusCount.error++;
+            console.log('  ', field, ': ', application.fieldStatus[page][field]);
+        })
+    });
+    console.log('Household Expense:');
+    Object.keys(application.householdExpense.fieldStatus).forEach(page => {
+        console.log(' ', page,':');
+        Object.keys(application.householdExpense.fieldStatus[page]).forEach(field => {
+            if(application.householdExpense.fieldStatus[page][field] === 'default') statusCount.default++; 
+            else if(application.householdExpense.fieldStatus[page][field] === 'review') statusCount.review++; 
+            else if(application.householdExpense.fieldStatus[page][field] === 'confirmed') statusCount.confirmed++; 
+            else if(application.householdExpense.fieldStatus[page][field] === 'error') statusCount.error++; 
+            console.log('  ', field, ': ', application.householdExpense.fieldStatus[page][field]);
+        })
+    });
+    console.log('Household Composition:');
+    application?.householdMember.forEach(member => {
+        console.log(' ', member.lineNumber, ':');
+        console.log('  General Information:')
+        Object.keys(member.generalInformation).forEach(page => {
+            console.log('   ', page,':');
+            Object.keys(member.generalInformation[page]).forEach(field => {
+                if(member.generalInformation[page][field] === 'default') statusCount.default++; 
+                else if(member.generalInformation[page][field] === 'review') statusCount.review++; 
+                else if(member.generalInformation[page][field] === 'confirmed') statusCount.confirmed++; 
+                else if(member.generalInformation[page][field] === 'error') statusCount.error++; 
+                console.log('    ', field, ': ', member.generalInformation[page][field]);
+            });
+        });
+        console.log('  Incomes:');
+        Object.keys(member.income).forEach(type => {
+            console.log('   ', type,':');
+            member.income[type].forEach(income => {
+                console.log('    ', income.index, ':');
+                Object.keys(income.fieldStatus).forEach(field => {
+                    if(income.fieldStatus[field] === 'default') statusCount.default++; 
+                    else if(income.fieldStatus[field] === 'review') statusCount.review++; 
+                    else if(income.fieldStatus[field] === 'confirmed') statusCount.confirmed++; 
+                    else if(income.fieldStatus[field] === 'error') statusCount.error++;
+                    console.log('     ', field, ': ', income.fieldStatus[field]);
+                });
+            });
+        });
+        console.log('  Insurance Information:');
+        Object.keys(member.insuranceInformation).forEach(page => {
+            console.log('   ', page,':');
+            Object.keys(member.insuranceInformation[page]).forEach(field => {
+                if(member.insuranceInformation[page][field] === 'default') statusCount.default++; 
+                else if(member.insuranceInformation[page][field] === 'review') statusCount.review++; 
+                else if(member.insuranceInformation[page][field] === 'confirmed') statusCount.confirmed++; 
+                else if(member.insuranceInformation[page][field] === 'error') statusCount.error++;
+                console.log('    ', field, ': ', member.insuranceInformation[page][field]);
+            });
+        });
+    });
 
     const handleSubmitApplication = async () => {
         if (!application?._id) {
@@ -56,14 +125,16 @@ const Status = () => {
             <div className="px-4 py-5 sm:px-6">
                 <div className="flex items-center justify-between">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">Application Status</h3>
-                    <Button
-                        variant="primary"
-                        onClick={handleSubmitApplication}
-                        loading={isSubmitting}
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? 'Submitting...' : 'Submit Application'}
-                    </Button>
+                    {statusCount.error === 0 && statusCount.review === 0 && (
+                        <Button
+                            variant="primary"
+                            onClick={handleSubmitApplication}
+                            loading={isSubmitting}
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                        </Button>
+                    )}
                 </div>
                 
                 {/* Error and Success Messages */}
@@ -108,22 +179,22 @@ const Status = () => {
                         <div className="grid grid-cols-4 gap-4 text-sm">
                             <div className="bg-red-50 p-3 rounded-lg">
                                 <div className="text-red-700 font-semibold">Required Fields</div>
-                                <div className="text-2xl font-bold text-red-600">3</div>
+                                <div className="text-2xl font-bold text-red-600">{statusCount.error}</div>
                                 <div className="text-red-600">remaining</div>
                             </div>
                             <div className="bg-yellow-50 p-3 rounded-lg">
                                 <div className="text-yellow-700 font-semibold">Review Needed</div>
-                                <div className="text-2xl font-bold text-yellow-600">2</div>
+                                <div className="text-2xl font-bold text-yellow-600">{statusCount.review}</div>
                                 <div className="text-yellow-600">fields</div>
                             </div>
                             <div className="bg-green-50 p-3 rounded-lg">
                                 <div className="text-green-700 font-semibold">Confirmed</div>
-                                <div className="text-2xl font-bold text-green-600">15</div>
+                                <div className="text-2xl font-bold text-green-600">{statusCount.confirmed}</div>
                                 <div className="text-green-600">fields</div>
                             </div>
                             <div className="bg-blue-50 p-3 rounded-lg">
                                 <div className="text-blue-700 font-semibold">Optional</div>
-                                <div className="text-2xl font-bold text-blue-600">5</div>
+                                <div className="text-2xl font-bold text-blue-600">{statusCount.default}</div>
                                 <div className="text-blue-600">remaining</div>
                             </div>
                         </div>
