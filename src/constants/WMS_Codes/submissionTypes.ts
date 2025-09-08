@@ -11,8 +11,8 @@ export const SUBMISSION_TYPES = [
         value: 'resubmission',
         label: 'Resubmission'
     },
-    // {
-    //     value: 'renewal',
-    //     label: 'Renewal'
-    // },
+    {
+        value: 'renewal',
+        label: 'Renewal'
+    },
 ]

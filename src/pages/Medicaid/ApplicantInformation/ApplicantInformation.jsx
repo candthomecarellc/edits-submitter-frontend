@@ -3,8 +3,11 @@ import HomeAddress from './HomeAddress';
 import MailingAddress from './MailingAddress';
 import SecondMailingAddress from './SecondMailingAddress';
 import OtherInformation from './OtherInformation';
+import RenewalInformation from './RenewalInformation';
+import { useOutletContext } from 'react-router-dom';
 
 const ApplicantInformation = () => {
+    const { application } = useOutletContext();
     return (
         <div className="p-6">
             <div className="sm:flex sm:items-center sm:justify-between mb-6">
@@ -21,6 +24,7 @@ const ApplicantInformation = () => {
             <MailingAddress />
             <SecondMailingAddress />
             <OtherInformation />
+            {application.submitionType === 'renewal' && <RenewalInformation />}
         </div>
     );
 };

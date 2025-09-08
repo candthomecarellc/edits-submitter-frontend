@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Button, DatePicker, Select } from '../../../components/Form';
 import { CHRONIC_CARE_CON } from '../../../constants/WMS_Codes/chronicCareCON';
+import { PERIOD } from '../../../constants/WMS_Codes/period';
 
 const HomeAddress = () => {
     const { application, setApplication } = useOutletContext();
@@ -19,6 +20,7 @@ const HomeAddress = () => {
         chronicCareCon: chronicCare?.chronicCareCon || '',
         chronicCareAmount: chronicCare?.chronicCareAmount || '',
         chronicCareLoc: chronicCare?.chronicCareLoc || '',
+        chronicCarePeriod: chronicCare?.chronicCarePeriod || '',
     });
 
     const status = application?.householdExpense?.fieldStatus?.otherExpenses;
@@ -28,6 +30,7 @@ const HomeAddress = () => {
         chronicCareCon: status?.chronicCareCon || 'empty',
         chronicCareAmount: status?.chronicCareAmount || 'empty',
         chronicCareLoc: status?.chronicCareLoc || 'empty',
+        chronicCarePeriod: status?.chronicCarePeriod || 'empty',
     });
 
     const handleChange = (e) => {
@@ -68,6 +71,7 @@ const HomeAddress = () => {
             chronicCareCon: chronicCare?.chronicCareCon || '',
             chronicCareAmount: chronicCare?.chronicCareAmount || '',
             chronicCareLoc: chronicCare?.chronicCareLoc || '',
+            chronicCarePeriod: chronicCare?.chronicCarePeriod || '',
         }));
         setIsEditing(false);
         setError('');
@@ -78,6 +82,7 @@ const HomeAddress = () => {
             chronicCareCon: status?.chronicCareCon || 'empty',
             chronicCareAmount: status?.chronicCareAmount || 'empty',
             chronicCareLoc: status?.chronicCareLoc || 'empty',
+            chronicCarePeriod: status?.chronicCarePeriod || 'empty',
         }))
     };
 
@@ -102,6 +107,7 @@ const HomeAddress = () => {
                                 chronicCareCon: fieldStatuses.chronicCareCon,
                                 chronicCareAmount: fieldStatuses.chronicCareAmount,
                                 chronicCareLoc: fieldStatuses.chronicCareLoc,
+                                chronicCarePeriod: fieldStatuses.chronicCarePeriod,
                             }
                         }
                     }
@@ -150,8 +156,8 @@ const HomeAddress = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-10 gap-6">
-                    <div className="col-span-2">
+                <div className="grid grid-cols-12 gap-6">
+                    <div className="col-span-4">
                         <DatePicker
                             type="chronicCareDateIns"
                             name="chronicCareDateIns"
@@ -165,7 +171,7 @@ const HomeAddress = () => {
                         />
                     </div>
 
-                    <div className="col-span-2">
+                    <div className="col-span-4">
                         <Input
                             type="chronicCarePia"
                             name="chronicCarePia"
@@ -182,7 +188,7 @@ const HomeAddress = () => {
                         />
                     </div>
 
-                    <div className="col-span-2">
+                    <div className="col-span-4">
                         <Select
                             type="chronicCareCon"
                             name="chronicCareCon"
@@ -197,7 +203,7 @@ const HomeAddress = () => {
                         />
                     </div>
 
-                    <div className="col-span-2">
+                    <div className="col-span-4">
                         <Input
                             type="chronicCareAmount"
                             name="chronicCareAmount"
@@ -214,7 +220,7 @@ const HomeAddress = () => {
                         />
                     </div>
 
-                    <div className="col-span-2">
+                    <div className="col-span-4">
                         <Input
                             type="chronicCareLoc"
                             name="chronicCareLoc"
@@ -230,6 +236,23 @@ const HomeAddress = () => {
                             onStatusChange={(newStatus) => handleStatusChange('chronicCareLoc', newStatus)}
                         />
                     </div>
+
+                    { application.submitionType === 'renewal' &&
+                        <div className="col-span-4">
+                            <Select
+                                type="chronicCarePeriod"
+                                name="chronicCarePeriod"
+                                id="chronicCarePeriod"
+                                label="Chronic Care Period"
+                                value={formData.chronicCarePeriod}
+                                options={PERIOD}
+                                onChange={handleChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.chronicCarePeriod}
+                                onStatusChange={(newStatus) => handleStatusChange('chronicCarePeriod', newStatus)}
+                            />
+                        </div>
+                    }
                 </div>
 
                 {!isEditing && (

@@ -24,6 +24,7 @@ const OtherInformation = () => {
         caseComposition: application?.caseComposition || '',
         clientNoticeLanguage: application?.clientNoticeLanguage || '',
         signatureDate: application?.signatureDate?.split('T')[0] || '',
+        priority: application?.priority || '',
         familyPlanning: application?.familyPlanning || false,
         healthPlan: application?.healthPlan || false,
     });
@@ -42,6 +43,7 @@ const OtherInformation = () => {
         caseComposition: status?.caseComposition || 'empty',
         clientNoticeLanguage: status?.clientNoticeLanguage || 'empty',
         signatureDate: status?.signatureDate || 'empty',
+        priority: status?.priority || 'empty',
         familyPlanning: status?.familyPlanning || 'empty',
         healthPlan: status?.healthPlan || 'empty',
     });
@@ -91,6 +93,7 @@ const OtherInformation = () => {
             caseComposition: application?.caseComposition || '',
             clientNoticeLanguage: application?.clientNoticeLanguage || '',
             signatureDate: application?.signatureDate?.split('T')[0] || '',
+            priority: application?.priority || '',
             familyPlanning: application?.familyPlanning || false,
             healthPlan: application?.healthPlan || false,
         }));
@@ -110,6 +113,7 @@ const OtherInformation = () => {
             caseComposition: status?.caseComposition || 'empty',
             clientNoticeLanguage: status?.clientNoticeLanguage || 'empty',
             signatureDate: status?.signatureDate || 'empty',
+            priority: status?.priority || 'empty',
             familyPlanning: status?.familyPlanning || 'empty',
             healthPlan: status?.healthPlan || 'empty',
         }));
@@ -138,6 +142,7 @@ const OtherInformation = () => {
                     caseComposition: formData.caseComposition,
                     clientNoticeLanguage: formData.clientNoticeLanguage,
                     signatureDate: formData.signatureDate,
+                    priority: formData.priority,
                     familyPlanning: formData.familyPlanning,
                     healthPlan: formData.healthPlan,
                     fieldStatus: {
@@ -165,6 +170,7 @@ const OtherInformation = () => {
                 caseComposition: response.data.data.caseComposition,
                 clientNoticeLanguage: response.data.data.clientNoticeLanguage,
                 signatureDate: response.data.data.signatureDate?.split('T')[0],
+                priority: response.data.data.priority,
                 familyPlanning: response.data.data.familyPlanning,
                 healthPlan: response.data.data.healthPlan,
             }));
@@ -255,7 +261,7 @@ const OtherInformation = () => {
                                     value={formData.contactName}
                                     onChange={handleChange}
                                     maxLength={28}
-                                    pattern="^[a-zA-Z\\s]*$"
+                                    pattern="^[a-zA-Z\s]*$"
                                     patternError="Contact Name must be a valid name"
                                     disabled={!isEditing}
                                     status={fieldStatuses.contactName}
@@ -345,9 +351,11 @@ const OtherInformation = () => {
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <p className="col-span-12 text-sm text-gray-500">* Case name must be head of household. Enter last name, space, first name.</p>
-                    <div className="col-span-3">
+                <div className="grid grid-cols-10 gap-6">
+                    <p className="col-span-10 text-sm text-gray-500">* Case name must be head of household. Enter last name, space, first name.</p>
+                    <div className="col-span-2">
                         <Input
                             type="text"
                             name="caseName"
@@ -365,7 +373,7 @@ const OtherInformation = () => {
                         />
                     </div>
 
-                    <div className="col-span-3">
+                    <div className="col-span-2">
                         <Input
                             type="caseComposition"
                             name="caseComposition"
@@ -383,7 +391,7 @@ const OtherInformation = () => {
                         />
                     </div>
 
-                    <div className="col-span-3">
+                    <div className="col-span-2">
                         <Select
                             name="clientNoticeLanguage"
                             id="clientNoticeLanguage"
@@ -398,7 +406,7 @@ const OtherInformation = () => {
                         />
                     </div>
 
-                    <div className="col-span-3">
+                    <div className="col-span-2">
                         <DatePicker
                             name="signatureDate"
                             id="signatureDate"
@@ -412,6 +420,23 @@ const OtherInformation = () => {
                         />
                     </div>
 
+                    <div className="col-span-2">
+                        <Input
+                            type="priority"
+                            name="priority"
+                            id="priority"
+                            label="Priority"
+                            value={formData.priority}
+                            onChange={handleChange}
+                            maxLength={application?.submitionType === 'renewal' ? 1 : 4}
+                            disabled={!isEditing}
+                            status={fieldStatuses.priority}
+                            onStatusChange={(newStatus) => handleStatusChange('priority', newStatus)}
+                        />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-6">
                     <div className="col-span-12 flex items-end gap-2">
                         <Checkbox
                             name="familyPlanning"

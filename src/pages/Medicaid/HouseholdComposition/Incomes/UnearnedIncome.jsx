@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
-import { Input, Button, Select } from '../../../../components/Form';
+import { Input, Button, Select, Checkbox } from '../../../../components/Form';
 import { UNEARNED_INCOME_CD } from '../../../../constants/WMS_Codes/unearnedIncomeCD';
 import { UNEARNED_INCOME_SOURCES } from '../../../../constants/WMS_Codes/unearnedIncomeSources';
 import { PERIOD } from '../../../../constants/WMS_Codes/period';
 import { CTG } from '../../../../constants/WMS_Codes/ctg';
 
 const UnearnedIncome = ({ income }) => {
-    const { member, setMember } = useOutletContext();
+    const { member, setMember, application } = useOutletContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -26,6 +26,7 @@ const UnearnedIncome = ({ income }) => {
         exempt1: income?.exempt1 || '',
         cd2: income?.cd2 || '',
         exempt2: income?.exempt2 || '',
+        noChange: income?.noChange || false,
     });
 
     const [fieldStatuses, setFieldStatuses] = useState({
@@ -37,6 +38,7 @@ const UnearnedIncome = ({ income }) => {
         exempt1: income?.fieldStatus?.exempt1 || 'default',
         cd2: income?.fieldStatus?.cd2 || 'default',
         exempt2: income?.fieldStatus?.exempt2 || 'default',
+        noChange: income?.fieldStatus?.noChange || 'default',
     });
 
     const handleChange = (e) => {
@@ -80,6 +82,7 @@ const UnearnedIncome = ({ income }) => {
             exempt1: income?.exempt1 || '',
             cd2: income?.cd2 || '',
             exempt2: income?.exempt2 || '',
+            noChange: income?.noChange || false,
         }));
         setIsEditing(false);
         setError('');
@@ -154,6 +157,14 @@ const UnearnedIncome = ({ income }) => {
         }
     };
 
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: checked
+        }));
+    };
+
     return (
         <div>
             {error && (
@@ -189,6 +200,21 @@ const UnearnedIncome = ({ income }) => {
                 </div>
 
                 <div className="grid grid-cols-12 gap-6 border border-gray-200 rounded-md p-4">
+                    { application.submitionType === 'renewal' &&
+                        <div className="col-span-12">
+                            <Checkbox
+                                name="noChange"
+                                id="noChange"
+                                label="Check here if the unearned income information has not changed"
+                                value={formData.noChange}
+                                checked={formData.noChange}
+                                onChange={handleCheckboxChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.noChange}
+                                onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
+                            />
+                        </div>
+                    }
                     <div className="col-span-3">
                         <Select
                             name="ctg"

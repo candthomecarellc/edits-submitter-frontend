@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
-import { Input, Button, Select } from '../../../../components/Form';
+import { Input, Button, Select, Checkbox } from '../../../../components/Form';
 import { RESOURCE_CD } from '../../../../constants/WMS_Codes/resourceCD';
 import { UTXN2_FLAG } from '../../../../constants/utxn2flag';
 import { PERIOD } from '../../../../constants/WMS_Codes/period';
 import { CTG } from '../../../../constants/WMS_Codes/ctg';
 
 const Resource = ({ resource }) => {
-    const { member, setMember } = useOutletContext();
+    const { member, setMember, application } = useOutletContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -23,6 +23,7 @@ const Resource = ({ resource }) => {
         period: resource?.period || '',
         cd: resource?.cd || '',
         utxn2Flag: resource?.utxn2Flag || '',
+        noChange: resource?.noChange || '',
     });
 
     const [fieldStatuses, setFieldStatuses] = useState({
@@ -31,6 +32,7 @@ const Resource = ({ resource }) => {
         period: resource?.fieldStatus?.period || 'default',
         cd: resource?.fieldStatus?.cd || 'default',
         utxn2Flag: resource?.fieldStatus?.utxn2Flag || 'default',
+        noChange: resource?.fieldStatus?.noChange || 'default',
     });
 
     const handleChange = (e) => {
@@ -71,6 +73,7 @@ const Resource = ({ resource }) => {
             period: resource?.period || '',
             cd: resource?.cd || '',
             utxn2Flag: resource?.utxn2Flag || '',
+            noChange: resource?.noChange || '',
         }));
         setIsEditing(false);
         setError('');
@@ -145,6 +148,14 @@ const Resource = ({ resource }) => {
         }
     };
 
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: checked
+        }));
+    };
+
     return (
         <div>
             {error && (
@@ -180,6 +191,21 @@ const Resource = ({ resource }) => {
                 </div>
 
                 <div className="grid grid-cols-10 gap-6 border border-gray-200 rounded-md p-4">
+                    { application.submitionType === 'renewal' &&
+                        <div className="col-span-10">
+                            <Checkbox
+                                name="noChange"
+                                id="noChange"
+                                label="Check here if the resource information has not changed"
+                                value={formData.noChange}
+                                checked={formData.noChange}
+                                onChange={handleCheckboxChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.noChange}
+                                onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
+                            />
+                        </div>
+                    }
                     <div className="col-span-2">
                         <Select
                             name="ctg"

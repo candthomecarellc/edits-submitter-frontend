@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
-import { Input, Button, Select } from '../../../../components/Form';
+import { Input, Button, Select, Checkbox } from '../../../../components/Form';
 import { CTG } from '../../../../constants/WMS_Codes/ctg';
 import { EARNED_INCOME_SOURCES } from '../../../../constants/WMS_Codes/earnedIncomeSources';
 import { PERIOD } from '../../../../constants/WMS_Codes/period';
 
 const EarnedIncome = ({ income }) => {
-    const { member, setMember } = useOutletContext();
+    const { member, setMember, application } = useOutletContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -28,6 +28,7 @@ const EarnedIncome = ({ income }) => {
         ctSup: income?.ctSup || '',
         wkRel: income?.wkRel || '',
         irwe: income?.irwe || '',
+        noChange: income?.noChange || false,
     });
 
     const [fieldStatuses, setFieldStatuses] = useState({
@@ -42,6 +43,7 @@ const EarnedIncome = ({ income }) => {
         ctSup: income?.fieldStatus?.ctSup ||'default',
         wkRel: income?.fieldStatus?.wkRel ||'default',
         irwe: income?.fieldStatus?.irwe ||'default',
+        noChange: income?.fieldStatus?.noChange || 'default',
     });
 
     // Update form data when income prop changes
@@ -107,6 +109,7 @@ const EarnedIncome = ({ income }) => {
             ctSup: income?.ctSup || '',
             wkRel: income?.wkRel || '',
             irwe: income?.irwe || '',
+            noChange: income?.noChange || false,
         }));
         setIsEditing(false);
         setError('');
@@ -181,6 +184,14 @@ const EarnedIncome = ({ income }) => {
         }
     };
 
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: checked
+        }));
+    };
+
     const eidOptions = [
         { value: '1', label: '1' },
         { value: '4', label: '4' },
@@ -230,6 +241,23 @@ const EarnedIncome = ({ income }) => {
                 </div>
 
                 <div className="grid grid-cols-12 gap-6 border border-gray-200 rounded-md p-4">
+
+                    { application.submitionType === 'renewal' &&
+                        <div className="col-span-12">
+                            <Checkbox
+                                name="noChange"
+                                id="noChange"
+                                label="Check here if the earned income information has not changed"
+                                value={formData.noChange}
+                                checked={formData.noChange}
+                                onChange={handleCheckboxChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.noChange}
+                                onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
+                            />
+                        </div>
+                    }
+
                     <div className="col-span-3">
                         <Select
                             name="ctg"

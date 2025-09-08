@@ -70,7 +70,6 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             value={formData.applicant.first}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            required
                         />
                     </div>
                     <div>
@@ -84,7 +83,6 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             value={formData.applicant.middle}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            required
                         />
                     </div>
                     <div>
@@ -98,7 +96,6 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             value={formData.applicant.last}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            required
                         />
                     </div>
                     <div>
@@ -112,7 +109,6 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             value={formData.email}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            required
                         />
                     </div>
                     <div>
@@ -126,7 +122,6 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             value={formData.primaryPhone.number}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            required
                         />
                     </div>
                     <div>
@@ -139,7 +134,6 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             value={formData.primaryPhone.type}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            required
                         >
                             <option value="">-Select-</option>
                             <option value="1">Home</option>
@@ -159,7 +153,6 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             value={formData.caseName}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            required
                         />
                     </div>
                     <div>
@@ -173,7 +166,6 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             value={formData.providerId}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            required
                         />
                     </div>
                     <div>
@@ -187,7 +179,6 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             value={formData.patientId}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            required
                         />
                     </div>
                     <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">

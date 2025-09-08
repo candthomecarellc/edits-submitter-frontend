@@ -7,6 +7,7 @@ import { WATER_PERIODS } from '../../../constants/selectOptions';
 import { ADDITIONAL_ALLOWANCE_TYPES } from '../../../constants/WMS_Codes/additionalAllowanceTypes';
 import { BUDGET_TYPES } from '../../../constants/WMS_Codes/budgetTypes';
 import { FUEL_TYPE } from '../../../constants/fuelType';
+import { PERIOD } from '../../../constants/WMS_Codes/period';
 
 const HomeAddress = () => {
     const { application, setApplication } = useOutletContext();
@@ -15,10 +16,13 @@ const HomeAddress = () => {
     const [success, setSuccess] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [originalData, setOriginalData] = useState(null);
+    const renewal = application.submitionType === 'renewal';
 
     const [formData, setFormData] = useState({
         shelterType: application?.householdExpense?.shelterType || '',
         shelterAmount: application?.householdExpense?.shelterAmount || '',
+        shelterPeriod: application?.householdExpense?.shelterPeriod || '',
+        shelterNoChange: application?.householdExpense?.shelterNoChange || '',
         waterCostPeriod: application?.householdExpense?.waterCostPeriod || '',
         waterCostAmount: application?.householdExpense?.waterCostAmount || '',
         addType: application?.householdExpense?.addType || '',
@@ -34,6 +38,8 @@ const HomeAddress = () => {
     const [fieldStatuses, setFieldStatuses] = useState({
         shelterType: status?.shelterType || 'empty',
         shelterAmount: status?.shelterAmount || 'empty',
+        shelterPeriod: status?.shelterPeriod || 'empty',
+        shelterNoChange: status?.shelterNoChange || 'empty',
         waterCostPeriod: status?.waterCostPeriod || 'empty',
         waterCostAmount: status?.waterCostAmount || 'empty',
         addType: status?.addType || 'empty',
@@ -80,6 +86,8 @@ const HomeAddress = () => {
             ...prev,
             shelterType: application?.householdExpense?.shelterType || '',
             shelterAmount: application?.householdExpense?.shelterAmount || '',
+            shelterPeriod: application?.householdExpense?.shelterPeriod || '',
+            shelterNoChange: application?.householdExpense?.shelterNoChange || '',
             waterCostPeriod: application?.householdExpense?.waterCostPeriod || '',
             waterCostAmount: application?.householdExpense?.waterCostAmount || '',
             addType: application?.householdExpense?.addType || '',
@@ -96,6 +104,8 @@ const HomeAddress = () => {
             ...prev,
             shelterType: status?.shelterType || 'empty',
             shelterAmount: status?.shelterAmount || 'empty',
+            shelterPeriod: status?.shelterPeriod || 'empty',
+            shelterNoChange: status?.shelterNoChange || 'empty',
             waterCostPeriod: status?.waterCostPeriod || 'empty',
             waterCostAmount: status?.waterCostAmount || 'empty',
             addType: status?.addType || 'empty',
@@ -137,6 +147,8 @@ const HomeAddress = () => {
                 ...prev,
                 shelterType: response.data.data.householdExpense?.shelterType || '',
                 shelterAmount: response.data.data.householdExpense?.shelterAmount || '',
+                shelterPeriod: response.data.data.householdExpense?.shelterPeriod || '',
+                shelterNoChange: response.data.data.householdExpense?.shelterNoChange || '',
                 waterCostPeriod: response.data.data.householdExpense?.waterCostPeriod || '',
                 waterCostAmount: response.data.data.householdExpense?.waterCostAmount || '',
                 addType: response.data.data.householdExpense?.addType || '',
@@ -188,9 +200,9 @@ const HomeAddress = () => {
                 </div>
 
                 <div className="grid grid-cols-12 gap-6">
-                    <div className="col-span-4 border border-gray-200 rounded-md p-4">
-                        <div className="grid grid-cols-2 gap-6">
-                            <div className="col-span-2">
+                    <div className={`col-span-${renewal ? 6 : 4} border border-gray-200 rounded-md p-4`}>
+                        <div className={`grid grid-cols-${renewal ? 2 : 1} gap-6`}>
+                            <div className="col-span-1">
                                 <Select
                                     name="shelterType"
                                     id="shelterType"
@@ -204,7 +216,7 @@ const HomeAddress = () => {
                                     onStatusChange={(newStatus) => handleStatusChange('shelterType', newStatus)}
                                 />
                             </div>
-                            <div className="col-span-2">
+                            <div className="col-span-1">
                                 <Input
                                     type="shelterAmount"
                                     name="shelterAmount"
@@ -220,10 +232,40 @@ const HomeAddress = () => {
                                     onStatusChange={(newStatus) => handleStatusChange('shelterAmount', newStatus)}
                                 />
                             </div>
+                            { renewal &&
+                                <div className="col-span-1">
+                                    <Select
+                                        name="shelterPeriod"
+                                        id="shelterPeriod"
+                                        label="Shelter Period"
+                                        value={formData.shelterPeriod}
+                                        onChange={handleChange}
+                                        options={PERIOD}
+                                        disabled={!isEditing}
+                                        status={fieldStatuses.shelterPeriod}
+                                        onStatusChange={(newStatus) => handleStatusChange('shelterPeriod', newStatus)}
+                                    />
+                                </div>
+                            }
+                            { renewal &&
+                                <div className="col-span-1">
+                                    <Checkbox
+                                        name="shelterNoChange"
+                                        id="shelterNoChange"
+                                        label="Check here if the shelter has not changed"
+                                        checked={formData.shelterNoChange}
+                                        value={formData.shelterNoChange}
+                                        onChange={handleCheckboxChange}
+                                        disabled={!isEditing}
+                                        status={fieldStatuses.shelterNoChange}
+                                        onStatusChange={(newStatus) => handleStatusChange('shelterNoChange', newStatus)}
+                                    />
+                                </div>
+                            }
                         </div>
                     </div>
 
-                    <div className="col-span-4 border border-gray-200 rounded-md p-4">
+                    <div className={`col-span-${renewal ? 3 : 4} border border-gray-200 rounded-md p-4`}>
                         <div className="grid grid-cols-2 gap-6">
                             <div className="col-span-2">
                                 <Select
@@ -257,7 +299,7 @@ const HomeAddress = () => {
                         </div>
                     </div>
                     
-                    <div className="col-span-4 border border-gray-200 rounded-md p-4">
+                    <div className={`col-span-${renewal ? 3 : 4} border border-gray-200 rounded-md p-4`}>
                         <div className="grid grid-cols-2 gap-6">
                             <div className="col-span-2">
                                 <Select

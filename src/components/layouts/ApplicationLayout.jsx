@@ -8,6 +8,46 @@ const ApplicationLayout = () => {
     const [application, setApplication] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    // startNavGuardFeature
+    // const [editingForms, setEditingForms] = useState({
+    //     applicantInformation: false,
+    //     householdExpense: false,
+    //     householdComposition: false,
+    //     documents: false,
+    //     // ... other forms
+    // });
+    
+    // const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+    // const handleNavigation = (path) => {
+    //     if (hasUnsavedChanges) {
+    //       setShowSavePrompt(true);
+    //       setPendingNavigation(path);
+    //     } else {
+    //       navigate(path);
+    //     }
+    // };
+
+    // In ApplicationLayout.jsx
+    // const checkForEditingState = () => {
+    //     return Object.values(editingForms).some(isEditing => isEditing);
+    // };
+    
+    // useEffect(() => {
+    //     setHasUnsavedChanges(checkForEditingState());
+    // }, [editingForms]);
+    
+    // const handleSaveAndNavigate = async (targetPath) => {
+    //     try {
+    //     // Save all pending changes
+    //     await saveApplication(application);
+    //     setEditingForms({}); // Reset all editing states
+    //     setHasUnsavedChanges(false);
+    //     navigate(targetPath);
+    //     } catch (error) {
+    //     console.error('Failed to save:', error);
+    //     }
+    // };
+    // endNavGuardFeature
 
     useEffect(() => {
         const fetchApplication = async () => {
@@ -60,6 +100,9 @@ const ApplicationLayout = () => {
                 <h3 className="text-lg font-medium text-gray-900">Application not found</h3>
                 <button
                     onClick={() => navigate('/applications')}
+                    // startNavGuardFeature
+                    // onClick={() => handleNavigation('/application/applicant-information')}
+                    // endNavGuardFeature
                     className="mt-4 text-indigo-600 hover:text-indigo-900"
                 >
                     Back to Applications
@@ -165,6 +208,9 @@ const ApplicationLayout = () => {
                 <div className="flex-1 overflow-y-auto">
                     <div className="">
                         <Outlet context={{ application, setApplication }} />
+                        {/* startNavGuardFeature */}
+                        {/* <Outlet context={{ application, setApplication, setEditingForms }} /> */}
+                        {/* endNavGuardFeature */}
                     </div>
                 </div>
 

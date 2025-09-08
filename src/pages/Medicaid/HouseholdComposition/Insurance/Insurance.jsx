@@ -2,8 +2,11 @@ import HealthInsurance from './HealthInsurance';
 import MedicalExpenses from './MedicalExpenses';
 import LivingOutside from './LivingOutside';
 import HealthPlan from './HealthPlan';
+import TPHIInformation from './TPHIInformation';
+import { useOutletContext } from 'react-router-dom';
 
 const Insurance = () => {
+    const { application } = useOutletContext();
     return (
         <div className="p-6">
             <div className="sm:flex sm:items-center sm:justify-between mb-6">
@@ -19,6 +22,7 @@ const Insurance = () => {
             <MedicalExpenses />
             <LivingOutside />
             <HealthPlan />
+            { application.submitionType === 'renewal' && <TPHIInformation /> }
         </div>
     );
 };

@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Button, CheckboxGroup, Checkbox, Select } from '../../../components/Form';
 import { PHONE_TYPES } from '../../../constants/phone';
+import { STATE_CODES } from '../../../constants/WMS_Codes/stateCodes'
 
 const SecondMailingAddress = () => {
     const { application, setApplication } = useOutletContext();
@@ -269,7 +270,6 @@ const SecondMailingAddress = () => {
 
                         <div className="col-span-4">
                             <Select
-                                type="phoneType"
                                 name="phoneType"
                                 id="phoneType"
                                 label="Phone Type"
@@ -342,13 +342,12 @@ const SecondMailingAddress = () => {
                         </div>
 
                         <div className="col-span-4">
-                            <Input
-                                type="state"
+                            <Select
                                 name="state"
                                 id="state"
                                 label="State"
                                 value={formData.state}
-                                maxLength={2}
+                                options={STATE_CODES}
                                 onChange={handleChange}
                                 disabled={!isEditing}
                                 status={fieldStatuses.state}

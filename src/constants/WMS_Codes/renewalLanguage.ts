@@ -1,4 +1,4 @@
-export const LANGUAGE_OPTIONS = [
+export const RENEWAL_LANGUAGE_OPTIONS = [
     { value: 'african-languages', label: 'African Languages' },
     { value: 'alaskan', label: 'Alaskan' },
     { value: 'albanian', label: 'Albanian' },
@@ -27,8 +27,6 @@ export const LANGUAGE_OPTIONS = [
     { value: 'chinese-fujian', label: 'Chinese - Fujian' },
     { value: 'chinese-mandarin', label: 'Chinese-Mandarin' },
     { value: 'chinese-other', label: 'Chinese-Other' },
-    { value: 'chinese-simplified', label: 'Chinese Simplified' },
-    { value: 'chinese-traditional', label: 'Chinese Traditional' },
     { value: 'creole-criollo', label: 'Creole - Criollo' },
     { value: 'creole-haitian', label: 'Creole - Haitian' },
     { value: 'creole-other', label: 'Creole - Other' },

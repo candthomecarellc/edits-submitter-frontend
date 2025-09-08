@@ -65,21 +65,21 @@ const HouseholdComposition = () => {
     const validateForm = () => {
         const errors = {};
         
-        if (!newMemberData.legalName.first.trim()) {
-            errors['legalName.first'] = 'First name is required';
-        }
+        // if (!newMemberData.legalName.first.trim()) {
+        //     errors['legalName.first'] = 'First name is required';
+        // }
         
-        if (!newMemberData.legalName.last.trim()) {
-            errors['legalName.last'] = 'Last name is required';
-        }
+        // if (!newMemberData.legalName.last.trim()) {
+        //     errors['legalName.last'] = 'Last name is required';
+        // }
 
-        if (!newMemberData.lineNumber) {
-            errors.lineNumber = 'Line number is required';
-        }
+        // if (!newMemberData.lineNumber) {
+        //     errors.lineNumber = 'Line number is required';
+        // }
         
-        if (!newMemberData.relationshipToApplicant) {
-            errors.relationshipToApplicant = 'Relationship to applicant is required';
-        }
+        // if (!newMemberData.relationshipToApplicant) {
+        //     errors.relationshipToApplicant = 'Relationship to applicant is required';
+        // }
         
         setFormErrors(errors);
         return Object.keys(errors).length === 0;

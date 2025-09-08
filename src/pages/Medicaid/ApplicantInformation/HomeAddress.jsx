@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
-import { Input, Button, Checkbox } from '../../../components/Form';
+import { Input, Button, Checkbox, Select } from '../../../components/Form';
+import { STATE_CODES } from '../../../constants/WMS_Codes/stateCodes'
 
 const HomeAddress = () => {
     const { application, setApplication } = useOutletContext();
@@ -18,8 +19,9 @@ const HomeAddress = () => {
         streetName: application?.residence?.street || '',
         city: application?.residence?.city || '',
         state: application?.residence?.state || '',
-        zipCode: application?.residence?.zip || '',
+        zip: application?.residence?.zip || '',
         county: application?.residence?.county || '',
+        noChange: application?.residence?.noChange || false,
     });
 
     const status = application?.fieldStatus?.homeAddress;
@@ -33,6 +35,7 @@ const HomeAddress = () => {
         state: status?.state || 'empty',
         zip: status?.zip || 'empty',
         county: status?.county || 'empty',
+        noChange: status?.noChange || 'empty',
     });
 
     const handleChange = (e) => {
@@ -75,8 +78,9 @@ const HomeAddress = () => {
             streetName: application?.residence?.street || '',
             city: application?.residence?.city || '',
             state: application?.residence?.state || '',
-            zipCode: application?.residence?.zip || '',
+            zip: application?.residence?.zip || '',
             county: application?.residence?.county || '',
+            noChange: application?.residence?.noChange || false,
         }));
         setIsEditing(false);
         setError('');
@@ -91,6 +95,7 @@ const HomeAddress = () => {
             state: status?.state || 'empty',
             zip: status?.zip || 'empty',
             county: status?.county || 'empty',
+            noChange: status?.noChange || 'empty',
         }));
     };
 
@@ -112,8 +117,9 @@ const HomeAddress = () => {
                         street: formData.streetName,
                         city: formData.city,
                         state: formData.state,
-                        zip: formData.zipCode,
+                        zip: formData.zip,
                         county: formData.county,
+                        noChange: formData.noChange,
                     },
                     homeless: formData.homeless,
                     fieldStatus: {
@@ -142,10 +148,10 @@ const HomeAddress = () => {
         }
     };
 
-    const handleHomelessChange = (e) => {
+    const handleCheckboxChange = (e) => {
         setFormData(prev => ({
             ...prev,
-            homeless: e.target.checked
+            [e.target.name]: e.target.checked
         }));
     };
 
@@ -178,7 +184,7 @@ const HomeAddress = () => {
                             label="Check here if the applicant is homeless"
                             checked={formData.homeless}
                             value={formData.homeless}
-                            onChange={handleHomelessChange}
+                            onChange={handleCheckboxChange}
                             disabled={!isEditing}
                             status={fieldStatuses.homeless}
                             onStatusChange={(newStatus) => handleStatusChange('homeless', newStatus)}
@@ -267,15 +273,14 @@ const HomeAddress = () => {
                         </div>
 
                         <div className="col-span-3">
-                            <Input
-                                type="state"
+                            <Select
                                 name="state"
                                 id="state"
                                 label="State"
                                 value={formData.state}
+                                options={STATE_CODES}
                                 onChange={handleChange}
                                 required={true}
-                                maxLength={2}
                                 disabled={!isEditing}
                                 status={fieldStatuses.state}
                                 onStatusChange={(newStatus) => handleStatusChange('state', newStatus)}
@@ -288,7 +293,7 @@ const HomeAddress = () => {
                                 name="zip"
                                 id="zip"
                                 label="Zip Code"
-                                value={formData.zipCode}
+                                value={formData.zip}
                                 onChange={handleChange}
                                 required={true}
                                 maxLength={9}
@@ -311,6 +316,22 @@ const HomeAddress = () => {
                                 onStatusChange={(newStatus) => handleStatusChange('county', newStatus)}
                             />
                         </div>
+
+                        { application.submitionType === 'renewal' &&
+                            <div className="col-span-12">
+                                <Checkbox
+                                    name="noChange"
+                                    id="noChange"
+                                    label="Check here if the home address has not changed"
+                                    checked={formData.noChange}
+                                    value={formData.noChange}
+                                    onChange={handleCheckboxChange}
+                                    disabled={!isEditing}
+                                    status={fieldStatuses.noChange}
+                                    onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
+                                />
+                            </div>
+                        }
                     </div>
                 )}
 

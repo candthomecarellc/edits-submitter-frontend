@@ -104,7 +104,7 @@ const HouseholdMemberLayout = () => {
                 {/* Main Content */}
                 <div className="flex-1 overflow-y-auto">
                     <div className="p-6">
-                        <Outlet context={{ member, setMember }} />
+                        <Outlet context={{ member, setMember, application }} />
                     </div>
                 </div>
             </div>

@@ -1,0 +1,17 @@
+export const RENEWAL_RESOURCE_CD = [
+    { value: 'cash', label: 'Cash on Hand' },
+    { value: 'bank-accounts', label: 'Bank Accounts' },
+    { value: 'stocks-bonds', label: 'Stocks, Bonds, Securities' },
+    { value: 'promissory-notes', label: 'Promissory Notes' },
+    { value: 'mortgages', label: 'Mortgages, Conditional Sales Contracts' },
+    { value: 'trust-funds', label: 'Trust Funds' },
+    { value: 'pia-savings', label: 'PIA Savings Accts' },
+    { value: 'lump-sum', label: 'Lump Sum Payment' },
+    { value: 'german-reparation', label: 'German Reparation Payments' },
+    { value: 'automobile', label: 'Equity Value of Automobile' },
+    { value: 'straight-line', label: 'Countable cash value face value is over $1500' },
+    { value: 'endowment', label: 'Endowment Insurance' },
+    { value: 'life-insurance', label: 'Exempt case value of life insurance for SSI-related' },
+    { value: 'burial-reserve', label: 'Burial Reserve Disregard for SSI-related budget' },
+    { value: 'other', label: 'Other Liquid Resources (including royalties and honoraria)' },
+]

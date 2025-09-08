@@ -14,6 +14,37 @@ const PersonalDetails = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [originalData, setOriginalData] = useState(null);
 
+    // startNavGuardFeature
+    // const { setEditingForms } = useOutletContext();
+
+    // useEffect(() => {
+    // // Report editing state when form data changes
+    // const hasChanges = checkForChanges(formData, originalData);
+    // setEditingForms(prev => ({
+    //     ...prev,
+    //     applicantInformation: hasChanges
+    // }));
+    // }, [formData, originalData, setEditingForms]);
+
+    // const [originalData, setOriginalData] = useState(null);
+    // const [hasChanges, setHasChanges] = useState(false);
+
+    // useEffect(() => {
+    // setOriginalData(formData);
+    // }, []);
+
+    // useEffect(() => {
+    // const changed = JSON.stringify(formData) !== JSON.stringify(originalData);
+    // setHasChanges(changed);
+    
+    // // Report to parent
+    // setEditingForms(prev => ({
+    //     ...prev,
+    //     [formName]: changed
+    // }));
+    // }, [formData, originalData, formName, setEditingForms]);
+    // endNavGuardFeature
+
     const [formData, setFormData] = useState({
         legalFirstName: application?.applicant?.first || '',
         legalMiddleInitial: application?.applicant?.middle || '',

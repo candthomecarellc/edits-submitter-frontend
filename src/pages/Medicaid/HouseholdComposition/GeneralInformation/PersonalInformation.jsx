@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
-import { Input, Button, Select, Radio, DatePicker } from '../../../../components/Form';
+import { Input, Button, Select, Radio, DatePicker, Checkbox } from '../../../../components/Form';
 import { SEX, GENDER } from '../../../../constants/WMS_Codes/gender';
 import { RELATIONSHIP } from '../../../../constants/WMS_Codes/relationship';
 import { NAME_TYPES } from '../../../../constants/selectOptions';
+import { STATE_CODES } from '../../../../constants/WMS_Codes/stateCodes';
 
 const PersonalInformation = () => {
-    const { member, setMember } = useOutletContext();
+    const { member, setMember, application } = useOutletContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -37,6 +38,8 @@ const PersonalInformation = () => {
         birthState: member?.birthState || '',
         birthCountry: member?.birthCountry || '',
         motherName: member?.motherName || '',
+        noChange: member?.noChange || false,
+        noChangeStatus: member?.noChangeStatus || '',
     });
 
     const status = member?.generalInformation?.personalInformation;
@@ -111,6 +114,8 @@ const PersonalInformation = () => {
             birthState: member?.birthState || '',
             birthCountry: member?.birthCountry || '',
             motherName: member?.motherName || '',
+            noChange: member?.noChange || false,
+            noChangeStatus: member?.noChangeStatus || '',
         });
         setIsEditing(false);
         setError('');
@@ -151,6 +156,14 @@ const PersonalInformation = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: checked
+        }));
     };
 
     const lineNumberOptions = [
@@ -393,12 +406,12 @@ const PersonalInformation = () => {
                     </div>
 
                     <div className="col-span-3">
-                        <Input
-                            type="birthState"
+                        <Select
                             name="birthState"
                             id="birthState"
                             label="State of Birth"
                             value={formData.birthState}
+                            options={STATE_CODES}
                             onChange={handleChange}
                             required
                             disabled={!isEditing}
@@ -436,6 +449,22 @@ const PersonalInformation = () => {
                             onStatusChange={(newStatus) => handleStatusChange('motherName', newStatus)}
                         />
                     </div>
+
+                    { application.submitionType === 'renewal' &&
+                        <div className="col-span-12">
+                            <Checkbox
+                                    name="noChange"
+                                    id="noChange"
+                                    label="Check here if the personal information has not changed"
+                                    value={formData.noChange}
+                                    checked={formData.noChange}
+                                    onChange={handleCheckboxChange}
+                                    disabled={!isEditing}
+                                    status={formData.noChangeStatus}
+                                    onStatusChange={(newStatus) => setFormData(prev => ({ ...prev, noChangeStatus: newStatus}))}
+                            />
+                        </div>
+                    }
                 </div>
 
                 {!isEditing && (

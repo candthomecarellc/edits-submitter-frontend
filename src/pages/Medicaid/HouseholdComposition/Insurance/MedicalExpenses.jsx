@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Button, Select, Checkbox } from '../../../../components/Form';
+import { STATE_CODES } from '../../../../constants/WMS_Codes/stateCodes';
 
 const MedicalExpenses = () => {
     const { member, setMember } = useOutletContext();
@@ -253,12 +254,12 @@ const MedicalExpenses = () => {
 
                     {formData.recentMoveIn && (
                         <div className="col-span-6">
-                            <Input
-                                type="text"
+                            <Select
                                 name="healthInsurance.moveInState"
                                 id="healthInsurance.moveInState"
                                 label="State"
                                 value={formData.healthInsurance.moveInState}
+                                options={STATE_CODES}
                                 onChange={handleChange}
                                 disabled={!isEditing}
                                 status={fieldStatuses.moveInState}

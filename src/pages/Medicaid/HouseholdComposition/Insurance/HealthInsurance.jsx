@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Input, Button, Checkbox, DatePicker } from '../../../../components/Form';
 
 const HealthInsurance = () => {
-    const { member, setMember } = useOutletContext();
+    const { member, setMember, application } = useOutletContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -20,6 +20,8 @@ const HealthInsurance = () => {
             personsCovered: member?.healthInsurance?.personsCovered || '',
             costOfPolicy: member?.healthInsurance?.costOfPolicy || '',
             endDateOfCoverage: member?.healthInsurance?.endDateOfCoverage || '',
+            medicareAmount: member?.healthInsurance?.medicareAmount || '',
+            medicareNoChange: member?.healthInsurance?.medicareNoChange || '',
         },
         medicaid: member?.medicaid || '',
         familyHealthPlus: member?.familyHealthPlus || '',
@@ -39,6 +41,8 @@ const HealthInsurance = () => {
         personsCovered: status?.personsCovered || 'default',
         costOfPolicy: status?.costOfPolicy || 'default',
         endDateOfCoverage: status?.endDateOfCoverage || 'default',
+        medicareAmount: status?.medicareAmount || 'default',
+        medicareNoChange: status?.medicareNoChange || 'default',
         medicare: status?.medicare || 'default',
         medicalAssistance: status?.medicalAssistance || 'default',
         jobHealthInsurance: status?.jobHealthInsurance || 'default',
@@ -64,10 +68,22 @@ const HealthInsurance = () => {
     };
 
     const handleCheckboxChange = (e) => {
-        setFormData(prev => ({
-            ...prev,
-            [e.target.name]: e.target.checked
-        }));
+        const { name, checked } = e.target;
+        if (name.includes('.')) {
+            const [parent, child] = name.split('.');
+            setFormData(prev => ({
+                ...prev,
+                [parent]: {
+                    ...prev[parent],
+                    [child]: checked
+                }
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: checked
+            }));
+        }
     };
 
     const handleStatusChange = (fieldName, newStatus) => {
@@ -90,6 +106,8 @@ const HealthInsurance = () => {
                 personsCovered: member?.healthInsurance?.personsCovered || '',
                 costOfPolicy: member?.healthInsurance?.costOfPolicy || '',
                 endDateOfCoverage: member?.healthInsurance?.endDateOfCoverage || '',
+                medicareAmount: member?.healthInsurance?.medicareAmount || '',
+                medicareNoChange: member?.healthInsurance?.medicareNoChange || '',
             },
             medicaid: member?.medicaid || '',
             familyHealthPlus: member?.familyHealthPlus || '',
@@ -308,6 +326,40 @@ const HealthInsurance = () => {
                             onStatusChange={(newStatus) => handleStatusChange('medicare', newStatus)}
                         />
                     </div>
+
+                    { application.submitionType === 'renewal' &&
+                        <div className="col-span-6 flex items-center">
+                            <Checkbox
+                                name="healthInsurance.medicareNoChange"
+                                id="healthInsurance.medicareNoChange"
+                                label="Check here if the Medicare information has not changed"
+                                value={formData.healthInsurance.medicareNoChange}
+                                checked={formData.healthInsurance.medicareNoChange}
+                                onChange={handleCheckboxChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.medicareNoChange}
+                                onStatusChange={(newStatus) => handleStatusChange('medicareNoChange', newStatus)}
+                            />
+                        </div>
+                    }
+
+                    { application.submitionType === 'renewal' && !formData.healthInsurance.medicareNoChange &&
+                        <div className="col-span-6">
+                            <Input
+                                type="healthInsurance.medicareAmount"
+                                name="healthInsurance.medicareAmount"
+                                id="healthInsurance.medicareAmount"
+                                label="Medicare Premium Amount"
+                                value={formData.healthInsurance.medicareAmount}
+                                onChange={handleChange}
+                                pattern="^[0-9]*$"
+                                patternError="Please enter a valid number"
+                                disabled={!isEditing}
+                                status={fieldStatuses.medicareAmount}
+                                onStatusChange={(newStatus) => handleStatusChange('medicareAmount', newStatus)}
+                            />
+                        </div>
+                    }
 
                     <div className="col-span-12">
                         <Checkbox

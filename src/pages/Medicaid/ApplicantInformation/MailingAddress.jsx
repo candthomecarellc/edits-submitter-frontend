@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
-import { Input, Button, Checkbox } from '../../../components/Form';
+import { Input, Button, Checkbox, Select } from '../../../components/Form';
+import { STATE_CODES } from '../../../constants/WMS_Codes/stateCodes'
+
 
 const MailingAddress = () => {
     const { application, setApplication } = useOutletContext();
@@ -12,6 +14,7 @@ const MailingAddress = () => {
 
     const [formData, setFormData] = useState({
         sameAsHomeAddress: application?.mailSame || false,
+        house: application?.mailingAddress?.house || '',
         apartmentNumber: application?.mailingAddress?.apartment || '',
         streetName: application?.mailingAddress?.street || '',
         city: application?.mailingAddress?.city || '',
@@ -22,6 +25,7 @@ const MailingAddress = () => {
     const status = application?.fieldStatus?.mailingAddress;
     const [fieldStatuses, setFieldStatuses] = useState({
         sameAsHomeAddress: status?.sameAsHomeAddress || 'empty',
+        house: status?.house || 'empty',
         apartmentNumber: status?.apartmentNumber || 'empty',
         streetName: status?.streetName || 'empty',
         city: status?.city || 'empty',
@@ -63,6 +67,7 @@ const MailingAddress = () => {
         setFormData(prev => ({
             ...prev,
             sameAsHomeAddress: application?.mailSame === true ? true : false,
+            house: application?.mailingAddress?.house || '',
             apartmentNumber: application?.mailingAddress?.apartment || '',
             streetName: application?.mailingAddress?.street || '',
             city: application?.mailingAddress?.city || '',
@@ -74,6 +79,7 @@ const MailingAddress = () => {
         setFieldStatuses(prev => ({
             ...prev,
             sameAsHomeAddress: status?.sameAsHomeAddress || 'empty',
+            house: status?.house || 'empty',
             apartmentNumber: status?.apartmentNumber || 'empty',
             streetName: status?.streetName || 'empty',
             city: status?.city || 'empty',
@@ -95,6 +101,7 @@ const MailingAddress = () => {
                 {
                     mailSame: formData.sameAsHomeAddress,
                     mailingAddress: {
+                        house: formData.house,
                         apartment: formData.apartmentNumber,
                         street: formData.streetName,
                         city: formData.city,
@@ -173,6 +180,21 @@ const MailingAddress = () => {
                     <div className="grid grid-cols-12 gap-6">
                         <div className="col-span-4">
                             <Input
+                                type="house"
+                                name="house"
+                                id="house"
+                                label="House Number"
+                                value={formData.house}
+                                maxLength={9}
+                                onChange={handleChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.house}
+                                onStatusChange={(newStatus) => handleStatusChange('house', newStatus)}
+                            />
+                        </div>
+
+                        <div className="col-span-4">
+                            <Input
                                 type="apartmentNumber"
                                 name="apartmentNumber"
                                 id="apartmentNumber"
@@ -186,7 +208,7 @@ const MailingAddress = () => {
                             />
                         </div>
 
-                        <div className="col-span-8">
+                        <div className="col-span-4">
                             <Input
                                 type="streetName"
                                 name="streetName"
@@ -217,13 +239,12 @@ const MailingAddress = () => {
                         </div>
 
                         <div className="col-span-4">
-                            <Input
-                                type="state"
+                            <Select
                                 name="state"
                                 id="state"
                                 label="State"
                                 value={formData.state}
-                                maxLength={2}
+                                options={STATE_CODES}
                                 onChange={handleChange}
                                 disabled={!isEditing}
                                 status={fieldStatuses.state}

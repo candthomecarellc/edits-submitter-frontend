@@ -5,9 +5,10 @@ import { Input, Button, Checkbox, Select, DatePicker, Radio } from '../../../../
 import { MARITAL_STATUS } from '../../../../constants/WMS_Codes/maritalStatus';
 import { EDUCATION_LEVEL } from '../../../../constants/educationLevel';
 import { STUDENT_TYPES } from '../../../../constants/selectOptions';
+import { CLIENT_REMOVED_REASON_CODES } from '../../../../constants/WMS_Codes/clientRemovedReasonCodes';
 
 const StatusInformation = () => {
-    const { member, setMember } = useOutletContext();
+    const { member, setMember, application } = useOutletContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -26,6 +27,8 @@ const StatusInformation = () => {
         studentId: member?.studentId || 0,
         studentType: member?.studentType || '',
         educationLevel: member?.educationLevel || 0,
+        removed: member?.removed || false,
+        removedReason: member?.removedReason || '',
     });
 
     const status = member?.generalInformation?.statusInformation;
@@ -73,6 +76,8 @@ const StatusInformation = () => {
             studentId: member?.studentId || 0,
             studentType: member?.studentType || '',
             educationLevel: member?.educationLevel || 0,
+            removed: member?.removed || false,
+            removedReason: member?.removedReason || '',
         }));
         setIsEditing(false);
         setError('');
@@ -144,7 +149,7 @@ const StatusInformation = () => {
 
                 <div className="grid grid-cols-12 gap-6">
                     <div className="col-span-6">
-                    <div className="pb-6">
+                        <div className="pb-6">
                             <Checkbox
                                 name="applying"
                                 id="applying"
@@ -186,32 +191,64 @@ const StatusInformation = () => {
                             />
                         </div>
                             
-                        <div className="pb-6">
-                            <Checkbox
-                                name="pregnant"
-                                id="pregnant"
-                                label="Pregnant"
-                                value={formData.pregnant}
-                                checked={formData.pregnant}
-                                onChange={handleCheckboxChange}
-                                disabled={!isEditing}
-                                status={fieldStatuses.pregnant}
-                                onStatusChange={(newStatus) => handleStatusChange('pregnant', newStatus)}
-                            />
+                        <div className="pb-6 grid grid-cols-3 gap-6">
+                            <div className="flex items-center col-span-1">
+                                <Checkbox
+                                    name="pregnant"
+                                    id="pregnant"
+                                    label="Pregnant"
+                                    value={formData.pregnant}
+                                    checked={formData.pregnant}
+                                    onChange={handleCheckboxChange}
+                                    disabled={!isEditing}
+                                    status={fieldStatuses.pregnant}
+                                    onStatusChange={(newStatus) => handleStatusChange('pregnant', newStatus)}
+                                />
+                            </div>
+                                
+                            { formData.pregnant && <div className="col-span-2">
+                                <DatePicker
+                                    name="pregnantDueDate"
+                                    id="pregnantDueDate"
+                                    label="Pregnant Due Date"
+                                    value={formData.pregnantDueDate}
+                                    onChange={handleChange}
+                                    disabled={!isEditing}
+                                    status={fieldStatuses.pregnantDueDate}
+                                    onStatusChange={(newStatus) => handleStatusChange('pregnantDueDate', newStatus)}
+                                />
+                            </div> }
                         </div>
                             
-                        <div className="pb-6">
-                            <DatePicker
-                                name="pregnantDueDate"
-                                id="pregnantDueDate"
-                                label="Pregnant Due Date"
-                                value={formData.pregnantDueDate}
-                                onChange={handleChange}
-                                disabled={!isEditing}
-                                status={fieldStatuses.pregnantDueDate}
-                                onStatusChange={(newStatus) => handleStatusChange('pregnantDueDate', newStatus)}
-                            />
-                        </div>
+                        { application.submitionType === 'renewal' && <div className="grid grid-cols-3 gap-6">
+                            <div className="flex items-center col-span-1">
+                                <Checkbox
+                                    name="removed"
+                                    id="removed"
+                                    label="Removed"
+                                    value={formData.removed}
+                                    checked={formData.removed}
+                                    onChange={handleCheckboxChange}
+                                    disabled={!isEditing}
+                                    status={fieldStatuses.removed}
+                                    onStatusChange={(newStatus) => handleStatusChange('removed', newStatus)}
+                                />
+                            </div>
+                                
+                            { formData.removed && <div className="col-span-2">
+                                <Select
+                                    name="removedReason"
+                                    id="removedReason"
+                                    label="Removed Reason"
+                                    options={CLIENT_REMOVED_REASON_CODES}
+                                    value={formData.removedReason}
+                                    onChange={handleChange}
+                                    disabled={!isEditing}
+                                    status={fieldStatuses.removedReason}
+                                    onStatusChange={(newStatus) => handleStatusChange('removedReason', newStatus)}
+                                />
+                            </div> }
+                        </div> }
                     </div>
 
                     <div className="col-span-6">
