@@ -15,65 +15,65 @@ const Status = () => {
         default: 0,
     };
 
-    console.log('Applicant Information:');
-    Object.keys(application.fieldStatus).forEach(page => {
-        console.log(' ', page,':');
+    // console.log('Applicant Information:');
+    Object.keys(application?.fieldStatus)?.forEach(page => {
+        // console.log(' ', page,':');
         Object.keys(application.fieldStatus[page]).forEach(field => {
             if(application.fieldStatus[page][field] === 'default') statusCount.default++; 
             else if(application.fieldStatus[page][field] === 'review') statusCount.review++; 
             else if(application.fieldStatus[page][field] === 'confirmed') statusCount.confirmed++; 
-            else if(application.fieldStatus[page][field] === 'error') statusCount.error++;
-            console.log('  ', field, ': ', application.fieldStatus[page][field]);
+            else if(application.fieldStatus[page][field] === 'error') { console.log("error in Applicant Information -> ", page, " -> ", field); statusCount.error++; }
+            // console.log('  ', field, ': ', application?.fieldStatus[page][field]);
         })
     });
-    console.log('Household Expense:');
-    Object.keys(application.householdExpense.fieldStatus).forEach(page => {
-        console.log(' ', page,':');
+    // console.log('Household Expense:');
+    Object.keys(application?.householdExpense?.fieldStatus)?.forEach(page => {
+        // console.log(' ', page,':');
         Object.keys(application.householdExpense.fieldStatus[page]).forEach(field => {
             if(application.householdExpense.fieldStatus[page][field] === 'default') statusCount.default++; 
             else if(application.householdExpense.fieldStatus[page][field] === 'review') statusCount.review++; 
             else if(application.householdExpense.fieldStatus[page][field] === 'confirmed') statusCount.confirmed++; 
-            else if(application.householdExpense.fieldStatus[page][field] === 'error') statusCount.error++; 
-            console.log('  ', field, ': ', application.householdExpense.fieldStatus[page][field]);
+            else if(application.householdExpense.fieldStatus[page][field] === 'error') { console.log("error in Household Expense -> ", page, " -> ", field); statusCount.error++; } 
+            // console.log('  ', field, ': ', application?.householdExpense?.fieldStatus[page][field]);
         })
     });
-    console.log('Household Composition:');
-    application?.householdMember.forEach(member => {
-        console.log(' ', member.lineNumber, ':');
-        console.log('  General Information:')
-        Object.keys(member.generalInformation).forEach(page => {
-            console.log('   ', page,':');
+    // console.log('Household Composition:');
+    application?.householdMember?.forEach((member, index) => {
+        // console.log(' ', member.lineNumber, ':');
+        // console.log('  General Information:')
+        Object.keys(member.generalInformation)?.forEach(page => {
+            // console.log('   ', page,':');
             Object.keys(member.generalInformation[page]).forEach(field => {
                 if(member.generalInformation[page][field] === 'default') statusCount.default++; 
                 else if(member.generalInformation[page][field] === 'review') statusCount.review++; 
                 else if(member.generalInformation[page][field] === 'confirmed') statusCount.confirmed++; 
-                else if(member.generalInformation[page][field] === 'error') statusCount.error++; 
-                console.log('    ', field, ': ', member.generalInformation[page][field]);
+                else if(member.generalInformation[page][field] === 'error') { console.log("error in Household Composition[", index, "] -> General Information -> ", page, " -> ", field); statusCount.error++; } 
+                // console.log('    ', field, ': ', member.generalInformation[page][field]);
             });
         });
-        console.log('  Incomes:');
-        Object.keys(member.income).forEach(type => {
-            console.log('   ', type,':');
-            member.income[type].forEach(income => {
-                console.log('    ', income.index, ':');
-                Object.keys(income.fieldStatus).forEach(field => {
+        // console.log('  Incomes:');
+        Object.keys(member.income)?.forEach(type => {
+            // console.log('   ', type,':');
+            member.income[type].forEach((income, incomeIndex) => {
+                // console.log('    ', index, ':');
+                Object.keys(income.fieldStatus)?.forEach(field => {
                     if(income.fieldStatus[field] === 'default') statusCount.default++; 
                     else if(income.fieldStatus[field] === 'review') statusCount.review++; 
                     else if(income.fieldStatus[field] === 'confirmed') statusCount.confirmed++; 
-                    else if(income.fieldStatus[field] === 'error') statusCount.error++;
-                    console.log('     ', field, ': ', income.fieldStatus[field]);
+                    else if(income.fieldStatus[field] === 'error') { console.log("error in Household Composition[", index, "] -> Incomes -> ", type , "[", incomeIndex, "] -> " , field); statusCount.error++; }
+                    // console.log('     ', field, ': ', income.fieldStatus[field]);
                 });
             });
         });
-        console.log('  Insurance Information:');
-        Object.keys(member.insuranceInformation).forEach(page => {
-            console.log('   ', page,':');
+        // console.log('  Insurance Information:');
+        Object.keys(member.insuranceInformation)?.forEach(page => {
+            // console.log('   ', page,':');
             Object.keys(member.insuranceInformation[page]).forEach(field => {
                 if(member.insuranceInformation[page][field] === 'default') statusCount.default++; 
                 else if(member.insuranceInformation[page][field] === 'review') statusCount.review++; 
                 else if(member.insuranceInformation[page][field] === 'confirmed') statusCount.confirmed++; 
-                else if(member.insuranceInformation[page][field] === 'error') statusCount.error++;
-                console.log('    ', field, ': ', member.insuranceInformation[page][field]);
+                else if(member.insuranceInformation[page][field] === 'error') { console.log("error in Household Composition[", index, "] -> Insurance Information -> ", page, " -> ", field); statusCount.error++; }
+                // console.log('    ', field, ': ', member.insuranceInformation[page][field]);
             });
         });
     });
@@ -125,7 +125,7 @@ const Status = () => {
             <div className="px-4 py-5 sm:px-6">
                 <div className="flex items-center justify-between">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">Application Status</h3>
-                    {statusCount.error === 0 && statusCount.review === 0 && (
+                    {/* {statusCount.error === 0 && statusCount.review === 0 && ( */}
                         <Button
                             variant="primary"
                             onClick={handleSubmitApplication}
@@ -134,7 +134,7 @@ const Status = () => {
                         >
                             {isSubmitting ? 'Submitting...' : 'Submit Application'}
                         </Button>
-                    )}
+                    {/* )} */}
                 </div>
                 
                 {/* Error and Success Messages */}

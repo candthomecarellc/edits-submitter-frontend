@@ -16,6 +16,7 @@ const StatusInformation = () => {
     const [originalData, setOriginalData] = useState(null);
     const applicationId = localStorage.getItem('edits-submitter.currentApplicationId');
     const memberId = localStorage.getItem('edits-submitter.currentMemberId');
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         applying: member?.applying || false,
@@ -106,7 +107,7 @@ const StatusInformation = () => {
                     },
                 }
             );
-            console.log("response", response);
+            // console.log("response", response);
             setSuccess('Applicant information updated successfully');
             setIsEditing(false);
         } catch (err) {
@@ -163,6 +164,7 @@ const StatusInformation = () => {
                             />
                         </div>
                     
+                        {!renewal &&
                         <div className="pb-6">
                             <Checkbox
                                 name="responsibleAdult"
@@ -175,8 +177,9 @@ const StatusInformation = () => {
                                 status={fieldStatuses.responsibleAdult}
                                 onStatusChange={(newStatus) => handleStatusChange('responsibleAdult', newStatus)}
                             />
-                        </div>
+                        </div>}
                     
+                        {!renewal &&
                         <div className="pb-6">
                             <Checkbox
                                 name="veteran"
@@ -189,7 +192,7 @@ const StatusInformation = () => {
                                 status={fieldStatuses.veteran}
                                 onStatusChange={(newStatus) => handleStatusChange('veteran', newStatus)}
                             />
-                        </div>
+                        </div>}
                             
                         <div className="pb-6 grid grid-cols-3 gap-6">
                             <div className="flex items-center col-span-1">
@@ -220,37 +223,38 @@ const StatusInformation = () => {
                             </div> }
                         </div>
                             
-                        { application.submitionType === 'renewal' && <div className="grid grid-cols-3 gap-6">
-                            <div className="flex items-center col-span-1">
-                                <Checkbox
-                                    name="removed"
-                                    id="removed"
-                                    label="Removed"
-                                    value={formData.removed}
-                                    checked={formData.removed}
-                                    onChange={handleCheckboxChange}
-                                    disabled={!isEditing}
-                                    status={fieldStatuses.removed}
-                                    onStatusChange={(newStatus) => handleStatusChange('removed', newStatus)}
-                                />
-                            </div>
-                                
-                            { formData.removed && <div className="col-span-2">
-                                <Select
-                                    name="removedReason"
-                                    id="removedReason"
-                                    label="Removed Reason"
-                                    options={CLIENT_REMOVED_REASON_CODES}
-                                    value={formData.removedReason}
-                                    onChange={handleChange}
-                                    disabled={!isEditing}
-                                    status={fieldStatuses.removedReason}
-                                    onStatusChange={(newStatus) => handleStatusChange('removedReason', newStatus)}
-                                />
-                            </div> }
-                        </div> }
+                        {renewal &&
+                        <div className="pb-6">
+                            <Checkbox
+                                name="removed"
+                                id="removed"
+                                label="Client Removed"
+                                value={formData.removed}
+                                checked={formData.removed}
+                                onChange={handleCheckboxChange}
+                                disabled={!isEditing}
+                                status={fieldStatuses.removed}
+                                onStatusChange={(newStatus) => handleStatusChange('removed', newStatus)}
+                            />
+                        </div>}
                     </div>
+                                
+                    { formData.removed && 
+                    <div className="col-span-6">
+                        <Select
+                            name="removedReason"
+                            id="removedReason"
+                            label="Removed Reason"
+                            options={CLIENT_REMOVED_REASON_CODES}
+                            value={formData.removedReason}
+                            onChange={handleChange}
+                            disabled={!isEditing}
+                            status={fieldStatuses.removedReason}
+                            onStatusChange={(newStatus) => handleStatusChange('removedReason', newStatus)}
+                        />
+                    </div> }
 
+                    {!renewal &&
                     <div className="col-span-6">
                         <div className="pb-6">
                             <Select
@@ -309,7 +313,7 @@ const StatusInformation = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </div>}
                 </div>
 
                 {!isEditing && (

@@ -16,6 +16,7 @@ const UnearnedIncome = ({ income }) => {
     const [originalData, setOriginalData] = useState(null);
     const applicationId = localStorage.getItem('edits-submitter.currentApplicationId');
     const memberId = localStorage.getItem('edits-submitter.currentMemberId');
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         ctg: income?.ctg || '',
@@ -114,7 +115,7 @@ const UnearnedIncome = ({ income }) => {
                 ...formData,
                 fieldStatus: fieldStatuses,
             };
-            console.log("updatedUnearnedIncome", updatedUnearnedIncome);
+            // console.log("updatedUnearnedIncome", updatedUnearnedIncome);
 
             // Update the member's unearned income array and get the updated member
             const updatedMember = {
@@ -127,7 +128,7 @@ const UnearnedIncome = ({ income }) => {
                 }
             };
             
-            console.log("updatedMember", updatedMember);
+            // console.log("updatedMember", updatedMember);
             
             // Update local state
             setMember(updatedMember);
@@ -200,21 +201,22 @@ const UnearnedIncome = ({ income }) => {
                 </div>
 
                 <div className="grid grid-cols-12 gap-6 border border-gray-200 rounded-md p-4">
-                    { application.submitionType === 'renewal' &&
-                        <div className="col-span-12">
-                            <Checkbox
-                                name="noChange"
-                                id="noChange"
-                                label="Check here if the unearned income information has not changed"
-                                value={formData.noChange}
-                                checked={formData.noChange}
-                                onChange={handleCheckboxChange}
-                                disabled={!isEditing}
-                                status={fieldStatuses.noChange}
-                                onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
-                            />
-                        </div>
-                    }
+                    { renewal &&
+                    <div className="col-span-12">
+                        <Checkbox
+                            name="noChange"
+                            id="noChange"
+                            label="Check here if the unearned income information has not changed"
+                            value={formData.noChange}
+                            checked={formData.noChange}
+                            onChange={handleCheckboxChange}
+                            disabled={!isEditing}
+                            status={fieldStatuses.noChange}
+                            onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
+                        />
+                    </div>}
+                    
+                    {!renewal &&
                     <div className="col-span-3">
                         <Select
                             name="ctg"
@@ -227,7 +229,7 @@ const UnearnedIncome = ({ income }) => {
                             status={fieldStatuses.ctg}
                             onStatusChange={(newStatus) => handleStatusChange('ctg', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-3">
                         <Select
@@ -271,6 +273,7 @@ const UnearnedIncome = ({ income }) => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Select
                             name="cd1"
@@ -283,8 +286,9 @@ const UnearnedIncome = ({ income }) => {
                             status={fieldStatuses.cd1}
                             onStatusChange={(newStatus) => handleStatusChange('cd1', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Input
                             type="text"
@@ -297,8 +301,9 @@ const UnearnedIncome = ({ income }) => {
                             status={fieldStatuses.exempt1}
                             onStatusChange={(newStatus) => handleStatusChange('exempt1', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Select
                             name="cd2"
@@ -311,8 +316,9 @@ const UnearnedIncome = ({ income }) => {
                             status={fieldStatuses.cd2}
                             onStatusChange={(newStatus) => handleStatusChange('cd2', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Input
                             type="text"
@@ -325,7 +331,7 @@ const UnearnedIncome = ({ income }) => {
                             status={fieldStatuses.exempt2}
                             onStatusChange={(newStatus) => handleStatusChange('exempt2', newStatus)}
                         />
-                    </div>
+                    </div>}
                 </div>
 
                 {!isEditing && (

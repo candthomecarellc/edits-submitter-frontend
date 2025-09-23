@@ -78,7 +78,7 @@ const TPHIInformation = () => {
                     },
                 }
             );
-            console.log("response", response);
+            // console.log("response", response);
             setSuccess('Applicant information updated successfully');
             setIsEditing(false);
         } catch (err) {

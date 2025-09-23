@@ -16,6 +16,7 @@ const Resource = ({ resource }) => {
     const [originalData, setOriginalData] = useState(null);
     const applicationId = localStorage.getItem('edits-submitter.currentApplicationId');
     const memberId = localStorage.getItem('edits-submitter.currentMemberId');
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         ctg: resource?.ctg || '',
@@ -105,7 +106,7 @@ const Resource = ({ resource }) => {
                 ...formData,
                 fieldStatus: fieldStatuses,
             };
-            console.log("updatedResource", updatedResource);
+            // console.log("updatedResource", updatedResource);
 
             // Update the member's resource array and get the updated member
             const updatedMember = {
@@ -118,7 +119,7 @@ const Resource = ({ resource }) => {
                 }
             };
             
-            console.log("updatedMember", updatedMember);
+            // console.log("updatedMember", updatedMember);
             
             // Update local state
             setMember(updatedMember);
@@ -190,22 +191,23 @@ const Resource = ({ resource }) => {
                     )}
                 </div>
 
-                <div className="grid grid-cols-10 gap-6 border border-gray-200 rounded-md p-4">
-                    { application.submitionType === 'renewal' &&
-                        <div className="col-span-10">
-                            <Checkbox
-                                name="noChange"
-                                id="noChange"
-                                label="Check here if the resource information has not changed"
-                                value={formData.noChange}
-                                checked={formData.noChange}
-                                onChange={handleCheckboxChange}
-                                disabled={!isEditing}
-                                status={fieldStatuses.noChange}
-                                onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
-                            />
-                        </div>
-                    }
+                <div className={`grid gap-6 border border-gray-200 rounded-md p-4 ${renewal ? 'grid-cols-4' : 'grid-cols-10'}`}>
+                    { renewal &&
+                    <div className={renewal ? 'col-span-4' : 'col-span-10'}>
+                        <Checkbox
+                            name="noChange"
+                            id="noChange"
+                            label="Check here if the resource information has not changed"
+                            value={formData.noChange}
+                            checked={formData.noChange}
+                            onChange={handleCheckboxChange}
+                            disabled={!isEditing}
+                            status={fieldStatuses.noChange}
+                            onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
+                        />
+                    </div>}
+                    
+                    {!renewal &&
                     <div className="col-span-2">
                         <Select
                             name="ctg"
@@ -218,7 +220,7 @@ const Resource = ({ resource }) => {
                             status={fieldStatuses.ctg}
                             onStatusChange={(newStatus) => handleStatusChange('ctg', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-2">
                         <Input
@@ -234,6 +236,7 @@ const Resource = ({ resource }) => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-2">
                         <Select
                             name="period"
@@ -246,7 +249,7 @@ const Resource = ({ resource }) => {
                             status={fieldStatuses.period}
                             onStatusChange={(newStatus) => handleStatusChange('period', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-2">
                         <Select
@@ -262,6 +265,7 @@ const Resource = ({ resource }) => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-2">
                         <Select
                             name="utxn2Flag"
@@ -274,7 +278,7 @@ const Resource = ({ resource }) => {
                             status={fieldStatuses.utxn2Flag}
                             onStatusChange={(newStatus) => handleStatusChange('utxn2Flag', newStatus)}
                         />
-                    </div>
+                    </div>}
                 </div>
 
                 {!isEditing && (

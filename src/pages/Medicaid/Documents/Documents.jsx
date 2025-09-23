@@ -6,6 +6,7 @@ import Button from '../../../components/Form/Button';
 import Input from '../../../components/Form/Input';
 import Checkbox from '../../../components/Form/Checkbox';
 import { DOCUMENTS } from '../../../constants/WMS_Codes/documents';
+import { DOC_CATEGORY } from '../../../constants/WMS_Codes/docCategory';
 
 const Documents = () => {
     const [documents, setDocuments] = useState([]);
@@ -38,7 +39,7 @@ const Documents = () => {
     const fetchDocuments = async () => {
         try {
             setLoading(true);
-            console.log('Fetching documents for application:', application._id);
+            // console.log('Fetching documents for application:', application._id);
             
             const accessToken = localStorage.getItem('edits-submitter.accessToken');
             const response = await fetch(`http://localhost:3000/api/v1/documents/application/${application._id}`, {
@@ -46,9 +47,9 @@ const Documents = () => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            console.log('Response status:', response.status);
+            // console.log('Response status:', response.status);
             const data = await response.json();
-            console.log('Response data:', data);
+            // console.log('Response data:', data);
             
             if (data.success) {
                 setDocuments(data.data.documents);
@@ -262,17 +263,17 @@ const Documents = () => {
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Document Type *
                                 </label>
-                                <Select
+                                <Input
                                     value={uploadForm.documentType}
+                                    maxLength={4}
+                                    required={true}
+                                    pattern="^[0-9]{4}$"
+                                    patternError='Document Type must be a valid 4 digit number'
                                     onChange={(e) => setUploadForm({
                                         ...uploadForm,
                                         documentType: e.target.value
                                     })}
-                                    options={DOCUMENTS.map(doc => ({
-                                        value: `${doc.category}-${doc.code}`,
-                                        label: `${doc.category} ${doc.code} - ${doc.value}`
-                                    }))}
-                                    placeholder="Select document type"
+                                    placeholder="Document type"
                                 />
                             </div>
 
@@ -286,13 +287,7 @@ const Documents = () => {
                                         ...uploadForm,
                                         documentCategory: e.target.value
                                     })}
-                                    options={[
-                                        { value: 'identity', label: 'Identity Documents' },
-                                        { value: 'income', label: 'Income Documents' },
-                                        { value: 'residence', label: 'Residence Documents' },
-                                        { value: 'medical', label: 'Medical Documents' },
-                                        { value: 'other', label: 'Other Documents' }
-                                    ]}
+                                    options={DOC_CATEGORY}
                                     placeholder="Select category"
                                 />
                             </div>

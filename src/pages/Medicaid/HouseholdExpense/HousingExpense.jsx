@@ -16,7 +16,7 @@ const HomeAddress = () => {
     const [success, setSuccess] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [originalData, setOriginalData] = useState(null);
-    const renewal = application.submitionType === 'renewal';
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         shelterType: application?.householdExpense?.shelterType || '',
@@ -200,8 +200,8 @@ const HomeAddress = () => {
                 </div>
 
                 <div className="grid grid-cols-12 gap-6">
-                    <div className={`col-span-${renewal ? 6 : 4} border border-gray-200 rounded-md p-4`}>
-                        <div className={`grid grid-cols-${renewal ? 2 : 1} gap-6`}>
+                    <div className={`border border-gray-200 rounded-md p-4 ${renewal ? 'col-span-12' : 'col-span-4'}`}>
+                        <div className={`grid ${renewal ? 'grid-cols-2' : 'grid-cols-1'} gap-6`}>
                             <div className="col-span-1">
                                 <Select
                                     name="shelterType"
@@ -248,7 +248,7 @@ const HomeAddress = () => {
                                 </div>
                             }
                             { renewal &&
-                                <div className="col-span-1">
+                                <div className="col-span-1 items-center flex">
                                     <Checkbox
                                         name="shelterNoChange"
                                         id="shelterNoChange"
@@ -265,7 +265,8 @@ const HomeAddress = () => {
                         </div>
                     </div>
 
-                    <div className={`col-span-${renewal ? 3 : 4} border border-gray-200 rounded-md p-4`}>
+                    {!renewal &&
+                    <div className="col-span-4 border border-gray-200 rounded-md p-4">
                         <div className="grid grid-cols-2 gap-6">
                             <div className="col-span-2">
                                 <Select
@@ -297,9 +298,10 @@ const HomeAddress = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </div>}
                     
-                    <div className={`col-span-${renewal ? 3 : 4} border border-gray-200 rounded-md p-4`}>
+                    {!renewal &&
+                    <div className="col-span-4 border border-gray-200 rounded-md p-4">
                         <div className="grid grid-cols-2 gap-6">
                             <div className="col-span-2">
                                 <Select
@@ -331,8 +333,9 @@ const HomeAddress = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </div>}
                     
+                    {!renewal &&
                     <div className="col-span-4">
                         <div className="grid grid-cols-2 gap-6">
                             <div className="col-span-2">
@@ -364,8 +367,9 @@ const HomeAddress = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-8 pt-6 flex items-end justify-end">
                         <div className="pr-6">
                             <Checkbox
@@ -402,7 +406,7 @@ const HomeAddress = () => {
                                 onStatusChange={(newStatus) => handleStatusChange('blindDisableChronicallyIll', newStatus)}
                             />
                         </div>
-                    </div>
+                    </div>}
                 </div>
 
                 {!isEditing && (

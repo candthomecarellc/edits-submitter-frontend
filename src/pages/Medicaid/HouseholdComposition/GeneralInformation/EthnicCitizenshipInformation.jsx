@@ -7,7 +7,7 @@ import { ALIEN_INDICATOR } from '../../../../constants/WMS_Codes/alien';
 import { FED_CHARGE_CD } from '../../../../constants/WMS_Codes/fedChargeCD';
 
 const EthnicCitizenshipInformation = () => {
-    const { member, setMember } = useOutletContext();
+    const { member, setMember, application } = useOutletContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -15,6 +15,7 @@ const EthnicCitizenshipInformation = () => {
     const [originalData, setOriginalData] = useState(null);
     const applicationId = localStorage.getItem('edits-submitter.currentApplicationId');
     const memberId = localStorage.getItem('edits-submitter.currentMemberId');
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         ethnicity: {
@@ -107,7 +108,7 @@ const EthnicCitizenshipInformation = () => {
         setLoading(true);
         setError('');
         setSuccess('');
-        console.log(fieldStatuses);
+        // console.log(fieldStatuses);
 
         try {
             const accessToken = localStorage.getItem('edits-submitter.accessToken');
@@ -158,6 +159,7 @@ const EthnicCitizenshipInformation = () => {
                     </div>
                 </div>
 
+                {!renewal &&
                 <div className="grid grid-cols-12 gap-6 border border-gray-200 rounded-md p-4">
                     <div className="col-span-4">
                         <Radio
@@ -242,8 +244,23 @@ const EthnicCitizenshipInformation = () => {
                             onStatusChange={(newStatus) => handleStatusChange('white', newStatus)}
                         />
                     </div>
-                </div>
+                </div>}
 
+                {renewal &&
+                <Select
+                    name="aci"
+                    id="aci"
+                    label="Alien Citizenship Indicator"
+                    value={formData.aci}
+                    onChange={handleChange}
+                    options={ALIEN_INDICATOR}
+                    required
+                    disabled={!isEditing}
+                    status={fieldStatuses.aci}
+                    onStatusChange={(newStatus) => handleStatusChange('aci', newStatus)}
+                />}
+
+                {!renewal &&
                 <div className="grid grid-cols-12 gap-6 border border-gray-200 rounded-md p-4">
                     <div className="col-span-4">
                         <Select
@@ -330,7 +347,7 @@ const EthnicCitizenshipInformation = () => {
                             onStatusChange={(newStatus) => handleStatusChange('fedChargeDate', newStatus)}
                         />
                     </div>
-                </div>
+                </div>}
 
                 {!isEditing && (
                     <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">

@@ -10,6 +10,7 @@ const OtherInformation = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isEditing, setIsEditing] = useState(false);
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         providerId: application?.providerId || '',
@@ -212,6 +213,7 @@ const OtherInformation = () => {
                     </p>
                 </div>
 
+                {!renewal &&
                 <div className="grid grid-cols-12 gap-6">
                     <div className="col-span-3 border border-gray-200 rounded-lg p-4">
                         <div className="grid grid-cols-2 gap-6">
@@ -351,10 +353,58 @@ const OtherInformation = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>}
 
-                <div className="grid grid-cols-10 gap-6">
-                    <p className="col-span-10 text-sm text-gray-500">* Case name must be head of household. Enter last name, space, first name.</p>
+                {renewal &&
+                <div className="grid grid-cols-12 gap-6">
+                    <div className="col-span-4">
+                        <Select
+                            name="languageSpoken"
+                            id="languageSpoken"
+                            label="Language Spoken"
+                            value={formData.languageSpoken}
+                            onChange={handleChange}
+                            options={LANGUAGE_OPTIONS}
+                            required={true}
+                            disabled={!isEditing}
+                            status={fieldStatuses.languageSpoken}
+                            onStatusChange={(newStatus) => handleStatusChange('languageSpoken', newStatus)}
+                        />
+                    </div>
+
+                    <div className="col-span-4">
+                        <Select
+                            name="languageRead"
+                            id="languageRead"
+                            label="Language Read"
+                            value={formData.languageRead}
+                            onChange={handleChange}
+                            options={LANGUAGE_OPTIONS}
+                            required
+                            disabled={!isEditing}
+                            status={fieldStatuses.languageRead}
+                            onStatusChange={(newStatus) => handleStatusChange('languageRead', newStatus)}
+                        />
+                    </div>
+
+                    <div className="col-span-4">
+                        <Select
+                            name="clientNoticeLanguage"
+                            id="clientNoticeLanguage"
+                            label="Client Notice Language"
+                            value={formData.clientNoticeLanguage}
+                            options={[{value: 'english', label: 'English'}, {value: 'spanish', label: 'Spanish'}]}
+                            onChange={handleChange}
+                            required
+                            disabled={!isEditing}
+                            status={fieldStatuses.clientNoticeLanguage}
+                            onStatusChange={(newStatus) => handleStatusChange('clientNoticeLanguage', newStatus)}
+                        />
+                    </div>
+                </div>}
+
+                <div className={`grid gap-6 ${renewal ? 'grid-cols-6' : 'grid-cols-10'}`}>
+                    <p className={`text-sm text-gray-500 ${renewal ? 'col-span-6' : 'col-span-10'}`}>* Case name must be head of household. Enter last name, space, first name.</p>
                     <div className="col-span-2">
                         <Input
                             type="text"
@@ -373,6 +423,7 @@ const OtherInformation = () => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-2">
                         <Input
                             type="caseComposition"
@@ -389,8 +440,9 @@ const OtherInformation = () => {
                             status={fieldStatuses.caseComposition}
                             onStatusChange={(newStatus) => handleStatusChange('caseComposition', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-2">
                         <Select
                             name="clientNoticeLanguage"
@@ -404,13 +456,13 @@ const OtherInformation = () => {
                             status={fieldStatuses.clientNoticeLanguage}
                             onStatusChange={(newStatus) => handleStatusChange('clientNoticeLanguage', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-2">
                         <DatePicker
                             name="signatureDate"
                             id="signatureDate"
-                            label="Signature Date"
+                            label={renewal ? "Submission Date" : "Signature Date"}
                             value={formData.signatureDate}
                             onChange={handleChange}
                             required
@@ -428,7 +480,7 @@ const OtherInformation = () => {
                             label="Priority"
                             value={formData.priority}
                             onChange={handleChange}
-                            maxLength={application?.submitionType === 'renewal' ? 1 : 4}
+                            maxLength={application?.submissionType === 'renewal' ? 1 : 4}
                             disabled={!isEditing}
                             status={fieldStatuses.priority}
                             onStatusChange={(newStatus) => handleStatusChange('priority', newStatus)}
@@ -436,6 +488,7 @@ const OtherInformation = () => {
                     </div>
                 </div>
 
+                {!renewal &&
                 <div className="grid grid-cols-12 gap-6">
                     <div className="col-span-12 flex items-end gap-2">
                         <Checkbox
@@ -464,7 +517,7 @@ const OtherInformation = () => {
                             onStatusChange={(newStatus) => handleStatusChange('healthPlan', newStatus)}
                         />
                     </div>
-                </div>
+                </div>}
 
                 {!isEditing && (
                     <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">

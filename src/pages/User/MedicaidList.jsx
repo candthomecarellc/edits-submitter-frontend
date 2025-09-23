@@ -17,6 +17,7 @@ const MedicaidList = () => {
     const [filterStatus, setFilterStatus] = useState('ALL');
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [responses, setResponses] = useState([]);
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -27,9 +28,9 @@ const MedicaidList = () => {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
-                console.log(response.data.data);
+                // console.log(response.data.data);
                 setApplications(response.data.data);
-                console.log(applications);
+                // console.log(applications);
             } catch (err) {
                 setError(err.response?.data?.message || 'Failed to fetch applications');
             } finally {
@@ -62,7 +63,7 @@ const MedicaidList = () => {
         try {
             const accessToken = localStorage.getItem('edits-submitter.accessToken');
             formData.createdBy = JSON.parse(localStorage.getItem('edits-submitter.user')).userName;
-            console.log(formData);
+            // console.log(formData);
             const response = await axios.post(
                 'http://localhost:3000/api/v1/application',
                 formData,
@@ -82,6 +83,24 @@ const MedicaidList = () => {
             navigate('/application/overview');
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to create new application');
+        }
+    };
+
+    const handleReadResponses = async () => {
+        try {
+            const accessToken = localStorage.getItem('edits-submitter.accessToken');
+            const response = await axios.get(
+                'http://localhost:3000/api/v1/notice/read-responses',
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            setResponses(response.data);
+            console.log(responses);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to Read Response Files');
         }
     };
 
@@ -160,6 +179,15 @@ const MedicaidList = () => {
                     <p className="mt-2 text-sm text-gray-700">
                         A list of all Medicaid applications in the system.
                     </p>
+                </div>
+                <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <button
+                        type="button"
+                        onClick={handleReadResponses}
+                        className="inline-flex items-center justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                    >
+                        Read Responses
+                    </button>
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                     <button

@@ -15,6 +15,7 @@ const EarnedIncome = ({ income }) => {
     const [originalData, setOriginalData] = useState(null);
     const applicationId = localStorage.getItem('edits-submitter.currentApplicationId');
     const memberId = localStorage.getItem('edits-submitter.currentMemberId');
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         ctg: income?.ctg || '',
@@ -141,7 +142,7 @@ const EarnedIncome = ({ income }) => {
                 ...formData,
                 fieldStatus: fieldStatuses,
             };
-            console.log("updatedEarnedIncome", updatedEarnedIncome);
+            // console.log("updatedEarnedIncome", updatedEarnedIncome);
 
             // Update the member's earned income array and get the updated member
             const updatedMember = {
@@ -154,7 +155,7 @@ const EarnedIncome = ({ income }) => {
                 }
             };
             
-            console.log("updatedMember", updatedMember);
+            // console.log("updatedMember", updatedMember);
             
             // Update local state
             setMember(updatedMember);
@@ -241,23 +242,22 @@ const EarnedIncome = ({ income }) => {
                 </div>
 
                 <div className="grid grid-cols-12 gap-6 border border-gray-200 rounded-md p-4">
+                    {renewal &&
+                    <div className="col-span-12">
+                        <Checkbox
+                            name="noChange"
+                            id="noChange"
+                            label="Check here if the earned income information has not changed"
+                            value={formData.noChange}
+                            checked={formData.noChange}
+                            onChange={handleCheckboxChange}
+                            disabled={!isEditing}
+                            status={fieldStatuses.noChange}
+                            onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
+                        />
+                    </div>}
 
-                    { application.submitionType === 'renewal' &&
-                        <div className="col-span-12">
-                            <Checkbox
-                                name="noChange"
-                                id="noChange"
-                                label="Check here if the earned income information has not changed"
-                                value={formData.noChange}
-                                checked={formData.noChange}
-                                onChange={handleCheckboxChange}
-                                disabled={!isEditing}
-                                status={fieldStatuses.noChange}
-                                onStatusChange={(newStatus) => handleStatusChange('noChange', newStatus)}
-                            />
-                        </div>
-                    }
-
+                    {!renewal &&
                     <div className="col-span-3">
                         <Select
                             name="ctg"
@@ -270,7 +270,7 @@ const EarnedIncome = ({ income }) => {
                             status={fieldStatuses.ctg}
                             onStatusChange={(newStatus) => handleStatusChange('ctg', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-3">
                         <Select
@@ -286,7 +286,7 @@ const EarnedIncome = ({ income }) => {
                         />
                     </div>
 
-                    <div className="col-span-6">
+                    <div className={renewal ? 'col-span-3' : 'col-span-6'}>
                         <Input
                             type="text"
                             name="employerName"
@@ -300,6 +300,7 @@ const EarnedIncome = ({ income }) => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Select
                             name="eid"
@@ -312,8 +313,9 @@ const EarnedIncome = ({ income }) => {
                             status={fieldStatuses.eid}
                             onStatusChange={(newStatus) => handleStatusChange('eid', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Select
                             name="employmentStatus"
@@ -326,7 +328,7 @@ const EarnedIncome = ({ income }) => {
                             status={fieldStatuses.employmentStatus}
                             onStatusChange={(newStatus) => handleStatusChange('employmentStatus', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-3">
                         <Input
@@ -356,6 +358,7 @@ const EarnedIncome = ({ income }) => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Input
                             type="text"
@@ -368,8 +371,9 @@ const EarnedIncome = ({ income }) => {
                             status={fieldStatuses.insur}
                             onStatusChange={(newStatus) => handleStatusChange('insur', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Input
                             type="text"
@@ -382,8 +386,9 @@ const EarnedIncome = ({ income }) => {
                             status={fieldStatuses.ctSup}
                             onStatusChange={(newStatus) => handleStatusChange('ctSup', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Input
                             type="text"
@@ -396,8 +401,9 @@ const EarnedIncome = ({ income }) => {
                             status={fieldStatuses.wkRel}
                             onStatusChange={(newStatus) => handleStatusChange('wkRel', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Input
                             type="text"
@@ -410,7 +416,7 @@ const EarnedIncome = ({ income }) => {
                             status={fieldStatuses.irwe}
                             onStatusChange={(newStatus) => handleStatusChange('irwe', newStatus)}
                         />
-                    </div>
+                    </div>}
                 </div>
 
                 {!isEditing && (

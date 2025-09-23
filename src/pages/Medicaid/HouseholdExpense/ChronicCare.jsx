@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
-import { Input, Button, DatePicker, Select } from '../../../components/Form';
+import { Input, Button, DatePicker, Select, Checkbox } from '../../../components/Form';
 import { CHRONIC_CARE_CON } from '../../../constants/WMS_Codes/chronicCareCON';
 import { PERIOD } from '../../../constants/WMS_Codes/period';
 
@@ -12,6 +12,7 @@ const HomeAddress = () => {
     const [success, setSuccess] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [originalData, setOriginalData] = useState(null);
+    const renewal = application.submissionType === 'renewal';
 
     const chronicCare = application?.householdExpense?.chronicCare;
     const [formData, setFormData] = useState({
@@ -21,6 +22,7 @@ const HomeAddress = () => {
         chronicCareAmount: chronicCare?.chronicCareAmount || '',
         chronicCareLoc: chronicCare?.chronicCareLoc || '',
         chronicCarePeriod: chronicCare?.chronicCarePeriod || '',
+        blindDisableChronicallyIll: application?.householdExpense?.blindDisableChronicallyIll || '',
     });
 
     const status = application?.householdExpense?.fieldStatus?.otherExpenses;
@@ -31,6 +33,7 @@ const HomeAddress = () => {
         chronicCareAmount: status?.chronicCareAmount || 'empty',
         chronicCareLoc: status?.chronicCareLoc || 'empty',
         chronicCarePeriod: status?.chronicCarePeriod || 'empty',
+        blindDisableChronicallyIll: application?.householdExpense?.fieldStatus?.housingExpense?.blindDisableChronicallyIll || 'empty',
     });
 
     const handleChange = (e) => {
@@ -72,6 +75,7 @@ const HomeAddress = () => {
             chronicCareAmount: chronicCare?.chronicCareAmount || '',
             chronicCareLoc: chronicCare?.chronicCareLoc || '',
             chronicCarePeriod: chronicCare?.chronicCarePeriod || '',
+            blindDisableChronicallyIll: application?.householdExpense?.blindDisableChronicallyIll || '',
         }));
         setIsEditing(false);
         setError('');
@@ -83,6 +87,7 @@ const HomeAddress = () => {
             chronicCareAmount: status?.chronicCareAmount || 'empty',
             chronicCareLoc: status?.chronicCareLoc || 'empty',
             chronicCarePeriod: status?.chronicCarePeriod || 'empty',
+            blindDisableChronicallyIll: application?.householdExpense?.fieldStatus?.housingExpense?.blindDisableChronicallyIll || 'empty',
         }))
     };
 
@@ -98,8 +103,19 @@ const HomeAddress = () => {
                 `http://localhost:3000/api/v1/application/${application._id}`,
                 {
                     householdExpense: {
-                        chronicCare: formData,
+                        blindDisableChronicallyIll: formData.blindDisableChronicallyIll,
+                        chronicCare: {
+                            chronicCareDateIns: formData.chronicCareDateIns,
+                            chronicCarePia: formData.chronicCarePia,
+                            chronicCareCon: formData.chronicCareCon,
+                            chronicCareAmount: formData.chronicCareAmount,
+                            chronicCareLoc: formData.chronicCareLoc,
+                            chronicCarePeriod: formData.chronicCarePeriod,
+                        },
                         fieldStatus: {
+                            housingExpense: {
+                                blindDisableChronicallyIll: fieldStatuses.blindDisableChronicallyIll,
+                            },
                             otherExpenses: {
                                 ...status,
                                 chronicCareDateIns: fieldStatuses.chronicCareDateIns,
@@ -132,6 +148,13 @@ const HomeAddress = () => {
         }
     };
 
+    const handleCheckboxChange = (e) => {
+        setFormData(prev => ({
+            ...prev,
+            [e.target.name]: e.target.checked
+        }))
+    }
+
     return (
         <div>
             {error && (
@@ -157,6 +180,7 @@ const HomeAddress = () => {
                 </div>
 
                 <div className="grid grid-cols-12 gap-6">
+                    {!renewal &&
                     <div className="col-span-4">
                         <DatePicker
                             type="chronicCareDateIns"
@@ -169,8 +193,9 @@ const HomeAddress = () => {
                             status={fieldStatuses.chronicCareDateIns}
                             onStatusChange={(newStatus) => handleStatusChange('chronicCareDateIns', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-4">
                         <Input
                             type="chronicCarePia"
@@ -186,8 +211,9 @@ const HomeAddress = () => {
                             status={fieldStatuses.chronicCarePia}
                             onStatusChange={(newStatus) => handleStatusChange('chronicCarePia', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-4">
                         <Select
                             type="chronicCareCon"
@@ -201,7 +227,22 @@ const HomeAddress = () => {
                             status={fieldStatuses.chronicCareCon}
                             onStatusChange={(newStatus) => handleStatusChange('chronicCareCon', newStatus)}
                         />
-                    </div>
+                    </div>}
+
+                    {renewal &&
+                    <div className="col-span-4 flex items-center">
+                        <Checkbox
+                            name="blindDisableChronicallyIll"
+                            id="blindDisableChronicallyIll"
+                            label="Are you or anyone who lives with you blind, disabled or chronically ill?"
+                            checked={formData.blindDisableChronicallyIll}
+                            value={formData.blindDisableChronicallyIll}
+                            onChange={handleCheckboxChange}
+                            disabled={!isEditing}
+                            status={fieldStatuses.blindDisableChronicallyIll}
+                            onStatusChange={(newStatus) => handleStatusChange('blindDisableChronicallyIll', newStatus)}
+                        />
+                    </div>}
 
                     <div className="col-span-4">
                         <Input
@@ -220,6 +261,7 @@ const HomeAddress = () => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-4">
                         <Input
                             type="chronicCareLoc"
@@ -235,24 +277,23 @@ const HomeAddress = () => {
                             status={fieldStatuses.chronicCareLoc}
                             onStatusChange={(newStatus) => handleStatusChange('chronicCareLoc', newStatus)}
                         />
-                    </div>
+                    </div>}
 
-                    { application.submitionType === 'renewal' &&
-                        <div className="col-span-4">
-                            <Select
-                                type="chronicCarePeriod"
-                                name="chronicCarePeriod"
-                                id="chronicCarePeriod"
-                                label="Chronic Care Period"
-                                value={formData.chronicCarePeriod}
-                                options={PERIOD}
-                                onChange={handleChange}
-                                disabled={!isEditing}
-                                status={fieldStatuses.chronicCarePeriod}
-                                onStatusChange={(newStatus) => handleStatusChange('chronicCarePeriod', newStatus)}
-                            />
-                        </div>
-                    }
+                    {renewal &&
+                    <div className="col-span-4">
+                        <Select
+                            type="chronicCarePeriod"
+                            name="chronicCarePeriod"
+                            id="chronicCarePeriod"
+                            label="Chronic Care Period"
+                            value={formData.chronicCarePeriod}
+                            options={PERIOD}
+                            onChange={handleChange}
+                            disabled={!isEditing}
+                            status={fieldStatuses.chronicCarePeriod}
+                            onStatusChange={(newStatus) => handleStatusChange('chronicCarePeriod', newStatus)}
+                        />
+                    </div>}
                 </div>
 
                 {!isEditing && (

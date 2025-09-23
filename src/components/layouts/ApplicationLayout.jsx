@@ -295,6 +295,18 @@ const ApplicationLayout = () => {
                             >
                                 View History
                             </button>
+                            {application.responseLog && (
+                                <button
+                                    onClick={() => navigate(`/application/response`)}
+                                    className={`w-full px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                                        isActive(`/application/response-log`)
+                                            ? 'bg-indigo-600 text-white'
+                                            : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                                    }`}
+                                >
+                                    View Response
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

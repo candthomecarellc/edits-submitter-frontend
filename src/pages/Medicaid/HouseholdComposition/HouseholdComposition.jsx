@@ -97,7 +97,7 @@ const HouseholdComposition = () => {
 
         setIsAddingMember(true);
         try {
-            console.log('Sending member data:', newMemberData);
+            // console.log('Sending member data:', newMemberData);
             
             // Get the access token for authentication
             const accessToken = localStorage.getItem('edits-submitter.accessToken');

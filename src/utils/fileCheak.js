@@ -12,7 +12,7 @@ const fileCheak = (e, setFormData) => {
       ...prev,
       [field]: file,
     }));
-    console.log(file);
+    // console.log(file);
   }
 };
 

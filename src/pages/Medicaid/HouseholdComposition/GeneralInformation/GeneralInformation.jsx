@@ -3,8 +3,11 @@ import StatusInformation from './StatusInformation';
 import MemberIncome from './MemberIncome';
 import EthnicCitizenshipInformation from './EthnicCitizenshipInformation';
 import OtherInformation from './OtherInformation';
+import { useOutletContext } from 'react-router-dom';
 
 const GeneralInformation = () => {
+    const { application } = useOutletContext();
+    const renewal = application.submissionType === 'renewal';
     return (
         <div className="p-6">
             <div className="sm:flex sm:items-center sm:justify-between mb-6">
@@ -18,7 +21,7 @@ const GeneralInformation = () => {
 
             <PersonalInformation />
             <StatusInformation />
-            <MemberIncome />
+            {!renewal && <MemberIncome />}
             <EthnicCitizenshipInformation />
             <OtherInformation />
         </div>

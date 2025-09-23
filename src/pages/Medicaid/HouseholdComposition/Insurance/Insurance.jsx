@@ -7,6 +7,7 @@ import { useOutletContext } from 'react-router-dom';
 
 const Insurance = () => {
     const { application } = useOutletContext();
+    const renewal = application.submissionType === 'renewal';
     return (
         <div className="p-6">
             <div className="sm:flex sm:items-center sm:justify-between mb-6">
@@ -19,10 +20,10 @@ const Insurance = () => {
             </div>
 
             <HealthInsurance />
-            <MedicalExpenses />
-            <LivingOutside />
-            <HealthPlan />
-            { application.submitionType === 'renewal' && <TPHIInformation /> }
+            {!renewal && <MedicalExpenses />}
+            {!renewal && <LivingOutside />}
+            {!renewal && <HealthPlan />}
+            {renewal && <TPHIInformation /> }
         </div>
     );
 };

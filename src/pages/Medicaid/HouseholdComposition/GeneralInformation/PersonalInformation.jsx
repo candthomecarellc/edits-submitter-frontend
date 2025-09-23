@@ -5,7 +5,6 @@ import { Input, Button, Select, Radio, DatePicker, Checkbox } from '../../../../
 import { SEX, GENDER } from '../../../../constants/WMS_Codes/gender';
 import { RELATIONSHIP } from '../../../../constants/WMS_Codes/relationship';
 import { NAME_TYPES } from '../../../../constants/selectOptions';
-import { STATE_CODES } from '../../../../constants/WMS_Codes/stateCodes';
 
 const PersonalInformation = () => {
     const { member, setMember, application } = useOutletContext();
@@ -16,6 +15,7 @@ const PersonalInformation = () => {
     const [originalData, setOriginalData] = useState(null);
     const applicationId = localStorage.getItem('edits-submitter.currentApplicationId');
     const memberId = localStorage.getItem('edits-submitter.currentMemberId');
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         lineNumber: member?.lineNumber || '',
@@ -267,6 +267,7 @@ const PersonalInformation = () => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-2">
                         <Radio
                             name="otherName.code"
@@ -279,8 +280,9 @@ const PersonalInformation = () => {
                             status={fieldStatuses.otherNameType}
                             onStatusChange={(newStatus) => handleStatusChange('otherNameType', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-4">
                         <Input
                             type="otherName.first"
@@ -296,8 +298,9 @@ const PersonalInformation = () => {
                             status={fieldStatuses.otherNameFirst}
                             onStatusChange={(newStatus) => handleStatusChange('otherNameFirst', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-2">
                         <Input
                             type="otherName.middle"
@@ -313,8 +316,9 @@ const PersonalInformation = () => {
                             status={fieldStatuses.otherNameMiddle}
                             onStatusChange={(newStatus) => handleStatusChange('otherNameMiddle', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-4">
                         <Input
                             type="otherName.last"
@@ -330,7 +334,7 @@ const PersonalInformation = () => {
                             status={fieldStatuses.otherNameLast}
                             onStatusChange={(newStatus) => handleStatusChange('otherNameLast', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-3">
                         <DatePicker
@@ -361,6 +365,7 @@ const PersonalInformation = () => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Select
                             name="gender"
@@ -373,8 +378,9 @@ const PersonalInformation = () => {
                             status={fieldStatuses.gender}
                             onStatusChange={(newStatus) => handleStatusChange('gender', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Select
                             name="relationshipToApplicant"
@@ -388,8 +394,9 @@ const PersonalInformation = () => {
                             status={fieldStatuses.relationshipToApplicant}
                             onStatusChange={(newStatus) => handleStatusChange('relationshipToApplicant', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Input
                             type="birthCity"
@@ -403,23 +410,25 @@ const PersonalInformation = () => {
                             status={fieldStatuses.birthCity}
                             onStatusChange={(newStatus) => handleStatusChange('birthCity', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
-                        <Select
+                        <Input
+                            type="birthState"
                             name="birthState"
                             id="birthState"
                             label="State of Birth"
                             value={formData.birthState}
-                            options={STATE_CODES}
                             onChange={handleChange}
                             required
                             disabled={!isEditing}
                             status={fieldStatuses.birthState}
                             onStatusChange={(newStatus) => handleStatusChange('birthState', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Input
                             type="birthCountry"
@@ -433,8 +442,9 @@ const PersonalInformation = () => {
                             status={fieldStatuses.birthCountry}
                             onStatusChange={(newStatus) => handleStatusChange('birthCountry', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-3">
                         <Input
                             type="motherName"
@@ -448,23 +458,22 @@ const PersonalInformation = () => {
                             status={fieldStatuses.motherName}
                             onStatusChange={(newStatus) => handleStatusChange('motherName', newStatus)}
                         />
-                    </div>
+                    </div>}
 
-                    { application.submitionType === 'renewal' &&
-                        <div className="col-span-12">
-                            <Checkbox
-                                    name="noChange"
-                                    id="noChange"
-                                    label="Check here if the personal information has not changed"
-                                    value={formData.noChange}
-                                    checked={formData.noChange}
-                                    onChange={handleCheckboxChange}
-                                    disabled={!isEditing}
-                                    status={formData.noChangeStatus}
-                                    onStatusChange={(newStatus) => setFormData(prev => ({ ...prev, noChangeStatus: newStatus}))}
-                            />
-                        </div>
-                    }
+                    {renewal &&
+                    <div className="col-span-6 flex items-center">
+                        <Checkbox
+                                name="noChange"
+                                id="noChange"
+                                label="Check here if the personal information has not changed"
+                                value={formData.noChange}
+                                checked={formData.noChange}
+                                onChange={handleCheckboxChange}
+                                disabled={!isEditing}
+                                status={formData.noChangeStatus}
+                                onStatusChange={(newStatus) => setFormData(prev => ({ ...prev, noChangeStatus: newStatus}))}
+                        />
+                    </div>}
                 </div>
 
                 {!isEditing && (

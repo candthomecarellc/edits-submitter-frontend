@@ -446,7 +446,7 @@ const MedicaidApplication = () => {
       UTXN2_Flag: '',
     },
     householdComposition: {
-      submitionType: '',
+      submissionType: '',
       line: '',
       name_First: '',
       name_Middle: '',
@@ -496,7 +496,7 @@ const MedicaidApplication = () => {
       sub_DOH5149: '',
     },
   });
-  console.log(formData);
+  // console.log(formData);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -508,7 +508,7 @@ const MedicaidApplication = () => {
     mutationFn: (data) => formSubmitFunction(data),
     onSuccess: (data) => {
       // Handle successful submission
-      console.log('Form submitted successfully:', data);
+      // console.log('Form submitted successfully:', data);
     },
     onError: (error) => {
       // Handle submission error

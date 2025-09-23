@@ -11,6 +11,7 @@ const ChildCare = () => {
     const [success, setSuccess] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [originalData, setOriginalData] = useState(null);
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         child1Name: application?.householdExpense?.childCare[0]?.name || '',
@@ -135,6 +136,7 @@ const ChildCare = () => {
                     householdExpense: {
                         childCare: [
                             {
+                                _id: application?.householdExpense?.childCare[0]?._id,
                                 name: formData.child1Name,
                                 month: formData.child1Month,
                                 year: formData.child1Year,
@@ -142,6 +144,7 @@ const ChildCare = () => {
                                 period: formData.child1Period,
                             },
                             {
+                                _id: application?.householdExpense?.childCare[1]?._id,
                                 name: formData.child2Name,
                                 month: formData.child2Month,
                                 year: formData.child2Year,
@@ -149,6 +152,7 @@ const ChildCare = () => {
                                 period: formData.child2Period,
                             },
                             {
+                                _id: application?.householdExpense?.childCare[2]?._id,
                                 name: formData.child3Name,
                                 month: formData.child3Month,
                                 year: formData.child3Year,
@@ -220,7 +224,8 @@ const ChildCare = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-12 gap-6">
+                <div className={`grid gap-6 ${renewal ? 'grid-cols-6' : 'grid-cols-12'}`}>
+                    {!renewal &&
                     <div className="col-span-4">
                         <Input
                             type="child1Name"
@@ -235,7 +240,7 @@ const ChildCare = () => {
                             status={fieldStatuses.child1Name}
                             onStatusChange={(newStatus) => handleStatusChange('child1Name', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-2">
                         <Select
@@ -284,6 +289,7 @@ const ChildCare = () => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-2">
                         <Select
                             name="child1Period"
@@ -296,10 +302,11 @@ const ChildCare = () => {
                             status={fieldStatuses.child1Period}
                             onStatusChange={(newStatus) => handleStatusChange('child1Period', newStatus)}
                         />
-                    </div>
+                    </div>}
                 </div>
 
-                <div className="grid grid-cols-12 gap-6">
+                <div className={`grid gap-6 ${renewal ? 'grid-cols-6' : 'grid-cols-12'}`}>
+                    {!renewal &&
                     <div className="col-span-4">
                         <Input
                             type="child2Name"
@@ -314,7 +321,7 @@ const ChildCare = () => {
                             status={fieldStatuses.child2Name}
                             onStatusChange={(newStatus) => handleStatusChange('child2Name', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-2">
                         <Select
@@ -363,6 +370,7 @@ const ChildCare = () => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-2">
                         <Select
                             name="child2Period"
@@ -375,10 +383,11 @@ const ChildCare = () => {
                             status={fieldStatuses.child2Period}
                             onStatusChange={(newStatus) => handleStatusChange('child2Period', newStatus)}
                         />
-                    </div>
+                    </div>}
                 </div>
 
-                <div className="grid grid-cols-12 gap-6">
+                <div className={`grid gap-6 ${renewal ? 'grid-cols-6' : 'grid-cols-12'}`}>
+                    {!renewal &&
                     <div className="col-span-4">
                         <Input
                             type="child3Name"
@@ -393,7 +402,7 @@ const ChildCare = () => {
                             status={fieldStatuses.child3Name}
                             onStatusChange={(newStatus) => handleStatusChange('child3Name', newStatus)}
                         />
-                    </div>
+                    </div>}
 
                     <div className="col-span-2">
                         <Select
@@ -442,6 +451,7 @@ const ChildCare = () => {
                         />
                     </div>
 
+                    {!renewal &&
                     <div className="col-span-2">
                         <Select
                             name="child3Period"
@@ -454,7 +464,7 @@ const ChildCare = () => {
                             status={fieldStatuses.child3Period}
                             onStatusChange={(newStatus) => handleStatusChange('child3Period', newStatus)}
                         />
-                    </div>
+                    </div>}
                 </div>
 
                 {!isEditing && (

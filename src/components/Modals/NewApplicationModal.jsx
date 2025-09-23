@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SUBMISSION_TYPES } from '../../constants/WMS_Codes/submissionTypes';
 
 const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
     const [formData, setFormData] = useState({
@@ -14,7 +15,8 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
         },
         caseName: '',
         providerId: '',
-        patientId: ''
+        patientId: '',
+        submissionType: '',
     });
 
     const handleChange = (e) => {
@@ -68,6 +70,7 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             name="applicant.first"
                             id="applicant.first"
                             value={formData.applicant.first}
+                            required
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -81,6 +84,7 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             name="applicant.middle"
                             id="applicant.middle"
                             value={formData.applicant.middle}
+                            required
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -94,6 +98,7 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             name="applicant.last"
                             id="applicant.last"
                             value={formData.applicant.last}
+                            required
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -120,6 +125,7 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             name="primaryPhone.number"
                             id="primaryPhone.number"
                             value={formData.primaryPhone.number}
+                            required
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -180,6 +186,24 @@ const NewApplicationModal = ({ isOpen, onClose, onSubmit }) => {
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
+                    </div>
+                    <div>
+                        <label htmlFor="submissionType" className="block text-sm font-medium text-gray-700">
+                            Submission Type
+                        </label>
+                        <select
+                            type="select"
+                            name="submissionType"
+                            id="submissionType"
+                            value={formData.submissionType}
+                            required
+                            onChange={handleChange}
+                            className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        >
+                            {SUBMISSION_TYPES.map((type) => (
+                                <option key={type.value} value={type.value}>{type.label}</option>
+                            ))}
+                        </select>
                     </div>
                     <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                         <button

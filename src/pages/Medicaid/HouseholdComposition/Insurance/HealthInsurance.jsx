@@ -12,6 +12,7 @@ const HealthInsurance = () => {
     const [originalData, setOriginalData] = useState(null);
     const applicationId = localStorage.getItem('edits-submitter.currentApplicationId');
     const memberId = localStorage.getItem('edits-submitter.currentMemberId');
+    const renewal = application.submissionType === 'renewal';
     
     const [formData, setFormData] = useState({
         healthInsurance: {
@@ -183,6 +184,7 @@ const HealthInsurance = () => {
                     </div>
                 </div>
 
+                {!renewal &&
                 <div className="grid grid-cols-12 gap-6 border border-gray-200 rounded-md p-4">
                     <div className="col-span-6">
                         <div className="">
@@ -247,8 +249,9 @@ const HealthInsurance = () => {
                             </div>
                         )}
                     </div>
-                </div>
+                </div>}
 
+                {!renewal &&
                 <div className="grid grid-cols-12 gap-6 border border-gray-200 rounded-md p-4">
                     <div className="col-span-12">
                         <Checkbox
@@ -310,7 +313,7 @@ const HealthInsurance = () => {
                             />
                         </div>
                     )}
-                </div>
+                </div>}
 
                 <div className="grid grid-cols-12 gap-6 border border-gray-200 rounded-md p-4">
                     <div className="col-span-12">
@@ -327,8 +330,8 @@ const HealthInsurance = () => {
                         />
                     </div>
 
-                    { application.submitionType === 'renewal' &&
-                        <div className="col-span-6 flex items-center">
+                    { application.submissionType === 'renewal' &&
+                        <div className="col-span-12">
                             <Checkbox
                                 name="healthInsurance.medicareNoChange"
                                 id="healthInsurance.medicareNoChange"
@@ -343,8 +346,8 @@ const HealthInsurance = () => {
                         </div>
                     }
 
-                    { application.submitionType === 'renewal' && !formData.healthInsurance.medicareNoChange &&
-                        <div className="col-span-6">
+                    { renewal && !formData.healthInsurance.medicareNoChange && formData.medicare &&
+                        <div className="col-span-12">
                             <Input
                                 type="healthInsurance.medicareAmount"
                                 name="healthInsurance.medicareAmount"
@@ -361,6 +364,7 @@ const HealthInsurance = () => {
                         </div>
                     }
 
+                    {!renewal &&
                     <div className="col-span-12">
                         <Checkbox
                             name="medicalAssistance"
@@ -373,8 +377,9 @@ const HealthInsurance = () => {
                             status={fieldStatuses.medicalAssistance}
                             onStatusChange={(newStatus) => handleStatusChange('medicalAssistance', newStatus)}
                         />
-                    </div>
+                    </div>}
 
+                    {!renewal &&
                     <div className="col-span-12">
                         <Checkbox
                             name="jobHealthInsurance"
@@ -387,7 +392,7 @@ const HealthInsurance = () => {
                             status={fieldStatuses.jobHealthInsurance}
                             onStatusChange={(newStatus) => handleStatusChange('jobHealthInsurance', newStatus)}
                         />
-                    </div>
+                    </div>}
                 </div>
 
                 {!isEditing && (

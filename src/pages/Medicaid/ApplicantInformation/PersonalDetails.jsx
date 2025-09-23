@@ -13,6 +13,7 @@ const PersonalDetails = () => {
     const [success, setSuccess] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [originalData, setOriginalData] = useState(null);
+    const renewal = application.submissionType === 'renewal';
 
     // startNavGuardFeature
     // const { setEditingForms } = useOutletContext();
@@ -55,7 +56,7 @@ const PersonalDetails = () => {
         anotherPhoneType: application?.anotherPhone?.type || '',
         email: application?.email || '',
         applicationType: application?.applicationType || '',
-        submitionType: application?.submitionType || '',
+        submissionType: application?.submissionType || '',
     });
 
     const status = application?.fieldStatus?.personalDetails;
@@ -69,7 +70,7 @@ const PersonalDetails = () => {
         anotherPhoneType: status?.anotherPhoneType || 'empty',
         email: status?.email || 'empty',
         applicationType: status?.applicationType || 'empty',
-        submitionType: status?.submitionType || 'empty',
+        submissionType: status?.submissionType || 'empty',
     });
 
     const handleChange = (e) => {
@@ -115,7 +116,7 @@ const PersonalDetails = () => {
             anotherPhoneType: application?.anotherPhone?.type || '',
             email: application?.email || '',
             applicationType: application?.applicationType || '',
-            submitionType: application?.submitionType || '',
+            submissionType: application?.submissionType || '',
         }));
         setIsEditing(false);
         setError('');
@@ -130,7 +131,7 @@ const PersonalDetails = () => {
             anotherPhoneType: status?.anotherPhoneType || 'empty',
             email: status?.email || 'empty',
             applicationType: status?.applicationType || 'empty',
-            submitionType: status?.submitionType || 'empty',
+            submissionType: status?.submissionType || 'empty',
         }));
     };
 
@@ -146,7 +147,7 @@ const PersonalDetails = () => {
                 `http://localhost:3000/api/v1/application/${application._id}`,
                 {
                     applicationType: formData.applicationType,
-                    submitionType: formData.submitionType,
+                    submissionType: formData.submissionType,
                     applicant: {
                         first: formData.legalFirstName,
                         middle: formData.legalMiddleInitial,
@@ -175,7 +176,7 @@ const PersonalDetails = () => {
             setApplication(prev => ({
                 ...prev,
                 applicationType: response.data.data.applicationType,
-                submitionType: response.data.data.submitionType,
+                submissionType: response.data.data.submissionType,
                 applicant: response.data.data.applicant,
                 email: response.data.data.email,
                 primaryPhone: response.data.data.primaryPhone,
@@ -213,7 +214,54 @@ const PersonalDetails = () => {
                         Basic information about the applicant.
                     </p>
                 </div>
-                <div className="md:grid md:grid-cols-2 md:gap-6">
+                <div className={`md:grid md:gap-6 ${renewal ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
+                    {!renewal &&
+                    <div className="col-span-1 sm:col-span-1">
+                        <Select
+                            name="applicationType"
+                            id="applicationType"
+                            label="Application Type"
+                            value={formData.applicationType}
+                            onChange={handleChange}
+                            options={APPLICATION_TYPES}
+                            required={true}
+                            disabled={!isEditing}
+                            status={fieldStatuses.applicationType}
+                            onStatusChange={(newStatus) => handleStatusChange('applicationType', newStatus)}
+                        />
+                    </div>}
+
+                    <div className="col-span-1 sm:col-span-1">
+                        <Select
+                            name="submissionType"
+                            id="submissionType"
+                            label="Submission Type"
+                            value={formData.submissionType}
+                            onChange={handleChange}
+                            options={SUBMISSION_TYPES}
+                            required={true}
+                            disabled={!isEditing}
+                            status={fieldStatuses.submissionType}
+                            onStatusChange={(newStatus) => handleStatusChange('submissionType', newStatus)}
+                        />
+                    </div>
+
+                    {renewal && 
+                    <div className="col-span-1 sm:col-span-1">
+                        <Input
+                            type="text"
+                            name="email"
+                            id="email"
+                            label="Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            disabled={!isEditing}
+                            status={fieldStatuses.email}
+                            onStatusChange={(newStatus) => handleStatusChange('email', newStatus)}
+                        />
+                    </div>}
+
+                    {!renewal &&
                     <div className="col-span-2 sm:col-span-1 border border-gray-200 rounded-lg p-4">
                         <div className="grid grid-cols-6 gap-6">
                             <div className="col-span-6 sm:col-span-3">
@@ -276,8 +324,24 @@ const PersonalDetails = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </div>}
 
+                    {renewal && 
+                    <div className="col-span-1 sm:col-span-1">
+                        <Input
+                            type="primaryPhone"
+                            name="primaryPhone"
+                            id="primaryPhone"
+                            label="Primary Phone"
+                            value={formData.primaryPhone}
+                            onChange={handleChange}
+                            disabled={!isEditing}
+                            status={fieldStatuses.primaryPhone}
+                            onStatusChange={(newStatus) => handleStatusChange('primaryPhone', newStatus)}
+                        />
+                    </div>}
+
+                    {!renewal &&
                     <div className="col-span-2 sm:col-span-1 border border-gray-200 rounded-lg p-4">
                         <div className="grid grid-cols-6 gap-6">
                             <div className="col-span-6 sm:col-span-4">
@@ -337,37 +401,7 @@ const PersonalDetails = () => {
                                 />
                             </div>
                         </div>
-                    </div>
-
-                    <div className="col-span-1 sm:col-span-1">
-                        <Select
-                            name="applicationType"
-                            id="applicationType"
-                            label="Application Type"
-                            value={formData.applicationType}
-                            onChange={handleChange}
-                            options={APPLICATION_TYPES}
-                            required={true}
-                            disabled={!isEditing}
-                            status={fieldStatuses.applicationType}
-                            onStatusChange={(newStatus) => handleStatusChange('applicationType', newStatus)}
-                        />
-                    </div>
-
-                    <div className="col-span-1 sm:col-span-1">
-                        <Select
-                            name="submitionType"
-                            id="submitionType"
-                            label="Submition Type"
-                            value={formData.submitionType}
-                            onChange={handleChange}
-                            options={SUBMISSION_TYPES}
-                            required={true}
-                            disabled={!isEditing}
-                            status={fieldStatuses.submitionType}
-                            onStatusChange={(newStatus) => handleStatusChange('submitionType', newStatus)}
-                        />
-                    </div>
+                    </div>}
                 </div>
 
                 {!isEditing && (

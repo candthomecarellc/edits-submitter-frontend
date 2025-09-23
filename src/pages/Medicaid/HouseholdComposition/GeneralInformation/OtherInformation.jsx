@@ -9,7 +9,7 @@ import { BCS } from '../../../../constants/WMS_Codes/bcs';
 import { SSI_INDICATOR } from '../../../../constants/WMS_Codes/ssiIndicator';
 
 const OtherInformation = () => {
-    const { member, setMember } = useOutletContext();
+    const { member, setMember, application } = useOutletContext();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -17,6 +17,7 @@ const OtherInformation = () => {
     const [originalData, setOriginalData] = useState(null);
     const applicationId = localStorage.getItem('edits-submitter.currentApplicationId');
     const memberId = localStorage.getItem('edits-submitter.currentMemberId');
+    const renewal = application.submissionType === 'renewal';
     
     const [formData, setFormData] = useState({
         ssn: member?.ssn || '',
@@ -153,6 +154,23 @@ const OtherInformation = () => {
                     </div>
                 </div>
 
+                {renewal &&
+                <Input
+                    type="text"
+                    name="ssn"
+                    id="ssn"
+                    label="Social Security Number"
+                    value={formData.ssn}
+                    onChange={handleChange}
+                    maxLength={9}
+                    pattern="^[0-9]*$"
+                    patternError="Please enter a valid Social Security Number"
+                    disabled={!isEditing}
+                    status={fieldStatuses.ssn}
+                    onStatusChange={(newStatus) => handleStatusChange('ssn', newStatus)}
+                />}
+
+                {!renewal &&
                 <div className="grid grid-cols-12 gap-6">
                     <div className="col-span-6">
                         <Input
@@ -268,7 +286,7 @@ const OtherInformation = () => {
                             onStatusChange={(newStatus) => handleStatusChange('pid', newStatus)}
                         />
                     </div>
-                </div>
+                </div>}
 
                 {!isEditing && (
                     <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">

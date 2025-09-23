@@ -10,6 +10,7 @@ const HomeAddress = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isEditing, setIsEditing] = useState(false);
+    const renewal = application.submissionType === 'renewal';
 
     const [formData, setFormData] = useState({
         homeless: application?.homeless || false,
@@ -303,6 +304,7 @@ const HomeAddress = () => {
                             />
                         </div>
 
+                        { !renewal &&
                         <div className="col-span-3">
                             <Input
                                 type="county"
@@ -315,9 +317,9 @@ const HomeAddress = () => {
                                 status={fieldStatuses.county}
                                 onStatusChange={(newStatus) => handleStatusChange('county', newStatus)}
                             />
-                        </div>
+                        </div>}
 
-                        { application.submitionType === 'renewal' &&
+                        { renewal &&
                             <div className="col-span-12">
                                 <Checkbox
                                     name="noChange"

@@ -8,6 +8,7 @@ import { useOutletContext } from 'react-router-dom';
 
 const ApplicantInformation = () => {
     const { application } = useOutletContext();
+    const renewal = application.submissionType === 'renewal';
     return (
         <div className="p-6">
             <div className="sm:flex sm:items-center sm:justify-between mb-6">
@@ -22,9 +23,9 @@ const ApplicantInformation = () => {
             <PersonalDetails />
             <HomeAddress />
             <MailingAddress />
-            <SecondMailingAddress />
+            {!renewal && <SecondMailingAddress />}
             <OtherInformation />
-            {application.submitionType === 'renewal' && <RenewalInformation />}
+            {renewal && <RenewalInformation />}
         </div>
     );
 };

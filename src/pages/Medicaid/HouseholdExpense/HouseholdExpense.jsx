@@ -2,8 +2,11 @@ import HousingExpense from './HousingExpense';
 import ChildCare from './ChildCare';
 import SSI from './SSI';
 import ChronicCare from './ChronicCare';
+import { useOutletContext } from 'react-router-dom';
 
 const HouseholdExpense = () => {
+    const { application } = useOutletContext();
+    const renewal = application.submissionType === 'renewal';
     return (
         <div className="p-6">
             <div className="sm:flex sm:items-center sm:justify-between mb-6">
@@ -17,7 +20,7 @@ const HouseholdExpense = () => {
 
             <HousingExpense />
             <ChildCare />
-            <SSI />
+            {!renewal && <SSI />}
             <ChronicCare />
         </div>
     );
