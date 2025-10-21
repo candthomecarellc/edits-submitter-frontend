@@ -140,3 +140,8 @@ export const DOCUMENTS = [
         value: 'Patient Review Instrument'
     }
 ]
+
+export const FAKE_DOCS = [
+    { value: '0004', label: 'Birth Certificate' },
+    { value: '0068', label: 'Medicare Card' },
+]

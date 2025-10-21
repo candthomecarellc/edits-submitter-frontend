@@ -5,7 +5,7 @@ import Select from '../../../components/Form/Select';
 import Button from '../../../components/Form/Button';
 import Input from '../../../components/Form/Input';
 import Checkbox from '../../../components/Form/Checkbox';
-import { DOCUMENTS } from '../../../constants/WMS_Codes/documents';
+import { DOCUMENTS, FAKE_DOCS } from '../../../constants/WMS_Codes/documents';
 import { DOC_CATEGORY } from '../../../constants/WMS_Codes/docCategory';
 
 const Documents = () => {
@@ -263,7 +263,8 @@ const Documents = () => {
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Document Type *
                                 </label>
-                                <Input
+                                <Select
+                                    options={FAKE_DOCS}
                                     value={uploadForm.documentType}
                                     maxLength={4}
                                     required={true}
@@ -273,7 +274,7 @@ const Documents = () => {
                                         ...uploadForm,
                                         documentType: e.target.value
                                     })}
-                                    placeholder="Document type"
+                                    placeholder="--Select--"
                                 />
                             </div>
 
@@ -288,7 +289,7 @@ const Documents = () => {
                                         documentCategory: e.target.value
                                     })}
                                     options={DOC_CATEGORY}
-                                    placeholder="Select category"
+                                    placeholder="--Select--"
                                 />
                             </div>
 
